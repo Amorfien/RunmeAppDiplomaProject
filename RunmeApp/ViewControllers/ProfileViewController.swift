@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  RunmeApp
 //
 //  Created by Pavel Grigorev on 22.06.2023.
@@ -7,13 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBlue
     }
 
 
 }
-
