@@ -9,6 +9,8 @@ import UIKit
 
 final class LoginCoordinator: Coordinatable {
 
+    weak var parentCoordinator: Coordinatable?
+
     private(set) var childCoordinators: [Coordinatable] = []
     private(set) var vc: UINavigationController
     private(set) var vm: LoginViewModelProtocol
@@ -16,6 +18,9 @@ final class LoginCoordinator: Coordinatable {
     init(vc: UINavigationController, vm: LoginViewModelProtocol) {
         self.vc = vc
         self.vm = vm
+    }
+    deinit {
+        print("LoginCoordinator deinit")
     }
 
     func start() -> UIViewController {
@@ -27,26 +32,24 @@ final class LoginCoordinator: Coordinatable {
     }
 
     func pushToHome() {
-        let homeCoordinator = HomeCoordinator()
-        let profileCoordinator = ProfileCoordinator()
-        let favoriteCoordinator = FavoriteCoordinator()
 
-        let appTabBarController = AppTabBarController(viewControllers: [
-            homeCoordinator.start(),
-            profileCoordinator.start(),
-            favoriteCoordinator.start()
-        ])
-            print(childCoordinators)
-        removeChildCoordinator(self)
-            print(childCoordinators)
-        addChildCoordinator(homeCoordinator)
-        addChildCoordinator(profileCoordinator)
-        addChildCoordinator(favoriteCoordinator)
-            print(childCoordinators)
+        if let appCoordinator = parentCoordinator as? AppCoordinator {
+            self.vc.navigationBar.isHidden = true
+            vc.setViewControllers([appCoordinator.goHome()], animated: false)
+        }
 
-        vc.setViewControllers([appTabBarController], animated: false)
+    }
 
-//        print("login")
+
+    func addChildCoordinator(_ coordinator: Coordinatable) {
+        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
+            return
+        }
+        childCoordinators.append(coordinator)
+    }
+
+    func removeChildCoordinator(_ coordinator: Coordinatable) {
+        childCoordinators = childCoordinators.filter { $0 === coordinator }
     }
 
 

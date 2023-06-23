@@ -7,44 +7,53 @@
 
 import UIKit
 
-final class AppCoordinator: Coordinatable {
+final class AppCoordinator: AppCoordinatorProtocol {
+    var parentCoordinator: Coordinatable?
     private(set) var childCoordinators: [Coordinatable] = []
+    var navigationController: UINavigationController
 
-    private var isLogin: Bool = false
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+    deinit {
+        print("AppCoordinator deinit")
+    }
 
-    init(isLogin: Bool) {
-        self.isLogin = isLogin
+    func goToLogin() -> UIViewController {
+        childCoordinators.removeAll()
+        let loginViewModel = LoginViewModel()
+        let loginCoordinator = LoginCoordinator(vc: navigationController, vm: loginViewModel)
+        loginCoordinator.parentCoordinator = self
+        addChildCoordinator(loginCoordinator)
+        return loginCoordinator.start()
+    }
+    func goHome() -> UIViewController {
+        childCoordinators.removeAll()
+        let homeViewModel = HomeViewModel()
+        let homeCoordinator = HomeCoordinator(vc: UINavigationController(), vm: homeViewModel)
+
+        let profileViewModel = ProfileViewModel()
+        let profileCoordinator = ProfileCoordinator(vc: UINavigationController(), vm: profileViewModel)
+        profileCoordinator.parentCoordinator = self
+        
+        let favoriteViewModel = FavoriteViewModel()
+        let favoriteCoordinator = FavoriteCoordinator(vc: UINavigationController(), vm: favoriteViewModel)
+
+        let appTabBarController = AppTabBarController(viewControllers: [
+            homeCoordinator.start(),
+            profileCoordinator.start(),
+            favoriteCoordinator.start()
+        ])
+
+        addChildCoordinator(homeCoordinator)
+        addChildCoordinator(profileCoordinator)
+        addChildCoordinator(favoriteCoordinator)
+
+        return appTabBarController
     }
 
     func start() -> UIViewController {
-
-        if isLogin {
-
-            let homeCoordinator = HomeCoordinator()
-            let profileCoordinator = ProfileCoordinator()
-            let favoriteCoordinator = FavoriteCoordinator()
-            
-            let appTabBarController = AppTabBarController(viewControllers: [
-                homeCoordinator.start(),
-                profileCoordinator.start(),
-                favoriteCoordinator.start()
-            ])
-
-            addChildCoordinator(homeCoordinator)
-            addChildCoordinator(profileCoordinator)
-            addChildCoordinator(favoriteCoordinator)
-
-            return appTabBarController
-
-        } else {
-
-            let loginCoordinator = LoginCoordinator(vc: UINavigationController(), vm: LoginViewModel())
-            addChildCoordinator(loginCoordinator)
-            return loginCoordinator.start()
-
-        }
-
-
+        UIViewController()
     }
 
     func addChildCoordinator(_ coordinator: Coordinatable) {

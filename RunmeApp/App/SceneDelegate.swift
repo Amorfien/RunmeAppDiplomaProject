@@ -15,12 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let appCoordinator = AppCoordinator(isLogin: false)
+        let isLogin = false // checking UserDefaults
+
+        let navigationController = UINavigationController()
+        let appCoordinator = AppCoordinator(navigationController: navigationController)
 
         self.window = UIWindow(windowScene: windowScene)
         self.appCoordinator = appCoordinator
 
-        window?.rootViewController = appCoordinator.start()
+        window?.rootViewController = isLogin ? appCoordinator.goHome() : appCoordinator.goToLogin()
         window?.makeKeyAndVisible()
     }
 

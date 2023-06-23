@@ -8,10 +8,16 @@
 import UIKit
 
 protocol Coordinatable: AnyObject {
+    var parentCoordinator: Coordinatable? { get set }
     var childCoordinators: [Coordinatable] { get }
     func start() -> UIViewController
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
+}
+
+protocol AppCoordinatorProtocol: Coordinatable {
+    func goToLogin() -> UIViewController
+    func goHome() -> UIViewController
 }
 
 //protocol ModuleCoordinatable: Coordinatable {

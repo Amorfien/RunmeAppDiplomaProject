@@ -9,14 +9,25 @@ import UIKit
 
 final class FavoriteCoordinator: Coordinatable {
 
+    weak var parentCoordinator: Coordinatable?
+
     var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController?
-    private(set) var vm: LoginViewModelProtocol?///
+    private(set) var vc: UINavigationController
+    private(set) var vm: FavoriteViewModelProtocol
+
+    init(vc: UINavigationController, vm: FavoriteViewModelProtocol) {
+        self.vc = vc
+        self.vm = vm
+    }
+    deinit {
+        print("FavoriteCoordinator deinit")
+    }
 
     func start() -> UIViewController {
         let favoriteViewController = FavoriteViewController()
         favoriteViewController.tabBarItem = UITabBarItem(title: "Favorite", image: .remove, tag: 2)
-        return favoriteViewController
+        vc.viewControllers = [favoriteViewController]
+        return vc
     }
 
 }

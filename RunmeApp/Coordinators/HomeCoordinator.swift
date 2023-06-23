@@ -9,14 +9,25 @@ import UIKit
 
 final class HomeCoordinator: Coordinatable {
 
+    weak var parentCoordinator: Coordinatable?
+
     var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController?
-    private(set) var vm: LoginViewModelProtocol?///
+    private(set) var vc: UINavigationController
+    private(set) var vm: HomeViewModelProtocol
+
+    init(vc: UINavigationController, vm: HomeViewModelProtocol) {
+        self.vc = vc
+        self.vm = vm
+    }
+    deinit {
+        print("HomeCoordinator deinit")
+    }
 
     func start() -> UIViewController {
         let homeViewController = HomeViewController()
         homeViewController.tabBarItem = UITabBarItem(title: "Home", image: .add, tag: 0)
-        return homeViewController
+        vc.viewControllers = [homeViewController]
+        return vc
     }
 
 }

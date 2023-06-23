@@ -35,6 +35,10 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
+    deinit {
+        print(#function, " LoginViewModel")
+    }
+
 //    private let networkService: NetworkServiceProtocol
 //
 //    init(networkService: NetworkServiceProtocol) {
