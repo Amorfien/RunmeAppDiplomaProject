@@ -25,13 +25,17 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
         case logOut
     }
 
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: FavoriteCoordinator?
     var onStateDidChange: ((State) -> Void)?
 
     private(set) var state: State = .initial {
         didSet {
             onStateDidChange?(state)
         }
+    }
+
+    deinit {
+        print(#function, " FavoriteViewModel ⚙️")
     }
 
     func updateState(viewInput: ViewInput) {

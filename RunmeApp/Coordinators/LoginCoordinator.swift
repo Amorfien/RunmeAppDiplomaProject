@@ -8,35 +8,37 @@
 import UIKit
 
 final class LoginCoordinator: Coordinatable {
+    var flowCompletionHandler: (() -> Void)?
 
-    weak var parentCoordinator: Coordinatable?
+//    weak var parentCoordinator: Coordinatable?
 
     private(set) var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController
-    private(set) var vm: LoginViewModelProtocol
+    var navigationController: UINavigationController
+    private(set) var vm: LoginViewModel
 
-    init(vc: UINavigationController, vm: LoginViewModelProtocol) {
-        self.vc = vc
+    init(vc: UINavigationController, vm: LoginViewModel) {
+        self.navigationController = vc
         self.vm = vm
     }
     deinit {
         print("LoginCoordinator deinit")
     }
 
-    func start() -> UIViewController {
-        let loginViewModel = LoginViewModel()
-        loginViewModel.coordinator = self
-        let loginViewController = LoginViewController(viewModel: loginViewModel)
-        vc.viewControllers = [loginViewController]
-        return vc
+    func start() {
+        vm.coordinator = self
+        let loginViewController = LoginViewController(viewModel: vm)
+        navigationController.setViewControllers([loginViewController], animated: false)
     }
 
     func pushToHome() {
 
-        if let appCoordinator = parentCoordinator as? AppCoordinator {
-            self.vc.navigationBar.isHidden = true
-            vc.setViewControllers([appCoordinator.goHome()], animated: false)
-        }
+        self.flowCompletionHandler?()
+
+
+//        if let appCoordinator = parentCoordinator as? AppCoordinator {
+//            self.vc.navigationBar.isHidden = true
+//            vc.setViewControllers([appCoordinator.goHome()], animated: false)
+//        }
 
     }
 

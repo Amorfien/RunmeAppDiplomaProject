@@ -9,32 +9,31 @@ import UIKit
 
 final class ProfileCoordinator: Coordinatable {
 
-    weak var parentCoordinator: Coordinatable?
+    var flowCompletionHandler: (() -> Void)?
 
     var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController
-    private(set) var vm: ProfileViewModelProtocol
+    var navigationController: UINavigationController
+    private(set) var vm: ProfileViewModel
 
-    init(vc: UINavigationController, vm: ProfileViewModelProtocol) {
-        self.vc = vc
+    init(vc: UINavigationController, vm: ProfileViewModel) {
+        self.navigationController = vc
         self.vm = vm
     }
     deinit {
         print("ProfileCoordinator deinit")
     }
 
-    func start() -> UIViewController {
-        let profileViewModel = ProfileViewModel()
-        let profileViewController = ProfileViewController(viewModel: profileViewModel)
+    func start() {
+        vm.coordinator = self
+        let profileViewController = ProfileViewController(viewModel: vm)
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: .actions, tag: 1)
-        vc.viewControllers = [profileViewController]
-        return vc
+        navigationController.setViewControllers([profileViewController], animated: true)
     }
 
     func logOut() {
-        if let appCoordinator = parentCoordinator as? AppCoordinator {
-            vc.setViewControllers([appCoordinator.goHome()], animated: false)
-        }
+
+        self.flowCompletionHandler?()
+
     }
 
 }

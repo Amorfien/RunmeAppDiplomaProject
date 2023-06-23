@@ -34,6 +34,10 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
 
+    deinit {
+        print(#function, " HomeViewModel ⚙️")
+    }
+
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .logOut:

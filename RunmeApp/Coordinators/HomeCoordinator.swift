@@ -8,26 +8,25 @@
 import UIKit
 
 final class HomeCoordinator: Coordinatable {
-
-    weak var parentCoordinator: Coordinatable?
+    var flowCompletionHandler: (() -> Void)?
 
     var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController
-    private(set) var vm: HomeViewModelProtocol
+    var navigationController: UINavigationController
+    private(set) var vm: HomeViewModel
 
-    init(vc: UINavigationController, vm: HomeViewModelProtocol) {
-        self.vc = vc
+    init(vc: UINavigationController, vm: HomeViewModel) {
+        self.navigationController = vc
         self.vm = vm
     }
     deinit {
         print("HomeCoordinator deinit")
     }
 
-    func start() -> UIViewController {
-        let homeViewController = HomeViewController()
+    func start() {
+        vm.coordinator = self
+        let homeViewController = HomeViewController(viewModel: vm)
         homeViewController.tabBarItem = UITabBarItem(title: "Home", image: .add, tag: 0)
-        vc.viewControllers = [homeViewController]
-        return vc
+        navigationController.setViewControllers([homeViewController], animated: true)
     }
 
 }

@@ -32,10 +32,11 @@ final class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(login), for: .touchUpInside)
         
         bindViewModel()
+        
     }
 
     deinit {
-        print(#function, " LoginViewController")
+        print(#function, " LoginViewController 📱")
     }
 
     func bindViewModel() {
@@ -48,7 +49,7 @@ final class LoginViewController: UIViewController {
                 ()
             case .loading:
                 ()
-            case .loaded:
+            case .success:
                 ()
             case .error:
                 // Here we can show alert with error text

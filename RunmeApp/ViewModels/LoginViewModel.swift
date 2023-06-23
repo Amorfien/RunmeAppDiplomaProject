@@ -17,7 +17,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     enum State {
         case initial
         case loading
-        case loaded
+        case success
         case error(Error)
     }
 
@@ -36,7 +36,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
 
     deinit {
-        print(#function, " LoginViewModel")
+        print(#function, " LoginViewModel ⚙️")
     }
 
 //    private let networkService: NetworkServiceProtocol

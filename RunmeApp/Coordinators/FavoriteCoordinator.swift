@@ -8,26 +8,25 @@
 import UIKit
 
 final class FavoriteCoordinator: Coordinatable {
-
-    weak var parentCoordinator: Coordinatable?
+    var flowCompletionHandler: (() -> Void)?
 
     var childCoordinators: [Coordinatable] = []
-    private(set) var vc: UINavigationController
-    private(set) var vm: FavoriteViewModelProtocol
+    var navigationController: UINavigationController
+    private(set) var vm: FavoriteViewModel
 
-    init(vc: UINavigationController, vm: FavoriteViewModelProtocol) {
-        self.vc = vc
+    init(vc: UINavigationController, vm: FavoriteViewModel) {
+        self.navigationController = vc
         self.vm = vm
     }
     deinit {
         print("FavoriteCoordinator deinit")
     }
 
-    func start() -> UIViewController {
-        let favoriteViewController = FavoriteViewController()
+    func start() {
+        vm.coordinator = self
+        let favoriteViewController = FavoriteViewController(viewModel: vm)
         favoriteViewController.tabBarItem = UITabBarItem(title: "Favorite", image: .remove, tag: 2)
-        vc.viewControllers = [favoriteViewController]
-        return vc
+        navigationController.setViewControllers([favoriteViewController], animated: true)
     }
 
 }

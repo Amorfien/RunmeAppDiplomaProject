@@ -33,6 +33,11 @@ final class ProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = logoutButton
     }
 
+    deinit {
+        print(#function, " ProfileViewController 📱")
+    }
+
+
     func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
             //            guard let self = self else {

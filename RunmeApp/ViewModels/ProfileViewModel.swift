@@ -34,11 +34,14 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
 
+    deinit {
+        print(#function, " ProfileViewModel ⚙️")
+    }
+
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .logOut:
             coordinator?.logOut()
-            print("logOut ", coordinator)
         }
     }
 }
