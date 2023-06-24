@@ -48,11 +48,11 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .loadButtonDidTap:
-            coordinator?.pushToHome()
+//            coordinator?.pushToHome()
+            coordinator?.pushPhoneViewController()
 
         case .bookDidSelect:
             ()
-//            coordinator?.pushBookViewController(forBook: book)
         }
     }
     

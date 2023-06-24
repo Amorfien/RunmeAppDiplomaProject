@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class AppCoordinator: Coordinatable {
+    
     var flowCompletionHandler: (() -> Void)?
 
     private var isLogin = false
@@ -17,31 +19,36 @@ final class AppCoordinator: Coordinatable {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        if Auth.auth().currentUser != nil {
+            self.isLogin = true
+        }
+        print(dump(Auth.auth().currentUser?.uid))
+
     }
     deinit {
         print("AppCoordinator deinit")
     }
 
-    func goToLogin() {
+    func start() {
+        isLogin ? goToMain() : goToLogin()
+    }
+
+    private func goToLogin() {
         childCoordinators.removeAll()
         let loginViewModel = LoginViewModel()
         let loginCoordinator = LoginCoordinator(vc: navigationController, vm: loginViewModel)
         addChildCoordinator(loginCoordinator)
 
-        loginCoordinator.flowCompletionHandler = { [ weak self ] in
+        loginCoordinator.flowCompletionHandler = { [weak self] in
             self?.isLogin = true
-//            self?.removeChildCoordinator(loginCoordinator)
             self?.start()
         }
         loginCoordinator.start()
     }
 
-    func start() {
-        isLogin ? goMain() : goToLogin()
-    }
-
-    func goMain() {
+    private func goToMain() {
         childCoordinators.removeAll()
+
         let homeViewModel = HomeViewModel()
         let homeCoordinator = HomeCoordinator(vc: UINavigationController(), vm: homeViewModel)
 

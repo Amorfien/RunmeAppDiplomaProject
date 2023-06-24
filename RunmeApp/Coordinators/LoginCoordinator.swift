@@ -10,8 +10,6 @@ import UIKit
 final class LoginCoordinator: Coordinatable {
     var flowCompletionHandler: (() -> Void)?
 
-//    weak var parentCoordinator: Coordinatable?
-
     private(set) var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
     private(set) var vm: LoginViewModel
@@ -34,25 +32,18 @@ final class LoginCoordinator: Coordinatable {
 
         self.flowCompletionHandler?()
 
-
-//        if let appCoordinator = parentCoordinator as? AppCoordinator {
-//            self.vc.navigationBar.isHidden = true
-//            vc.setViewControllers([appCoordinator.goHome()], animated: false)
-//        }
-
     }
 
-
-    func addChildCoordinator(_ coordinator: Coordinatable) {
-        guard !childCoordinators.contains(where: { $0 === coordinator }) else {
-            return
-        }
-        childCoordinators.append(coordinator)
+    func pushPhoneViewController() {
+        let phoneViewController = PhoneViewController()
+        phoneViewController.coordinator = self
+        navigationController.pushViewController(phoneViewController, animated: true)
     }
 
-    func removeChildCoordinator(_ coordinator: Coordinatable) {
-        childCoordinators = childCoordinators.filter { $0 === coordinator }
+    func pushOTPViewController() {
+        let otpViewController = OTPViewController()
+        otpViewController.coordinator = self
+        navigationController.pushViewController(otpViewController, animated: true)
     }
-
 
 }
