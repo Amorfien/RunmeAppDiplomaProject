@@ -16,14 +16,17 @@ final class LoginViewModel: LoginViewModelProtocol {
 
     enum State {
         case initial
-        case loading
-        case success
+//        case phone
+//        case sms
+//        case registration
         case error(Error)
     }
 
     enum ViewInput {
-        case loadButtonDidTap
-        case bookDidSelect
+        case helloButtonDidTap
+        case phoneButtonDidTap
+        case smsButtonDidTap
+        case registerButtonDidTap
     }
 
     weak var coordinator: LoginCoordinator?
@@ -47,12 +50,18 @@ final class LoginViewModel: LoginViewModelProtocol {
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .loadButtonDidTap:
+        case .helloButtonDidTap:
 //            coordinator?.pushToHome()
             coordinator?.pushPhoneViewController()
 
-        case .bookDidSelect:
-            ()
+        case .phoneButtonDidTap:
+            coordinator?.pushOTPViewController()
+        case .smsButtonDidTap:
+            AuthManager.shared.searchUserInDb { [weak self] success in
+                success ? self?.coordinator?.pushToHome() : self?.coordinator?.pushRegistrationViewController()
+            }
+        case .registerButtonDidTap:
+            coordinator?.pushToHome()
         }
     }
     

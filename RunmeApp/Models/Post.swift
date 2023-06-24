@@ -13,7 +13,8 @@ struct Post {
     let author: User
     let date: Date
     let text: String = ""
-    let imageName: String?
-    var likes: UInt32 = 0
+    let running: Running
+//    let imageName: String?
+    var likes = 0
     
 }

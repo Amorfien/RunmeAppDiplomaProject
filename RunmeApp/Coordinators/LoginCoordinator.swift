@@ -24,8 +24,8 @@ final class LoginCoordinator: Coordinatable {
 
     func start() {
         vm.coordinator = self
-        let loginViewController = LoginViewController(viewModel: vm)
-        navigationController.setViewControllers([loginViewController], animated: false)
+        let helloViewController = HelloViewController(viewModel: vm)
+        navigationController.setViewControllers([helloViewController], animated: false)
     }
 
     func pushToHome() {
@@ -44,6 +44,12 @@ final class LoginCoordinator: Coordinatable {
         let otpViewController = OTPViewController()
         otpViewController.coordinator = self
         navigationController.pushViewController(otpViewController, animated: true)
+    }
+
+    func pushRegistrationViewController() {
+        let registrationViewController = RegistrationViewController()
+        registrationViewController.coordinator = self
+        navigationController.pushViewController(registrationViewController, animated: true)
     }
 
 }

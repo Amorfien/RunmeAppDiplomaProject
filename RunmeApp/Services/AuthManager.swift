@@ -61,5 +61,14 @@ final class AuthManager {
         }
     }
 
+    func searchUserInDb(completion: @escaping (Bool) -> Void) {
+        print(auth.currentUser?.uid)
+        if auth.currentUser?.uid == "VH77VEBCMFNrokiTteI167yxU1B2" {
+            completion(true)
+        } else {
+            completion(false)
+        }
+    }
+
 
 }
