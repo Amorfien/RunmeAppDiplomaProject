@@ -16,6 +16,7 @@
 		18020F052A464FD100D615D7 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F042A464FD100D615D7 /* PhoneViewController.swift */; };
 		18020F072A46531300D615D7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F062A46531300D615D7 /* OTPViewController.swift */; };
 		180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* CustomTextField.swift */; };
+		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
 		18768A882A45D54600720EC3 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A872A45D54600720EC3 /* LoginButton.swift */; };
 		18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */; };
 		1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6762A4490E4008DBE6C /* AppDelegate.swift */; };
@@ -40,7 +41,7 @@
 		1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */; };
 		1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B02A44F897008DBE6C /* HomeViewModel.swift */; };
 		1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */; };
-		18DC3BEC2A46F9D000438728 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEB2A46F9D000438728 /* User.swift */; };
+		18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEB2A46F9D000438728 /* Runner.swift */; };
 		18DC3BEE2A46FEEA00438728 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BED2A46FEEA00438728 /* Post.swift */; };
 		18DC3BF02A4701A100438728 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEF2A4701A100438728 /* Running.swift */; };
 		18DC3BF72A474B7000438728 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BF62A474B7000438728 /* RegistrationViewController.swift */; };
@@ -54,6 +55,7 @@
 		18020F042A464FD100D615D7 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
 		18020F062A46531300D615D7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		180AC2FA2A47669E000FD11F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		18768A872A45D54600720EC3 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		1880D6732A4490E4008DBE6C /* RunmeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunmeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,7 +82,7 @@
 		1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		1880D6B02A44F897008DBE6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
-		18DC3BEB2A46F9D000438728 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		18DC3BEB2A46F9D000438728 /* Runner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		18DC3BED2A46FEEA00438728 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		18DC3BEF2A4701A100438728 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		18DC3BF62A474B7000438728 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				18020F022A462D1E00D615D7 /* AuthManager.swift */,
+				180AC2FC2A47856D000FD11F /* DatabaseService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -200,7 +203,7 @@
 		1880D68E2A4493B2008DBE6C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				18DC3BEB2A46F9D000438728 /* User.swift */,
+				18DC3BEB2A46F9D000438728 /* Runner.swift */,
 				18DC3BEF2A4701A100438728 /* Running.swift */,
 				18DC3BED2A46FEEA00438728 /* Post.swift */,
 			);
@@ -346,7 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DC3BEC2A46F9D000438728 /* User.swift in Sources */,
+				18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */,
 				1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */,
 				18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */,
 				1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */,
@@ -367,6 +370,7 @@
 				1880D69D2A449857008DBE6C /* ProfileViewController.swift in Sources */,
 				1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */,
 				1880D6972A449688008DBE6C /* Coordinatable.swift in Sources */,
+				180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */,
 				18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */,
 				180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */,
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,

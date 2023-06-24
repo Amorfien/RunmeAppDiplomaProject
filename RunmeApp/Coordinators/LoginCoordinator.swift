@@ -28,7 +28,7 @@ final class LoginCoordinator: Coordinatable {
         navigationController.setViewControllers([helloViewController], animated: false)
     }
 
-    func pushToHome() {
+    func pushToMain() {
 
         self.flowCompletionHandler?()
 

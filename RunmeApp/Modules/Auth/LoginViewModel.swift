@@ -57,11 +57,12 @@ final class LoginViewModel: LoginViewModelProtocol {
         case .phoneButtonDidTap:
             coordinator?.pushOTPViewController()
         case .smsButtonDidTap:
-            AuthManager.shared.searchUserInDb { [weak self] success in
-                success ? self?.coordinator?.pushToHome() : self?.coordinator?.pushRegistrationViewController()
-            }
+            ()
+//            DatabaseService.shared.searchUserInDb { [weak self] success in
+//                success ? self?.coordinator?.pushToHome() : self?.coordinator?.pushRegistrationViewController()
+//            }
         case .registerButtonDidTap:
-            coordinator?.pushToHome()
+            coordinator?.pushToMain()
         }
     }
     

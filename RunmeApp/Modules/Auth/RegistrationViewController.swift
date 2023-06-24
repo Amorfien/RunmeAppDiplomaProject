@@ -79,7 +79,26 @@ final class RegistrationViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func nextDidTap() {
-        hideKeyboard()
+
+        let runner = Runner(
+            id: AuthManager.shared.currentUser?.uid ?? "---",
+            phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
+            name: nameTextField.text,
+            surname: surnameTextField.text,
+            nickname: nicknameTextField.text,
+            birthday: birthdayTextField.text)
+
+        DatabaseService.shared.setUser(user: runner) { [weak self] result in
+            switch result {
+
+            case .success(_):
+                print("Success!!")
+                self?.coordinator?.pushToMain()
+            case .failure(let error):
+                print("Error(( \(error.localizedDescription)")
+            }
+        }
+
     }
 
     //  жест чтобы скрывать клавиатуру по тапу

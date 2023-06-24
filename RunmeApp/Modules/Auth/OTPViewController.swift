@@ -20,9 +20,9 @@ class OTPViewController: PhoneViewController {
         AuthManager.shared.verifyCode(smsCode: text) { [weak self] success in
             guard success else { return }
 
-            AuthManager.shared.searchUserInDb { [weak self] success in
+            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
                 DispatchQueue.main.async {
-                    success ? self?.coordinator?.pushToHome() : self?.coordinator?.pushRegistrationViewController()
+                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
                 }
             }
 
