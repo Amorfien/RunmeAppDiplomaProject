@@ -20,14 +20,13 @@ class OTPViewController: PhoneViewController {
         AuthManager.shared.verifyCode(smsCode: text) { [weak self] success in
             guard success else { return }
 
-            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
-                DispatchQueue.main.async {
-                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
-                }
-            }
+            self?.viewModel.updateState(viewInput: .smsButtonDidTap)
 
-//            DispatchQueue.main.async {
-//                self?.coordinator?.pushToHome()
+//            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
+//                DispatchQueue.main.async {
+//
+//                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
+//                }
 //            }
 
         }

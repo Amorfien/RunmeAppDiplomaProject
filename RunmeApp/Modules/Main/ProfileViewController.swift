@@ -27,6 +27,17 @@ final class ProfileViewController: UIViewController {
         bindViewModel()
         navigationController?.navigationBar.prefersLargeTitles = true
         self.title = "Profile"
+        DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
+            switch result {
+            case .success(let runner):
+                DispatchQueue.main.async {
+                    self.title = "Hello, \(runner.nickname ?? "")!"
+                    print(runner)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
         navigationController?.navigationBar.backgroundColor = .cyan
 
         let logoutButton = UIBarButtonItem(image: UIImage(systemName: "door.right.hand.open"), style: .done, target: self, action: #selector(logout))

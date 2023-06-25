@@ -26,7 +26,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         case helloButtonDidTap
         case phoneButtonDidTap
         case smsButtonDidTap
-        case registerButtonDidTap
+        case registerButtonDidTap(Runner)
     }
 
     weak var coordinator: LoginCoordinator?
@@ -51,18 +51,44 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-//            coordinator?.pushToHome()
             coordinator?.pushPhoneViewController()
+//            coordinator?.pushRegistrationViewController()
 
+
+
+            
         case .phoneButtonDidTap:
             coordinator?.pushOTPViewController()
         case .smsButtonDidTap:
-            ()
-//            DatabaseService.shared.searchUserInDb { [weak self] success in
-//                success ? self?.coordinator?.pushToHome() : self?.coordinator?.pushRegistrationViewController()
-//            }
-        case .registerButtonDidTap:
-            coordinator?.pushToMain()
+            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
+                DispatchQueue.main.async {
+                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
+                }
+            }
+        case .registerButtonDidTap(let runner):
+
+            DatabaseService.shared.setUser(user: runner) { [weak self] result in
+                switch result {
+
+                case .success(_):
+                    print("Success!!")
+
+                    FirebaseStorageService.shared.upload(currentUserId: runner.id, photo: runner.avatar!) { result in
+                        switch result {
+
+                        case .success(let url):
+                            print("Avatar upload")
+                            print(url.absoluteString)
+                        case .failure(let error):
+                            print("Upload Error \(error.localizedDescription)")
+                        }
+                    }
+
+                    self?.coordinator?.pushToMain()
+                case .failure(let error):
+                    print("Set User Error \(error.localizedDescription)")
+                }
+            }
         }
     }
     

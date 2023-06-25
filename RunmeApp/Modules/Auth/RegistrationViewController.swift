@@ -9,9 +9,24 @@ import UIKit
 
 final class RegistrationViewController: UIViewController {
 
-    var coordinator: LoginCoordinator?
+    // MARK: - Properties
+    let viewModel: LoginViewModel
 
-    private let registerLabel = UILabel(text: "Registration", font: .systemFont(ofSize: 22, weight: .semibold), textColor: .label)
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "mosaic")
+        imageView.layer.cornerRadius = 75
+        imageView.layer.borderWidth = 1
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 150, height: 30))
+        button.backgroundColor = .white.withAlphaComponent(0.8)
+        button.setTitle("➕", for: .normal)
+        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+        imageView.addSubview(button)
+        return imageView
+    }()
 
     private let vStack: UIStackView = {
         let stack = UIStackView()
@@ -35,6 +50,18 @@ final class RegistrationViewController: UIViewController {
         return button
     }()
 
+    //MARK: - Init
+
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,8 +70,9 @@ final class RegistrationViewController: UIViewController {
     }
 
     private func setupView() {
+        self.title = "Registration"
         view.backgroundColor = .systemGray5
-        view.addSubview(registerLabel)
+        view.addSubview(avatarImageView)
         view.addSubview(vStack)
         let textFields = [nameTextField, surnameTextField, nicknameTextField, birthdayTextField]
 
@@ -59,11 +87,13 @@ final class RegistrationViewController: UIViewController {
         view.addSubview(nextButton)
         
         NSLayoutConstraint.activate([
-            registerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            registerLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 150),
 
-            vStack.topAnchor.constraint(equalTo: registerLabel.bottomAnchor, constant: 40),
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            avatarImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 150),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 150),
+
+            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
 
@@ -78,6 +108,12 @@ final class RegistrationViewController: UIViewController {
 
     // MARK: - Actions
 
+    @objc private func addButtonDidTap() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+
     @objc private func nextDidTap() {
 
         let runner = Runner(
@@ -86,18 +122,10 @@ final class RegistrationViewController: UIViewController {
             name: nameTextField.text,
             surname: surnameTextField.text,
             nickname: nicknameTextField.text,
+            avatar: avatarImageView.image,
             birthday: birthdayTextField.text)
 
-        DatabaseService.shared.setUser(user: runner) { [weak self] result in
-            switch result {
-
-            case .success(_):
-                print("Success!!")
-                self?.coordinator?.pushToMain()
-            case .failure(let error):
-                print("Error(( \(error.localizedDescription)")
-            }
-        }
+        viewModel.updateState(viewInput: .registerButtonDidTap(runner))
 
     }
 
@@ -112,6 +140,7 @@ final class RegistrationViewController: UIViewController {
 
 }
 
+//MARK: - Extensions
 
 extension RegistrationViewController: UITextFieldDelegate {
 
@@ -125,6 +154,27 @@ extension RegistrationViewController: UITextFieldDelegate {
         }
         return true
 
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard textField.tag == 3 else { return }
+        guard let text = textField.text else { return }
+        if text.count > 8 {
+            textField.deleteBackward()
+        } else if text.count == 2 || text.count == 5 {
+            textField.text! += "." //проблема со стиранием (нельзя ошибаться)
+        }
+    }
+
+}
+
+extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            avatarImageView.image = pickedImage
+        }
+        picker.dismiss(animated: true)
     }
 
 }

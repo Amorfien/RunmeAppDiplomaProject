@@ -44,7 +44,7 @@ final class HelloViewController: UIViewController {
         view.backgroundColor = .systemYellow
 
         setupView()
-        bindViewModel()
+//        bindViewModel()
         
     }
 
@@ -54,21 +54,21 @@ final class HelloViewController: UIViewController {
 
     // MARK: - ViewModel Binding
 
-    func bindViewModel() {
-        viewModel.onStateDidChange = { [weak self] state in
-//            guard let self = self else {
-//                return
+//    func bindViewModel() {
+//        viewModel.onStateDidChange = { /*[weak self]*/ state in
+////            guard let self = self else {
+////                return
+////            }
+//            switch state {
+//            case .initial:
+//                ()
+//
+//            case .error:
+//                // Here we can show alert with error text
+//                ()
 //            }
-            switch state {
-            case .initial:
-                ()
-
-            case .error:
-                // Here we can show alert with error text
-                ()
-            }
-        }
-    }
+//        }
+//    }
 
     // MARK: - Private methods
 
@@ -93,8 +93,7 @@ final class HelloViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func loginDidTap() {
-//        viewModel.updateState(viewInput: .loadButtonDidTap)
-        viewModel.coordinator?.pushPhoneViewController()
+        viewModel.updateState(viewInput: .helloButtonDidTap)
     }
 
 }

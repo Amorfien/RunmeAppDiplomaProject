@@ -22,7 +22,6 @@ final class AppCoordinator: Coordinatable {
         if Auth.auth().currentUser != nil {
             self.isLogin = true
         }
-        print(dump(Auth.auth().currentUser?.uid))
 
     }
     deinit {

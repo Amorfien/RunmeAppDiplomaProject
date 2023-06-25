@@ -9,7 +9,9 @@ import UIKit
 
 class PhoneViewController: UIViewController {
 
-    var coordinator: LoginCoordinator?
+//    var coordinator: LoginCoordinator?
+    // MARK: - Properties
+    let viewModel: LoginViewModel
 
     lazy var phoneTextField: TextFieldWithPadding = {
         let phone = TextFieldWithPadding()
@@ -34,6 +36,18 @@ class PhoneViewController: UIViewController {
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button
     }()
+
+    //MARK: - Init
+
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +96,8 @@ class PhoneViewController: UIViewController {
         AuthManager.shared.startAuth(phoneNumber: text) { [weak self] success in
             guard success else { return }
             DispatchQueue.main.async {
-                self?.coordinator?.pushOTPViewController()
+//                self?.coordinator?.pushOTPViewController()
+                self?.viewModel.updateState(viewInput: .phoneButtonDidTap)
             }
         }
 

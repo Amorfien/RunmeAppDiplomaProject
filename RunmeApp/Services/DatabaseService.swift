@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class DatabaseService {
+final class DatabaseService {
 
     static let shared = DatabaseService()
 
@@ -41,10 +41,16 @@ class DatabaseService {
             guard let phoneNumber = data["phoneNumber"] as? String else { return }
 
             let name = data["name"] as? String
-            //
-            //
+            let surname = data["surname"] as? String
+            let nickname = data["nickname"] as? String
+            let birthday = data["birthday"] as? String
+            let birthdayShow = data["birthdayShow"] as? Bool
+            let isAdmin = data["isAdmin"] as? Bool
+            let personalBests = data["personalBests"] as? [Int]
+            let achievements = data["achievements"] as? [Int]
+            let posts = data["posts"] as? [String]
             // дописать
-            let runner = Runner(id: id, phoneNumber: phoneNumber, name: name, surname: nil, birthday: nil)
+            let runner = Runner(id: id, phoneNumber: phoneNumber, name: name, surname: surname, nickname: nickname, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
 
             completion(.success(runner))
         }

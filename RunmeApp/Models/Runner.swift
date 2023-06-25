@@ -5,26 +5,29 @@
 //  Created by Pavel Grigorev on 24.06.2023.
 //
 
-import Foundation
+import UIKit
 
 struct Runner: Identifiable {
 
     var id: String
 
-//    let UID: String
     let phoneNumber: String
 
     let name: String?
     let surname: String?
     var nickname: String?
 
+    var avatar: UIImage?
+    var avatarURL: String?
+
     let birthday: String?
     var birthdayShow = true
+    var isAdmin = false
 
-    var personalBests: [PersonalBest] = []
-    var achievements: [Achievement] = []
+    var personalBests: [Int] = [0, 0, 0, 0]
+    var achievements: [Int] = []
 
-    var posts: [Post] = []
+    var posts: [String] = []
 
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
@@ -35,6 +38,9 @@ struct Runner: Identifiable {
         repres["nickname"] = self.nickname
         repres["birthday"] = self.birthday
         repres["birthdayShow"] = true
+        repres["isAdmin"] = false
+        repres["personalBests"] = self.personalBests
+        repres["achievements"] = self.achievements
         return repres
     }
 

@@ -17,6 +17,8 @@
 		18020F072A46531300D615D7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F062A46531300D615D7 /* OTPViewController.swift */; };
 		180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* CustomTextField.swift */; };
 		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
+		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
+		186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B52A48689F00001093 /* FirebaseStorageService.swift */; };
 		18768A882A45D54600720EC3 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A872A45D54600720EC3 /* LoginButton.swift */; };
 		18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */; };
 		1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6762A4490E4008DBE6C /* AppDelegate.swift */; };
@@ -56,6 +58,8 @@
 		18020F062A46531300D615D7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		180AC2FA2A47669E000FD11F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
+		186AD0B52A48689F00001093 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		18768A872A45D54600720EC3 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		1880D6732A4490E4008DBE6C /* RunmeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunmeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +114,7 @@
 			children = (
 				18020F022A462D1E00D615D7 /* AuthManager.swift */,
 				180AC2FC2A47856D000FD11F /* DatabaseService.swift */,
+				186AD0B52A48689F00001093 /* FirebaseStorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -151,8 +156,8 @@
 				1880D68B2A449380008DBE6C /* Coordinators */,
 				1880D6932A4495FB008DBE6C /* TabBar */,
 				18DC3BF12A473DD100438728 /* Modules */,
-				18768A862A45D53000720EC3 /* CustomUI */,
 				18020F012A462D0900D615D7 /* Services */,
+				18768A862A45D53000720EC3 /* CustomUI */,
 				1880D68D2A449399008DBE6C /* Extensions */,
 			);
 			path = RunmeApp;
@@ -196,6 +201,7 @@
 			children = (
 				1880D6A82A44A48D008DBE6C /* String + Extensions.swift */,
 				18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */,
+				186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */,
+				186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */,
 				1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */,
 				18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */,
 				1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */,
@@ -373,6 +380,7 @@
 				180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */,
 				18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */,
 				180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */,
+				186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */,
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,
 				18768A882A45D54600720EC3 /* LoginButton.swift in Sources */,
 				1880D6A12A449C58008DBE6C /* HomeCoordinator.swift in Sources */,
