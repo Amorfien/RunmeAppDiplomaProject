@@ -73,12 +73,6 @@ final class DatabaseService {
             }
         }
 
-
-//        if AuthManager.shared.currentUser?.uid == "VH77VEBCMFNrokiTteI167yxU1B2" {
-//            completion(true)
-//        } else {
-//            completion(false)
-//        }
     }
 
 }

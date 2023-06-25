@@ -36,6 +36,7 @@ struct Runner: Identifiable {
         repres["name"] = self.name
         repres["surname"] = self.surname
         repres["nickname"] = self.nickname
+        repres["avatarURL"] = self.avatarURL
         repres["birthday"] = self.birthday
         repres["birthdayShow"] = true
         repres["isAdmin"] = false
@@ -46,18 +47,18 @@ struct Runner: Identifiable {
 
 }
 
-typealias RunTimeSec = UInt16 //0...65535 sec (18 hrs)
-
-enum PersonalBest {
-    case five(RunTimeSec)
-    case ten(RunTimeSec)
-    case half(RunTimeSec)
-    case marathon(RunTimeSec)
-}
-
-
-enum Achievement {
-    case gold
-    case silver
-    case bronze
-}
+//typealias RunTimeSec = UInt16 //0...65535 sec (18 hrs)
+//
+//enum PersonalBest {
+//    case five(RunTimeSec)
+//    case ten(RunTimeSec)
+//    case half(RunTimeSec)
+//    case marathon(RunTimeSec)
+//}
+//
+//
+//enum Achievement {
+//    case gold
+//    case silver
+//    case bronze
+//}

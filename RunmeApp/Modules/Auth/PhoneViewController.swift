@@ -9,18 +9,17 @@ import UIKit
 
 class PhoneViewController: UIViewController {
 
-//    var coordinator: LoginCoordinator?
     // MARK: - Properties
     let viewModel: LoginViewModel
 
     lazy var phoneTextField: TextFieldWithPadding = {
-        let phone = TextFieldWithPadding()
-        phone.placeholder = "Phone number"
+        var phone = TextFieldWithPadding()
         phone.backgroundColor = .systemGray5
         phone.keyboardType = .phonePad
-        phone.font = UIFont.systemFont(ofSize: 20)
-        phone.textAlignment = .center
-//        phone.returnKeyType = .continue
+        phone.attributedText = NSAttributedString(string: "+7", attributes: [
+            NSAttributedString.Key.kern: 5
+        ])
+        phone.font = UIFont(name: "Menlo-Regular", size: 26)
         phone.layer.cornerRadius = 10
         phone.layer.borderColor = UIColor.lightGray.cgColor
         phone.layer.borderWidth = 0.5
@@ -55,6 +54,11 @@ class PhoneViewController: UIViewController {
         setupGestures()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        phoneTextField.becomeFirstResponder()
+    }
+
     // MARK: - Private methods
 
     private func setupView() {
@@ -65,11 +69,11 @@ class PhoneViewController: UIViewController {
         NSLayoutConstraint.activate([
             phoneTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
-            phoneTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            phoneTextField.widthAnchor.constraint(equalToConstant: 272),
             phoneTextField.heightAnchor.constraint(equalToConstant: 48),
 
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 48),
+            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 56),
 //            nextButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -50),
             nextButton.widthAnchor.constraint(equalToConstant: 200)
         ])
@@ -78,7 +82,6 @@ class PhoneViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func nextDidTap() {
-//        viewModel.updateState(viewInput: .loadButtonDidTap)
         if let text = phoneTextField.text, !text.isEmpty {
             returnKeyButton(text: text)
         }
@@ -96,7 +99,6 @@ class PhoneViewController: UIViewController {
         AuthManager.shared.startAuth(phoneNumber: text) { [weak self] success in
             guard success else { return }
             DispatchQueue.main.async {
-//                self?.coordinator?.pushOTPViewController()
                 self?.viewModel.updateState(viewInput: .phoneButtonDidTap)
             }
         }
@@ -115,16 +117,15 @@ extension PhoneViewController: UITextFieldDelegate {
         if text.count == 12 {
             nextButton.isEnabled = true
             nextButton.isSelected = false
-        } else if text.count < 12 {
+        } else if text.count > 1 && text.count < 12 {
             nextButton.isEnabled = false
-        } else {
+        } else if text.count > 12 {
             textField.deleteBackward()
+        } else if text.count == 0 {
+                    textField.attributedText = NSAttributedString(string: "+", attributes: [
+                        NSAttributedString.Key.kern: 5
+                    ])
         }
-    }
-
-    // начало с +7
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = "+7"
     }
 
 }

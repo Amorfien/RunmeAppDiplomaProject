@@ -12,41 +12,37 @@ class OTPViewController: PhoneViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .tertiarySystemBackground
-        phoneTextField.placeholder = "SMS Code"
-//        phoneTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
+        phoneTextField.textPadding.left = 2 //костыль
+        phoneTextField.attributedText = NSAttributedString(string: " ", attributes: [
+            NSAttributedString.Key.kern: 10
+        ])
+        phoneTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
     }
 
     override func returnKeyButton(text: String) {
-        AuthManager.shared.verifyCode(smsCode: text) { [weak self] success in
+        var code = text
+        code.removeFirst()
+        AuthManager.shared.verifyCode(smsCode: code) { [weak self] success in
             guard success else { return }
-
             self?.viewModel.updateState(viewInput: .smsButtonDidTap)
-
-//            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
-//                DispatchQueue.main.async {
-//
-//                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
-//                }
-//            }
-
         }
     }
 
+    //ограничение количества символов, управление кнопкой
     override func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        if text.count == 6 {
+        if text.count == 7 {
             nextButton.isEnabled = true
             nextButton.isSelected = false
-        } else if text.count < 6 {
+        } else if text.count > 1 && text.count < 7 {
             nextButton.isEnabled = false
-        } else {
+        } else if text.count > 7{
             textField.deleteBackward()
+        } else if text.count == 0 {
+            phoneTextField.attributedText = NSAttributedString(string: " ", attributes: [
+                NSAttributedString.Key.kern: 10
+            ])
         }
     }
-
-    override func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
-    }
-
 
 }

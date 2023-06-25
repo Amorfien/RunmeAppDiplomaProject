@@ -7,10 +7,11 @@
 
 import Foundation
 
+///Пробежки-тренировки
 struct Running {
 
     let distance: Distance
-    let time: RunTimeSec
+    let time: Int//RunTimeSec
 
 }
 

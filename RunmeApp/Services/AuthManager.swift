@@ -25,7 +25,7 @@ final class AuthManager {
 
     func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
 
-//        Auth.auth().settings?.isAppVerificationDisabledForTesting = true
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = true ///тестовый режим, отключение капчи, только забитые юзеры
 
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
             guard let verificationID, error == nil else {
@@ -61,7 +61,7 @@ final class AuthManager {
         do {
             try Auth.auth().signOut()
         } catch {
-
+            print("Auth SinOut Error?")
         }
     }
 

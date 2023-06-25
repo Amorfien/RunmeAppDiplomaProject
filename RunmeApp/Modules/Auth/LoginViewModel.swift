@@ -42,53 +42,51 @@ final class LoginViewModel: LoginViewModelProtocol {
         print(#function, " LoginViewModel ⚙️")
     }
 
-//    private let networkService: NetworkServiceProtocol
-//
-//    init(networkService: NetworkServiceProtocol) {
-//        self.networkService = networkService
-//    }
-
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
             coordinator?.pushPhoneViewController()
 //            coordinator?.pushRegistrationViewController()
-
-
-
             
         case .phoneButtonDidTap:
             coordinator?.pushOTPViewController()
+
         case .smsButtonDidTap:
             DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
                 DispatchQueue.main.async {
                     success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
                 }
             }
-        case .registerButtonDidTap(let runner):
+            
+        case .registerButtonDidTap(var runner):
 
-            DatabaseService.shared.setUser(user: runner) { [weak self] result in
+//            let semaphore = DispatchSemaphore(value: 1)
+            //не получилось реализовать семафор. Оставил вложенность.
+
+            FirebaseStorageService.shared.upload(currentUserId: runner.id, photo: runner.avatar!) { result in
                 switch result {
 
-                case .success(_):
-                    print("Success!!")
+                case .success(let url):
+                    print("Avatar upload")
+                    runner.avatarURL = url.absoluteString
 
-                    FirebaseStorageService.shared.upload(currentUserId: runner.id, photo: runner.avatar!) { result in
+                    DatabaseService.shared.setUser(user: runner) { [weak self] result in
                         switch result {
 
-                        case .success(let url):
-                            print("Avatar upload")
-                            print(url.absoluteString)
+                        case .success(_):
+                            print("Success Register user \(runner.name ?? "")!!")
+                            self?.coordinator?.pushToMain()
                         case .failure(let error):
-                            print("Upload Error \(error.localizedDescription)")
+                            print("Set User Error \(error.localizedDescription)")
                         }
                     }
 
-                    self?.coordinator?.pushToMain()
                 case .failure(let error):
-                    print("Set User Error \(error.localizedDescription)")
+                    print("Upload Error \(error.localizedDescription)")
                 }
             }
+
+
         }
     }
     
