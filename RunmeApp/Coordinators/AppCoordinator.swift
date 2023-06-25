@@ -34,7 +34,8 @@ final class AppCoordinator: Coordinatable {
 
     private func goToLogin() {
         childCoordinators.removeAll()
-        let loginViewModel = LoginViewModel()
+        let localAuthorizationService = LocalAuthorizationService()
+        let loginViewModel = LoginViewModel(localAuthorizationService: localAuthorizationService)
         let loginCoordinator = LoginCoordinator(vc: navigationController, vm: loginViewModel)
         addChildCoordinator(loginCoordinator)
 

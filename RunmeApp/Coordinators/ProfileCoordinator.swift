@@ -32,7 +32,7 @@ final class ProfileCoordinator: Coordinatable {
 
     func logOut() {
 
-        AuthManager.shared.signOut()
+//        AuthManager.shared.signOut()
 
         self.flowCompletionHandler?()
 

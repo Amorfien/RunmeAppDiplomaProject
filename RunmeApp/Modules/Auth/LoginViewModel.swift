@@ -15,31 +15,48 @@ protocol LoginViewModelProtocol: AnyObject {
 final class LoginViewModel: LoginViewModelProtocol {
 
     enum State {
-        case initial
-//        case phone
-//        case sms
-//        case registration
+        case identifiedUser
+        case noUser
+        case okay
         case error(Error)
     }
 
     enum ViewInput {
         case helloButtonDidTap
+        case loginWithBio
         case phoneButtonDidTap
         case smsButtonDidTap
         case registerButtonDidTap(Runner)
     }
 
+    private let localAuthorizationService: LocalAuthorizationService
     weak var coordinator: LoginCoordinator?
     var onStateDidChange: ((State) -> Void)?
 
-    private(set) var state: State = .initial {
+    private(set) var state: State = .noUser {
         didSet {
             onStateDidChange?(state)
         }
     }
 
+    init(localAuthorizationService: LocalAuthorizationService) {
+        self.localAuthorizationService = localAuthorizationService
+        print(localAuthorizationService.sensorType)
+    }
+
     deinit {
         print(#function, " LoginViewModel ⚙️")
+    }
+
+    /// дополнительный метод для того чтобы сработал didSet после инициализатора
+    func initialState(sensorType: (String) -> Void) {
+        ///только локальная проверка, в базе может не быть полной модели юзера
+        if AuthManager.shared.currentUser != nil {
+            self.state = .identifiedUser
+        } else {
+            self.state = .noUser
+        }
+        sensorType(localAuthorizationService.sensorType)
     }
 
     func updateState(viewInput: ViewInput) {
@@ -47,6 +64,21 @@ final class LoginViewModel: LoginViewModelProtocol {
         case .helloButtonDidTap:
             coordinator?.pushPhoneViewController()
 //            coordinator?.pushRegistrationViewController()
+
+        case .loginWithBio:
+            localAuthorizationService.authorizeIfPossible { [weak self] bioResult in
+                if bioResult {
+                    print("🟢")
+                    self?.state = .okay
+                    sleep(1)
+                    DispatchQueue.main.async {
+                        self?.coordinator?.pushToMain()
+                    }
+                } else {
+                    print("⛔️")
+                    //                     self?.state = .noBiometry
+                }
+            }
             
         case .phoneButtonDidTap:
             coordinator?.pushOTPViewController()

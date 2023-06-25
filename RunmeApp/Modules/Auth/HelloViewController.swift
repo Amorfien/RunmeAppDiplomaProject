@@ -27,6 +27,15 @@ final class HelloViewController: UIViewController {
         return button
     }()
 
+    private lazy var bioLoginButton: UIButton = {
+         let button = UIButton()
+         button.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
+         button.tintColor = .systemGray
+         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
+         button.translatesAutoresizingMaskIntoConstraints = false
+         return button
+     }()
+
     //MARK: - Init
 
     init(viewModel: LoginViewModel) {
@@ -44,7 +53,11 @@ final class HelloViewController: UIViewController {
         view.backgroundColor = .systemYellow
 
         setupView()
-//        bindViewModel()
+        bindViewModel()
+
+        viewModel.initialState { sensorType in
+            bioLoginButton.setBackgroundImage(UIImage(systemName: sensorType), for: .normal)
+        }
         
     }
 
@@ -54,21 +67,26 @@ final class HelloViewController: UIViewController {
 
     // MARK: - ViewModel Binding
 
-//    func bindViewModel() {
-//        viewModel.onStateDidChange = { /*[weak self]*/ state in
-////            guard let self = self else {
-////                return
-////            }
-//            switch state {
-//            case .initial:
-//                ()
-//
-//            case .error:
-//                // Here we can show alert with error text
-//                ()
-//            }
-//        }
-//    }
+    func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
+            switch state {
+            case .identifiedUser:
+                self.bioLoginButton.tintColor = .systemGray
+            case .noUser:
+                self.bioLoginButton.isEnabled = false
+                self.bioLoginButton.tintColor = .systemGray5
+            case .okay:
+                  DispatchQueue.main.async {
+                      self.bioLoginButton.tintColor = .systemBlue
+                  }
+            case .error(_):
+                ()
+            }
+        }
+    }
 
     // MARK: - Private methods
 
@@ -76,6 +94,7 @@ final class HelloViewController: UIViewController {
         view.backgroundColor = .systemGray4
         view.addSubview(helloImageView)
         view.addSubview(loginButton)
+        view.addSubview(bioLoginButton)
 
         NSLayoutConstraint.activate([
             helloImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -86,7 +105,14 @@ final class HelloViewController: UIViewController {
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 48),
 //            loginButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -50),
-            loginButton.widthAnchor.constraint(equalToConstant: 200)
+            loginButton.widthAnchor.constraint(equalToConstant: 200),
+
+            bioLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bioLoginButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 40),
+            bioLoginButton.widthAnchor.constraint(equalToConstant: 50),
+            bioLoginButton.heightAnchor.constraint(equalToConstant: 50),
+
+
         ])
     }
 
@@ -94,6 +120,10 @@ final class HelloViewController: UIViewController {
 
     @objc private func loginDidTap() {
         viewModel.updateState(viewInput: .helloButtonDidTap)
+    }
+
+    @objc private func bioLoginDidTap() {
+        viewModel.updateState(viewInput: .loginWithBio)
     }
 
 }
