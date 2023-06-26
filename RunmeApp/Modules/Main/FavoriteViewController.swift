@@ -25,7 +25,7 @@ final class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemOrange
 
-        self.title = "Favorite"
+        self.navigationItem.title = "Favorite"
         navigationController?.navigationBar.backgroundColor = .systemMint
     }
 

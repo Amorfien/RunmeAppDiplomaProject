@@ -41,6 +41,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .logOut:
+            AuthManager.shared.signOut()
             coordinator?.logOut()
         }
     }

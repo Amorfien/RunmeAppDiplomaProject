@@ -14,7 +14,7 @@ final class RegistrationViewController: UIViewController {
 
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "mosaic")
+        imageView.image = UIImage(named: "dafault-avatar")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 75
         imageView.layer.borderWidth = 1

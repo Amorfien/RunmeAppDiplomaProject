@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
 
-        self.title = "Home"
+        self.navigationItem.title = "Home"
         navigationController?.navigationBar.backgroundColor = .brown
     }
 

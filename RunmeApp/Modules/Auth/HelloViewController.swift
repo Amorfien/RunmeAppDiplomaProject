@@ -28,13 +28,15 @@ final class HelloViewController: UIViewController {
     }()
 
     private lazy var bioLoginButton: UIButton = {
-         let button = UIButton()
-         button.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
-         button.tintColor = .systemGray
-         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
-         button.translatesAutoresizingMaskIntoConstraints = false
-         return button
-     }()
+        let button = UIButton()
+
+        button.tintColor = .systemGray
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Menlo-Regular", size: 20)
+        button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     //MARK: - Init
 
@@ -55,8 +57,9 @@ final class HelloViewController: UIViewController {
         setupView()
         bindViewModel()
 
-        viewModel.initialState { sensorType in
-            bioLoginButton.setBackgroundImage(UIImage(systemName: sensorType), for: .normal)
+        viewModel.initialState { sensorType, userPhone in
+            bioLoginButton.setImage(UIImage(systemName: sensorType), for: .normal)
+            bioLoginButton.setTitle(" " + userPhone, for: .normal)
         }
         
     }
@@ -74,10 +77,11 @@ final class HelloViewController: UIViewController {
             }
             switch state {
             case .identifiedUser:
-                self.bioLoginButton.tintColor = .systemGray
+                self.loginButton.setTitle("Change User", for: .normal)
+                self.bioLoginButton.isHidden = false
             case .noUser:
-                self.bioLoginButton.isEnabled = false
-                self.bioLoginButton.tintColor = .systemGray5
+                self.loginButton.setTitle("Enter by phone number  📞", for: .normal)
+                self.bioLoginButton.isHidden = true
             case .okay:
                   DispatchQueue.main.async {
                       self.bioLoginButton.tintColor = .systemBlue
@@ -105,11 +109,12 @@ final class HelloViewController: UIViewController {
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 48),
 //            loginButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -50),
-            loginButton.widthAnchor.constraint(equalToConstant: 200),
+            loginButton.widthAnchor.constraint(equalToConstant: 250),
+            loginButton.heightAnchor.constraint(equalToConstant: 40),
 
             bioLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bioLoginButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 40),
-            bioLoginButton.widthAnchor.constraint(equalToConstant: 50),
+            bioLoginButton.widthAnchor.constraint(equalToConstant: 350),
             bioLoginButton.heightAnchor.constraint(equalToConstant: 50),
 
 

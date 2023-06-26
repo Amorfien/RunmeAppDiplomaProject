@@ -12,16 +12,11 @@ final class AppCoordinator: Coordinatable {
     
     var flowCompletionHandler: (() -> Void)?
 
-    private var isLogin = false
-
     private(set) var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        if Auth.auth().currentUser != nil {
-            self.isLogin = true
-        }
 
     }
     deinit {
@@ -29,7 +24,7 @@ final class AppCoordinator: Coordinatable {
     }
 
     func start() {
-        isLogin ? goToMain() : goToLogin()
+        goToLogin()
     }
 
     private func goToLogin() {
@@ -40,8 +35,7 @@ final class AppCoordinator: Coordinatable {
         addChildCoordinator(loginCoordinator)
 
         loginCoordinator.flowCompletionHandler = { [weak self] in
-            self?.isLogin = true
-            self?.start()
+            self?.goToMain()
         }
         loginCoordinator.start()
     }
@@ -55,8 +49,7 @@ final class AppCoordinator: Coordinatable {
         let profileViewModel = ProfileViewModel()
         let profileCoordinator = ProfileCoordinator(vc: UINavigationController(), vm: profileViewModel)
         profileCoordinator.flowCompletionHandler = { [weak self] in
-            self?.isLogin = false
-            self?.start()
+            self?.goToLogin()
         }
 
         let favoriteViewModel = FavoriteViewModel()

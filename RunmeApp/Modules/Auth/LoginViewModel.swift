@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LoginViewModelProtocol: AnyObject {
+protocol LoginViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((LoginViewModel.State) -> Void)? { get set }
     func updateState(viewInput: LoginViewModel.ViewInput)
 }
@@ -49,14 +49,18 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
 
     /// дополнительный метод для того чтобы сработал didSet после инициализатора
-    func initialState(sensorType: (String) -> Void) {
+    func initialState(completion: (_ sensorType: String, _ userPhone: String) -> Void) {
         ///только локальная проверка, в базе может не быть полной модели юзера
         if AuthManager.shared.currentUser != nil {
             self.state = .identifiedUser
         } else {
             self.state = .noUser
         }
-        sensorType(localAuthorizationService.sensorType)
+        let sensorType = localAuthorizationService.sensorType
+        let userPhone = AuthManager.shared.currentUser?.phoneNumber
+
+        completion(sensorType, phoneFormatter(number: userPhone))
+
     }
 
     func updateState(viewInput: ViewInput) {
@@ -71,9 +75,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                     print("🟢")
                     self?.state = .okay
                     sleep(1)
-                    DispatchQueue.main.async {
-                        self?.coordinator?.pushToMain()
-                    }
+                    self?.checkFullRegistration()
                 } else {
                     print("⛔️")
                     //                     self?.state = .noBiometry
@@ -84,11 +86,7 @@ final class LoginViewModel: LoginViewModelProtocol {
             coordinator?.pushOTPViewController()
 
         case .smsButtonDidTap:
-            DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
-                DispatchQueue.main.async {
-                    success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
-                }
-            }
+            checkFullRegistration()
             
         case .registerButtonDidTap(var runner):
 
@@ -117,10 +115,17 @@ final class LoginViewModel: LoginViewModelProtocol {
                     print("Upload Error \(error.localizedDescription)")
                 }
             }
-
-
         }
     }
+
+    private func checkFullRegistration() {
+        DatabaseService.shared.searchUserInDb(userId: AuthManager.shared.currentUser?.uid ?? "---") { [weak self] success in
+            DispatchQueue.main.async {
+                success ? self?.coordinator?.pushToMain() : self?.coordinator?.pushRegistrationViewController()
+            }
+        }
+    }
+
     
 }
 
