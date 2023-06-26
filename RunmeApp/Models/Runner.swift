@@ -13,9 +13,12 @@ struct Runner: Identifiable {
 
     let phoneNumber: String
 
+    var nickname: String?
     let name: String?
     let surname: String?
-    var nickname: String?
+
+    let email: String?
+    let telegram: String?
 
     var avatar: UIImage?
     var avatarURL: String?
@@ -28,14 +31,15 @@ struct Runner: Identifiable {
     var achievements: [Int] = []
 
     var posts: [String] = []
-
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
         repres["id"] = self.id
         repres["phoneNumber"] = self.phoneNumber
+        repres["nickname"] = self.nickname
         repres["name"] = self.name
         repres["surname"] = self.surname
-        repres["nickname"] = self.nickname
+        repres["email"] = self.email
+        repres["telegram"] = self.telegram
         repres["avatarURL"] = self.avatarURL
         repres["birthday"] = self.birthday
         repres["birthdayShow"] = true

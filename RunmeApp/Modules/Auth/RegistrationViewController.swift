@@ -12,16 +12,23 @@ final class RegistrationViewController: UIViewController {
     // MARK: - Properties
     let viewModel: LoginViewModel
 
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "dafault-avatar")
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 75
+        imageView.layer.cornerRadius = 80
         imageView.layer.borderWidth = 1
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 150, height: 30))
+        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 160, height: 40))
         button.backgroundColor = .white.withAlphaComponent(0.8)
         button.setTitle("➕", for: .normal)
         button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
@@ -31,22 +38,24 @@ final class RegistrationViewController: UIViewController {
 
     private let vStack: UIStackView = {
         let stack = UIStackView()
-//        stack.backgroundColor = .systemGray3
         stack.axis = .vertical
-        stack.spacing = 28
+        stack.spacing = 40
+        stack.distribution = .equalSpacing
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
 
-    private let nameTextField = CustomTextField(placeholder: .name)
-    private let surnameTextField = CustomTextField(placeholder: .surname)
-    private let nicknameTextField = CustomTextField(placeholder: .nickname)
-    private let birthdayTextField = CustomTextField(placeholder: .birthday)
+    private let nicknameTextField = CustomTextField(type: .nickname)
+    private let nameTextField = CustomTextField(type: .name)
+    private let surnameTextField = CustomTextField(type: .surname)
+    private let emailTextField = CustomTextField(type: .email)
+    private let telegramTextField = CustomTextField(type: .telegram)
+    private let birthdayTextField = CustomTextField(type: .birthday)
 
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
-        button.setTitle("Next", for: .normal)
-//        button.isEnabled = false
+        button.setTitle("Done", for: .normal)
+        button.isEnabled = false
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button
     }()
@@ -73,9 +82,10 @@ final class RegistrationViewController: UIViewController {
     private func setupView() {
         self.title = "Registration"
         view.backgroundColor = .systemGray5
-        view.addSubview(avatarImageView)
-        view.addSubview(vStack)
-        let textFields = [nameTextField, surnameTextField, nicknameTextField, birthdayTextField]
+        view.addSubview(scrollView)
+        scrollView.addSubview(avatarImageView)
+        scrollView.addSubview(vStack)
+        let textFields = [nicknameTextField, nameTextField, surnameTextField, emailTextField, telegramTextField, birthdayTextField]
 
         for (tag, textField) in textFields.enumerated() {
             vStack.addArrangedSubview(textField)
@@ -84,25 +94,32 @@ final class RegistrationViewController: UIViewController {
         }
 
         birthdayTextField.keyboardType = .decimalPad
+        emailTextField.keyboardType = .emailAddress
+        telegramTextField.keyboardType = .emailAddress
 
         view.addSubview(nextButton)
-        
+
         NSLayoutConstraint.activate([
 
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            avatarImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 150),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 150),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 40),
+            avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
             vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
 
-            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 40),
-            nextButton.widthAnchor.constraint(equalToConstant: 200),
-            nextButton.heightAnchor.constraint(equalToConstant: 40),
-            nextButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.keyboardLayoutGuide.topAnchor, constant: -20),
+            nextButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
+            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            nextButton.widthAnchor.constraint(equalToConstant: 150),
+
         ])
     }
 
@@ -120,9 +137,11 @@ final class RegistrationViewController: UIViewController {
         let runner = Runner(
             id: AuthManager.shared.currentUser?.uid ?? "---",
             phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
+            nickname: nicknameTextField.text,
             name: nameTextField.text,
             surname: surnameTextField.text,
-            nickname: nicknameTextField.text,
+            email: emailTextField.text,
+            telegram: telegramTextField.text,
             avatar: avatarImageView.image,
             birthday: birthdayTextField.text)
 
@@ -146,11 +165,12 @@ final class RegistrationViewController: UIViewController {
 extension RegistrationViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
         switch textField.tag {
-        case 0: surnameTextField.becomeFirstResponder()
-        case 1: nicknameTextField.becomeFirstResponder()
-        case 2: birthdayTextField.becomeFirstResponder()
+        case 0: nameTextField.becomeFirstResponder()
+        case 1: surnameTextField.becomeFirstResponder()
+        case 2: emailTextField.becomeFirstResponder()
+        case 3: telegramTextField.becomeFirstResponder()
+        case 4: birthdayTextField.becomeFirstResponder()
         default: hideKeyboard()
         }
         return true
@@ -158,13 +178,29 @@ extension RegistrationViewController: UITextFieldDelegate {
     }
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard textField.tag == 3 else { return }
+        if textField.tag == 0 {
+            guard let text = textField.text else { return }
+            if text.count > 2 {
+                nextButton.isEnabled = true
+                nextButton.isSelected = false
+            } else {
+                nextButton.isEnabled = false
+            }
+        }
+        guard textField.tag == 5 else { return }
         guard let text = textField.text else { return }
         if text.count > 8 {
             textField.deleteBackward()
         } else if text.count == 2 || text.count == 5 {
             textField.text! += "." //проблема со стиранием (нельзя ошибаться)
         }
+    }
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField.frame.midY + 330 > view.frame.midY {
+            scrollView.contentOffset.y = textField.frame.minY - 100
+        }
+        return true
     }
 
 }

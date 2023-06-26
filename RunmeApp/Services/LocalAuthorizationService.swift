@@ -11,7 +11,7 @@ import LocalAuthentication
 final class LocalAuthorizationService {
 
     private let context: LAContext = LAContext()
-    private let policy: LAPolicy = .deviceOwnerAuthenticationWithBiometrics
+    private let policy: LAPolicy = .deviceOwnerAuthentication
     var sensorType = ""
 
     init() {
@@ -27,7 +27,7 @@ final class LocalAuthorizationService {
 
         if canEvaluate {
 
-            context.evaluatePolicy(policy, localizedReason: "Тут что-то для TouchID") { success, error in
+            context.evaluatePolicy(policy, localizedReason: "Чтобы войти в свою учётную запись") { success, error in
                 if success {
                     authorizationFinished(true)
                 } else { return }
