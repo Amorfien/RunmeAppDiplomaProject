@@ -106,12 +106,12 @@ final class RegistrationViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 40),
+            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
             avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             avatarImageView.heightAnchor.constraint(equalToConstant: 160),
             avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
-            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
+            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 44),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),

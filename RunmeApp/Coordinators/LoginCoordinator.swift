@@ -35,12 +35,16 @@ final class LoginCoordinator: Coordinatable {
     }
 
     func pushPhoneViewController() {
-        let phoneViewController = PhoneViewController(viewModel: vm)
+        let phoneViewController = PhoneVerificationViewController(viewModel: vm, type: .phone)
         navigationController.pushViewController(phoneViewController, animated: true)
+    }
+    func pushTermsViewController() {
+        let termsViewController = TermsViewController()
+        navigationController.pushViewController(termsViewController, animated: true)
     }
 
     func pushOTPViewController() {
-        let otpViewController = OTPViewController(viewModel: vm)
+        let otpViewController = PhoneVerificationViewController(viewModel: vm, type: .sms)
         navigationController.pushViewController(otpViewController, animated: true)
     }
 

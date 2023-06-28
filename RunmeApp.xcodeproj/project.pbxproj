@@ -13,13 +13,13 @@
 		18020EFE2A46211F00D615D7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 18020EFD2A46211F00D615D7 /* FirebaseFirestore */; };
 		18020F002A46211F00D615D7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 18020EFF2A46211F00D615D7 /* FirebaseStorage */; };
 		18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F022A462D1E00D615D7 /* AuthManager.swift */; };
-		18020F052A464FD100D615D7 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F042A464FD100D615D7 /* PhoneViewController.swift */; };
-		18020F072A46531300D615D7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F062A46531300D615D7 /* OTPViewController.swift */; };
 		180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* CustomTextField.swift */; };
 		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
 		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
 		186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B52A48689F00001093 /* FirebaseStorageService.swift */; };
 		186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */; };
+		187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */; };
+		187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D72A4C554700BBD8E1 /* TermsViewController.swift */; };
 		18768A882A45D54600720EC3 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A872A45D54600720EC3 /* LoginButton.swift */; };
 		18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */; };
 		187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A3C672A4B4F9800DFC2C2 /* News.swift */; };
@@ -57,13 +57,13 @@
 /* Begin PBXFileReference section */
 		18020EF62A461F1F00D615D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18020F022A462D1E00D615D7 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		18020F042A464FD100D615D7 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
-		18020F062A46531300D615D7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		180AC2FA2A47669E000FD11F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		186AD0B52A48689F00001093 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
+		187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
+		187525D72A4C554700BBD8E1 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		18768A872A45D54600720EC3 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		187A3C672A4B4F9800DFC2C2 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
@@ -248,9 +248,9 @@
 			children = (
 				1880D6AA2A44A8E0008DBE6C /* LoginViewModel.swift */,
 				1880D67A2A4490E4008DBE6C /* HelloViewController.swift */,
-				18020F042A464FD100D615D7 /* PhoneViewController.swift */,
-				18020F062A46531300D615D7 /* OTPViewController.swift */,
+				187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */,
 				18DC3BF62A474B7000438728 /* RegistrationViewController.swift */,
+				187525D72A4C554700BBD8E1 /* TermsViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -380,9 +380,9 @@
 				187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
+				187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */,
 				18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */,
 				1880D69B2A44984C008DBE6C /* HomeViewController.swift in Sources */,
-				18020F072A46531300D615D7 /* OTPViewController.swift in Sources */,
 				1880D6A32A449C66008DBE6C /* ProfileCoordinator.swift in Sources */,
 				1880D69F2A44987A008DBE6C /* FavoriteViewController.swift in Sources */,
 				1880D6952A44963F008DBE6C /* AppTabBarController.swift in Sources */,
@@ -399,10 +399,10 @@
 				18768A882A45D54600720EC3 /* LoginButton.swift in Sources */,
 				1880D6A12A449C58008DBE6C /* HomeCoordinator.swift in Sources */,
 				1880D6AD2A44A94B008DBE6C /* ViewModelProtocol.swift in Sources */,
-				18020F052A464FD100D615D7 /* PhoneViewController.swift in Sources */,
 				18DC3BEE2A46FEEA00438728 /* Post.swift in Sources */,
 				1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */,
 				1880D6A52A449C70008DBE6C /* FavoriteCoordinator.swift in Sources */,
+				187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */,
 				18DC3BF72A474B7000438728 /* RegistrationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

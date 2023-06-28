@@ -32,7 +32,15 @@ final class HelloViewController: UIViewController {
 
         button.tintColor = .systemGray
         button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Menlo-Regular", size: 20)
+        button.contentHorizontalAlignment = .leading
+//        button.contentVerticalAlignment = .fill
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        button.imageView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.titleLabel?.leadingAnchor.constraint(equalTo: button.imageView!.trailingAnchor).isActive = true
+        button.titleLabel?.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+        button.titleLabel?.font = .monospacedDigitSystemFont(ofSize: 22, weight: .medium)
         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
         button.layer.borderWidth = 0.5
         button.layer.cornerRadius = 8
@@ -60,7 +68,7 @@ final class HelloViewController: UIViewController {
 
         viewModel.initialState { sensorType, userPhone in
             bioLoginButton.setImage(UIImage(systemName: sensorType), for: .normal)
-            bioLoginButton.setTitle(" " + userPhone, for: .normal)
+            bioLoginButton.setTitle("    " + userPhone, for: .normal)
         }
         
     }
@@ -103,19 +111,19 @@ final class HelloViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             helloImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            helloImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
+            helloImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
             helloImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             helloImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
 
             bioLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bioLoginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 32),
             bioLoginButton.widthAnchor.constraint(equalToConstant: 288),
-            bioLoginButton.heightAnchor.constraint(equalToConstant: 40),
+            bioLoginButton.heightAnchor.constraint(equalToConstant: 48),
 
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 88),
+            loginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 120),
             loginButton.widthAnchor.constraint(equalToConstant: 288),
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
+            loginButton.heightAnchor.constraint(equalToConstant: 48),
 
 
         ])

@@ -25,6 +25,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         case helloButtonDidTap
         case loginWithBio
         case phoneButtonDidTap
+        case termsButtonDidTap
         case smsButtonDidTap
         case registerButtonDidTap(Runner)
     }
@@ -66,9 +67,10 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-//            coordinator?.pushPhoneViewController()
-//            coordinator?.pushRegistrationViewController()
-            coordinator?.pushToMain()
+            coordinator?.pushPhoneViewController()            //true
+
+//            coordinator?.pushRegistrationViewController()     //test
+//            coordinator?.pushToMain()                         //test
 
         case .loginWithBio:
             localAuthorizationService.authorizeIfPossible { [weak self] bioResult in
@@ -85,6 +87,8 @@ final class LoginViewModel: LoginViewModelProtocol {
             
         case .phoneButtonDidTap:
             coordinator?.pushOTPViewController()
+        case .termsButtonDidTap:
+            coordinator?.pushTermsViewController()
 
         case .smsButtonDidTap:
             checkFullRegistration()
