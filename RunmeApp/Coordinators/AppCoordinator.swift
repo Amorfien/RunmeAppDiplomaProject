@@ -17,16 +17,6 @@ final class AppCoordinator: Coordinatable {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-
-//        let news = NewsService()
-//        news.loadNews { result in
-//            switch result {
-//            case .success(let news):
-//                print(news.count)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
     }
     deinit {
         print("AppCoordinator deinit")
@@ -52,7 +42,8 @@ final class AppCoordinator: Coordinatable {
     private func goToMain() {
         childCoordinators.removeAll()
 
-        let homeViewModel = HomeViewModel()
+        let newsService = NewsService()
+        let homeViewModel = HomeViewModel(newsService: newsService)
         let homeCoordinator = HomeCoordinator(vc: UINavigationController(), vm: homeViewModel)
 
         let profileViewModel = ProfileViewModel()

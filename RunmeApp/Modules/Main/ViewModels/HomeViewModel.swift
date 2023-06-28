@@ -17,13 +17,15 @@ final class HomeViewModel: HomeViewModelProtocol {
     enum State {
         case initial
         case loading
-        case loaded
+        case loaded([Article])
         case error(Error)
     }
 
     enum ViewInput {
-        case logOut
+        case reload
     }
+
+    private let newsService: NewsService
 
     weak var coordinator: HomeCoordinator?
     var onStateDidChange: ((State) -> Void)?
@@ -34,14 +36,26 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
 
+    init(newsService: NewsService) {
+        self.newsService = newsService
+    }
     deinit {
         print(#function, " HomeViewModel ⚙️")
     }
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .logOut:
-            ()
+        case .reload:
+            self.state = .loading
+            newsService.loadNews { result in
+                switch result {
+                case .success(let news):
+                    print(news.count)
+                    self.state = .loaded(news)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
 
         }
     }

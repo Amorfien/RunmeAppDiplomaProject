@@ -20,27 +20,13 @@ final class NewsService: NewsProtocol {
         case requestError
     }
 
-    enum NewsKeyword: String {
-        case ironman
-        case zoj = "зож"
-        case sportrun = "спорт+бег"
-    }
-
-    let keywords = ["ironman", "зож", "спорт+бег"]
-
-//    // поддержка кириллицы в URL
-//    guard let apiURL = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
-//        print("some Error")
-//        return
-//    }
+    let keywords = ["ironman"]//, "зож", "спорт+бег"]
 
     // MARK: - URL session
     func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
 
-//    https://newsapi.org/v2/everything?q=зож&sortBy=publishedAt&apiKey=8834743500d845509e348c362ff8cfc1
-
         let urlComponents: URLComponents = {
-//            let codedApiKey: [UInt8] = [0x35, 0x65, 0x38, 0x62, 0x36, 0x62, 0x66, 0x63]
+            let codedApiKey: [UInt8] = [0x38, 0x38, 0x33, 0x34, 0x37, 0x34, 0x33, 0x35, 0x30, 0x30, 0x64, 0x38, 0x34, 0x35, 0x35, 0x30, 0x39, 0x65, 0x33, 0x34, 0x38, 0x63, 0x33, 0x36, 0x32, 0x66, 0x66, 0x38, 0x63, 0x66, 0x63, 0x31]
             var url = URLComponents()
             url.scheme = "https"
             url.host = "newsapi.org"
@@ -49,8 +35,7 @@ final class NewsService: NewsProtocol {
                 URLQueryItem(name: "q", value: keyword),
                 URLQueryItem(name: "language", value: "ru"),
                 URLQueryItem(name: "sortBy", value: "publishedAt"),
-                URLQueryItem(name: "apiKey", value: "8834743500d845509e348c362ff8cfc1")
-//                URLQueryItem(name: "apikey", value: String(data: Data(codedApiKey), encoding: .utf8))
+                URLQueryItem(name: "apiKey", value: String(data: Data(codedApiKey), encoding: .utf8))
             ]
             return url
         }()

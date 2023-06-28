@@ -16,8 +16,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
 
     enum State {
         case initial
-        case loading
-        case loaded
+//        case loading
+//        case loaded
         case error(Error)
     }
 

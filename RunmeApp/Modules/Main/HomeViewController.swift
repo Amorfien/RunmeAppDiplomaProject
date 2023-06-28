@@ -11,30 +11,40 @@ final class HomeViewController: UIViewController {
 
     private let viewModel: HomeViewModel
 
+//    let articles: [Article] = [testNews1, testNews2, testNews1, testNews2]
+    var articles: [Article] = [] {
+        didSet {
+                self.newsTableView.reloadData()
+        }
+    }
+
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Новости", "Для вас"])
 //        segmentedControl.backgroundColor = .secondarySystemBackground
+        segmentedControl.selectedSegmentTintColor = .tintColor
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
-//        segmentedControl.selectedSegmentTintColor = .systemBackground
         segmentedControl.addTarget(self, action: #selector(changeSource), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         return segmentedControl
     }()
 
+    private let tableHeaderView = FriendCardsCollectionView()
+
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
     private lazy var newsTableView: UITableView = {
         let tableView = UITableView()
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 120))
-        header.backgroundColor = .lightGray
-        tableView.tableHeaderView = header
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "123")
-        tableView.rowHeight = 80
-        tableView.separatorInset = .zero
-        tableView.separatorColor = .tintColor
+        tableView.tableHeaderView = tableHeaderView
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 90)
+        tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
+        tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
+//        tableView.rowHeight = 80
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
 //        tableView.isHidden = true
+        tableView.sectionHeaderHeight = 50
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -51,17 +61,20 @@ final class HomeViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    deinit {
+        print(#function, " HomeViewController 📱")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
         setupView()
         bindViewModel()
-
-
     }
-    deinit {
-        print(#function, " HomeViewController 📱")
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.updateState(viewInput: .reload)
     }
 
     private func setupNavigation() {
@@ -76,9 +89,11 @@ final class HomeViewController: UIViewController {
         sourceSegment.widthAnchor.constraint(equalToConstant: 270).isActive = true
     }
     private func setupView() {
-//        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = .secondarySystemBackground
 
         view.addSubview(newsTableView)
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
 
@@ -87,11 +102,43 @@ final class HomeViewController: UIViewController {
             newsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             newsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+
+
         ])
 
     }
     private func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
+            switch state {
+            case .initial:
+                ()
+            case .loading:
+                updateTableViewVisibility(isHidden: true)
+                updateLoadingAnimation(isLoading: true)
+            case .loaded(let news):
+                DispatchQueue.main.async {
+                    self.articles = news
+                    self.updateLoadingAnimation(isLoading: false)
+                    self.updateTableViewVisibility(isHidden: false)
+                }
+            case .error(_):
+                ()
+            }
+        }
+    }
 
+    private func updateTableViewVisibility(isHidden: Bool) {
+        newsTableView.isHidden = isHidden
+        activityIndicator.isHidden = !isHidden
+    }
+
+    private func updateLoadingAnimation(isLoading: Bool) {
+        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
 
     //MARK: - Actions
@@ -112,15 +159,24 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        1
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.articles.count
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let sectionHeader = HeaderInSectionView()
+        sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? Date().description)
+        return sectionHeader
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "123")
-        cell.backgroundColor = .systemYellow
-        cell.textLabel?.text = "Hello"
-        cell.detailTextLabel?.text = "My friend"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
+        else { return NewsPostTableViewCell() }
 
+        cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
         return cell
     }
 

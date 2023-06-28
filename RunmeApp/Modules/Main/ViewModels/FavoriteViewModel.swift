@@ -16,13 +16,13 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
 
     enum State {
         case initial
-        case loading
-        case loaded
+//        case loading
+//        case loaded
         case error(Error)
     }
 
     enum ViewInput {
-        case logOut
+        case qqq
     }
 
     weak var coordinator: FavoriteCoordinator?
@@ -40,7 +40,7 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .logOut:
+        case .qqq:
             ()
 
         }

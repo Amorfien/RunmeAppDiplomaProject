@@ -46,7 +46,6 @@ final class CustomTextField: TextFieldWithPadding {
         self.placeholder = type.placeholder
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 36).isActive = true
-        translatesAutoresizingMaskIntoConstraints = false
 
         let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel)
         topLabel.translatesAutoresizingMaskIntoConstraints = true

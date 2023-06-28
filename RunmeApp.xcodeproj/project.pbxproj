@@ -20,6 +20,7 @@
 		186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */; };
 		187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */; };
 		187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D72A4C554700BBD8E1 /* TermsViewController.swift */; };
+		187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525DA2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift */; };
 		18768A882A45D54600720EC3 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A872A45D54600720EC3 /* LoginButton.swift */; };
 		18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */; };
 		187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A3C672A4B4F9800DFC2C2 /* News.swift */; };
@@ -46,6 +47,10 @@
 		1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */; };
 		1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B02A44F897008DBE6C /* HomeViewModel.swift */; };
 		1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */; };
+		18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */; };
+		18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */; };
+		18ACD0BB2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */; };
+		18ACD0BD2A4C9C71008B7FDB /* FriendCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0BC2A4C9C71008B7FDB /* FriendCardCell.swift */; };
 		18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEB2A46F9D000438728 /* Runner.swift */; };
 		18DC3BEE2A46FEEA00438728 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BED2A46FEEA00438728 /* Post.swift */; };
 		18DC3BF02A4701A100438728 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEF2A4701A100438728 /* Running.swift */; };
@@ -64,6 +69,7 @@
 		186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		187525D72A4C554700BBD8E1 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		187525DA2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPostTableViewCell.swift; sourceTree = "<group>"; };
 		18768A872A45D54600720EC3 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		187A3C672A4B4F9800DFC2C2 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
@@ -93,6 +99,10 @@
 		1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		1880D6B02A44F897008DBE6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInSectionView.swift; sourceTree = "<group>"; };
+		18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
+		18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCardsCollectionView.swift; sourceTree = "<group>"; };
+		18ACD0BC2A4C9C71008B7FDB /* FriendCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCardCell.swift; sourceTree = "<group>"; };
 		18DC3BEB2A46F9D000438728 /* Runner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		18DC3BED2A46FEEA00438728 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		18DC3BEF2A4701A100438728 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
@@ -128,11 +138,23 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		187525D92A4C62F300BBD8E1 /* TableUI */ = {
+			isa = PBXGroup;
+			children = (
+				187525DA2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift */,
+				18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */,
+				18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */,
+				18ACD0BC2A4C9C71008B7FDB /* FriendCardCell.swift */,
+			);
+			path = TableUI;
+			sourceTree = "<group>";
+		};
 		18768A862A45D53000720EC3 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
 				18768A872A45D54600720EC3 /* LoginButton.swift */,
 				18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */,
+				18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */,
 				18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */,
 				180AC2FA2A47669E000FD11F /* CustomTextField.swift */,
 			);
@@ -259,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				18DC3BF52A473EA500438728 /* ViewModels */,
+				187525D92A4C62F300BBD8E1 /* TableUI */,
 				1880D69A2A44984C008DBE6C /* HomeViewController.swift */,
 				1880D69C2A449857008DBE6C /* ProfileViewController.swift */,
 				1880D69E2A44987A008DBE6C /* FavoriteViewController.swift */,
@@ -373,6 +396,7 @@
 				1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */,
 				1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */,
 				18DC3BFB2A47512800438728 /* LabelTextFieldHStack.swift in Sources */,
+				18ACD0BB2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift in Sources */,
 				1880D6A72A449C7F008DBE6C /* LoginCoordinator.swift in Sources */,
 				1880D6922A449480008DBE6C /* Res.swift in Sources */,
 				186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */,
@@ -380,6 +404,7 @@
 				187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
+				187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */,
 				187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */,
 				18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */,
 				1880D69B2A44984C008DBE6C /* HomeViewController.swift in Sources */,
@@ -390,10 +415,13 @@
 				1880D69D2A449857008DBE6C /* ProfileViewController.swift in Sources */,
 				1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */,
 				1880D6972A449688008DBE6C /* Coordinatable.swift in Sources */,
+				18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */,
 				187A3C6A2A4B4FB900DFC2C2 /* NewsService.swift in Sources */,
 				180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */,
 				18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */,
+				18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */,
 				180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */,
+				18ACD0BD2A4C9C71008B7FDB /* FriendCardCell.swift in Sources */,
 				186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */,
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,
 				18768A882A45D54600720EC3 /* LoginButton.swift in Sources */,

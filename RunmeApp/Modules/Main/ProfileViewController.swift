@@ -57,10 +57,6 @@ final class ProfileViewController: UIViewController {
             switch state {
             case .initial:
                 ()
-            case .loading:
-                ()
-            case .loaded:
-                ()
             case .error(_):
                 ()
             }

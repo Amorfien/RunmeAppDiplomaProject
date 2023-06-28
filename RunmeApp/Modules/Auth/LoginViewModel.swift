@@ -77,7 +77,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 if bioResult {
                     print("🟢")
                     self?.state = .okay
-                    sleep(1)
+//                    sleep(1)
                     self?.checkFullRegistration()
                 } else {
                     print("⛔️")

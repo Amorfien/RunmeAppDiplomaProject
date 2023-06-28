@@ -32,14 +32,7 @@ final class HelloViewController: UIViewController {
 
         button.tintColor = .systemGray
         button.setTitleColor(.label, for: .normal)
-        button.contentHorizontalAlignment = .leading
-//        button.contentVerticalAlignment = .fill
-        button.imageView?.contentMode = .scaleAspectFit
-        button.imageView?.translatesAutoresizingMaskIntoConstraints = false
-        button.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        button.imageView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.titleLabel?.leadingAnchor.constraint(equalTo: button.imageView!.trailingAnchor).isActive = true
-        button.titleLabel?.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
+
         button.titleLabel?.font = .monospacedDigitSystemFont(ofSize: 22, weight: .medium)
         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
         button.layer.borderWidth = 0.5
