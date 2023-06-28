@@ -10,27 +10,27 @@ import UIKit
 final class CustomTextField: TextFieldWithPadding {
 
     enum RegisterLabel: String {
-        case name
-        case surname
-        case nickname = "Nickname (required)"
-        case telegram
-        case email
-        case birthday
+        case nickname = "Никнейм (обязательно)"
+        case name = "Имя"
+        case surname = "Фамилия"
+        case telegram = "Telegram"
+        case email = "E-mail"
+        case birthday = "День рождения"
 
         var placeholder: String {
             switch self {
-            case .name:
-                return "John"
-            case .surname:
-                return "Black"
             case .nickname:
                 return "Flash"
+            case .name:
+                return "Саша"
+            case .surname:
+                return "Филин"
             case .birthday:
                 return "22.10.98"
             case .telegram:
                 return "@telegram"
             case .email:
-                return "flashjohn@aol.com"
+                return "собака@почта.ру"
 //            default:
 //                return ""
             }
@@ -48,11 +48,13 @@ final class CustomTextField: TextFieldWithPadding {
         heightAnchor.constraint(equalToConstant: 36).isActive = true
         translatesAutoresizingMaskIntoConstraints = false
 
-        let topLabel = UILabel(text: type.rawValue.capitalized, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel)
+        let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel)
         topLabel.translatesAutoresizingMaskIntoConstraints = true
-        topLabel.frame = CGRect(x: 16, y: -20, width: 200, height: 20)
+        topLabel.frame = CGRect(x: 16, y: -20, width: 150, height: 20)
 
         addSubview(topLabel)
+
+        
     }
 
     required init?(coder: NSCoder) {

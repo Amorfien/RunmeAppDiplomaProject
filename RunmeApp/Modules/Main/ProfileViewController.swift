@@ -26,12 +26,12 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .systemBlue
         bindViewModel()
         navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Profile"
+        self.navigationItem.title = "Профиль"
         DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
             switch result {
             case .success(let runner):
                 DispatchQueue.main.async {
-                    self.navigationItem.title = "Hello, \(runner.nickname ?? "")!"
+                    self.navigationItem.title = "Привет, \(runner.nickname ?? "")!"
                     print(runner)
                 }
             case .failure(let error):

@@ -54,7 +54,7 @@ final class RegistrationViewController: UIViewController {
 
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
-        button.setTitle("Done", for: .normal)
+        button.setTitle("Готово", for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button
@@ -80,7 +80,7 @@ final class RegistrationViewController: UIViewController {
     }
 
     private func setupView() {
-        self.title = "Registration"
+        self.title = "Регистрация"
         view.backgroundColor = .systemGray5
         view.addSubview(scrollView)
         scrollView.addSubview(avatarImageView)

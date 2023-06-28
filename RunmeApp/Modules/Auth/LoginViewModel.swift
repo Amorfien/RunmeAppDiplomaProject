@@ -41,7 +41,7 @@ final class LoginViewModel: LoginViewModelProtocol {
 
     init(localAuthorizationService: LocalAuthorizationService) {
         self.localAuthorizationService = localAuthorizationService
-        print(localAuthorizationService.sensorType)
+//        print(localAuthorizationService.sensorType)
     }
 
     deinit {
@@ -66,8 +66,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-            coordinator?.pushPhoneViewController()
+//            coordinator?.pushPhoneViewController()
 //            coordinator?.pushRegistrationViewController()
+            coordinator?.pushToMain()
 
         case .loginWithBio:
             localAuthorizationService.authorizeIfPossible { [weak self] bioResult in

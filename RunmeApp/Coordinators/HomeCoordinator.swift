@@ -26,7 +26,7 @@ final class HomeCoordinator: Coordinatable {
     func start() {
         vm.coordinator = self
         let homeViewController = HomeViewController(viewModel: vm)
-        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: .add, tag: 0)
+        homeViewController.tabBarItem = UITabBarItem(title: "Главная", image: .add, tag: 0)
         navigationController.setViewControllers([homeViewController], animated: true)
     }
 

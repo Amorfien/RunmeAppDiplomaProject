@@ -30,7 +30,7 @@ class PhoneViewController: UIViewController {
 
     lazy var nextButton: LoginButton = {
         let button = LoginButton()
-        button.setTitle("Next", for: .normal)
+        button.setTitle("Дальше", for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button

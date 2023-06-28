@@ -26,7 +26,7 @@ final class ProfileCoordinator: Coordinatable {
     func start() {
         vm.coordinator = self
         let profileViewController = ProfileViewController(viewModel: vm)
-        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: .actions, tag: 1)
+        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: .actions, tag: 1)
         navigationController.setViewControllers([profileViewController], animated: true)
     }
 

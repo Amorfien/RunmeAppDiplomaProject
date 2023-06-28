@@ -22,6 +22,8 @@
 		186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */; };
 		18768A882A45D54600720EC3 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A872A45D54600720EC3 /* LoginButton.swift */; };
 		18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */; };
+		187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A3C672A4B4F9800DFC2C2 /* News.swift */; };
+		187A3C6A2A4B4FB900DFC2C2 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A3C692A4B4FB900DFC2C2 /* NewsService.swift */; };
 		1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6762A4490E4008DBE6C /* AppDelegate.swift */; };
 		1880D6792A4490E4008DBE6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6782A4490E4008DBE6C /* SceneDelegate.swift */; };
 		1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D67A2A4490E4008DBE6C /* HelloViewController.swift */; };
@@ -64,6 +66,9 @@
 		186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		18768A872A45D54600720EC3 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
+		187A3C672A4B4F9800DFC2C2 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		187A3C692A4B4FB900DFC2C2 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
+		187A3C6B2A4B62FC00DFC2C2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		1880D6732A4490E4008DBE6C /* RunmeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunmeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1880D6762A4490E4008DBE6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1880D6782A4490E4008DBE6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,10 +119,11 @@
 		18020F012A462D0900D615D7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */,
 				18020F022A462D1E00D615D7 /* AuthManager.swift */,
 				180AC2FC2A47856D000FD11F /* DatabaseService.swift */,
 				186AD0B52A48689F00001093 /* FirebaseStorageService.swift */,
-				186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */,
+				187A3C692A4B4FB900DFC2C2 /* NewsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -215,6 +221,7 @@
 				18DC3BEB2A46F9D000438728 /* Runner.swift */,
 				18DC3BEF2A4701A100438728 /* Running.swift */,
 				18DC3BED2A46FEEA00438728 /* Post.swift */,
+				187A3C672A4B4F9800DFC2C2 /* News.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -321,11 +328,12 @@
 			};
 			buildConfigurationList = 1880D66E2A4490E4008DBE6C /* Build configuration list for PBXProject "RunmeApp" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 1880D66A2A4490E4008DBE6C;
 			packageReferences = (
@@ -369,6 +377,7 @@
 				1880D6922A449480008DBE6C /* Res.swift in Sources */,
 				186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */,
 				1880D6AB2A44A8E0008DBE6C /* LoginViewModel.swift in Sources */,
+				187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
 				18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */,
@@ -381,6 +390,7 @@
 				1880D69D2A449857008DBE6C /* ProfileViewController.swift in Sources */,
 				1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */,
 				1880D6972A449688008DBE6C /* Coordinatable.swift in Sources */,
+				187A3C6A2A4B4FB900DFC2C2 /* NewsService.swift in Sources */,
 				180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */,
 				18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */,
 				180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */,
@@ -404,6 +414,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1880D6822A4490E5008DBE6C /* Base */,
+				187A3C6B2A4B62FC00DFC2C2 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -415,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -475,6 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -536,6 +549,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RunmeApp/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RunMeApp;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = FaceID;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -564,6 +578,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RunmeApp/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RunMeApp;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = FaceID;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

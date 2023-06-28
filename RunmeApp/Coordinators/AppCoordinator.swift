@@ -18,6 +18,15 @@ final class AppCoordinator: Coordinatable {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
 
+//        let news = NewsService()
+//        news.loadNews { result in
+//            switch result {
+//            case .success(let news):
+//                print(news.count)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
     }
     deinit {
         print("AppCoordinator deinit")
