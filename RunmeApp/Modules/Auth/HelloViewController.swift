@@ -14,7 +14,8 @@ final class HelloViewController: UIViewController {
 
     private let helloImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "figure.run.circle")
+        image.image = UIImage(named: "start")
+        image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -97,7 +98,7 @@ final class HelloViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        view.backgroundColor = .systemGray4
+        view.backgroundColor = Res.MyColors.myBackground
         view.addSubview(helloImageView)
         view.addSubview(loginButton)
         view.addSubview(bioLoginButton)
@@ -105,8 +106,8 @@ final class HelloViewController: UIViewController {
         NSLayoutConstraint.activate([
             helloImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             helloImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
-            helloImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            helloImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            helloImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            helloImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
 
             bioLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bioLoginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 32),

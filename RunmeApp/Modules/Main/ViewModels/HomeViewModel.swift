@@ -47,15 +47,20 @@ final class HomeViewModel: HomeViewModelProtocol {
         switch viewInput {
         case .reload:
             self.state = .loading
-            newsService.loadNews { result in
-                switch result {
-                case .success(let news):
-                    print(news.count)
-                    self.state = .loaded(news)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+//            newsService.loadNews { result in
+//                switch result {
+//                case .success(let news):
+//                    print(news.count)
+//                    self.state = .loaded(news)
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+            ///заглушка чтобы не расходывать трафик/запросы
+            let news: [Article] = [testNews1, testNews2, testNews1, testNews2]
+            self.state = .loaded(news)
+
+
 
         }
     }

@@ -30,7 +30,7 @@ final class FriendCardsCollectionView: UICollectionView {
     }
 
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = Res.MyColors.homeBackground
         showsHorizontalScrollIndicator = false
 //        self.translatesAutoresizingMaskIntoConstraints = false
 //        NSLayoutConstraint.activate([

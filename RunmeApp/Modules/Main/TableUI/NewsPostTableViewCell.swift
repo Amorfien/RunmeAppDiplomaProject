@@ -76,6 +76,9 @@ final class NewsPostTableViewCell: UITableViewCell {
     }
 
     private func setup() {
+
+        backgroundColor = Res.MyColors.homeBackground
+        
         [authorLabel, postImageView, descriptionText, likesLabel, viewsLabel, saveToFavoriteImage].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([

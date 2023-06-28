@@ -23,29 +23,39 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBlue
+        setupNavigation()
+        setupView()
+
         bindViewModel()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Профиль"
+
         DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
             switch result {
             case .success(let runner):
                 DispatchQueue.main.async {
                     self.navigationItem.title = "Привет, \(runner.nickname ?? "")!"
-                    print(runner)
+//                    print(runner)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
-        navigationController?.navigationBar.backgroundColor = .cyan
 
-        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "door.right.hand.open"), style: .done, target: self, action: #selector(logout))
-        navigationItem.rightBarButtonItem = logoutButton
     }
 
     deinit {
         print(#function, " ProfileViewController 📱")
+    }
+
+    private func setupNavigation() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "Профиль"
+//        navigationController?.navigationBar.backgroundColor = .cyan
+        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "door.right.hand.open"), style: .done, target: self, action: #selector(logout))
+        navigationItem.rightBarButtonItem = logoutButton
+    }
+
+    private func setupView() {
+        view.backgroundColor = Res.MyColors.profileBackground
     }
 
 

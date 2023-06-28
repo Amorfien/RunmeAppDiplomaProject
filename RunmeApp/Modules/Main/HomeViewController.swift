@@ -11,7 +11,6 @@ final class HomeViewController: UIViewController {
 
     private let viewModel: HomeViewModel
 
-//    let articles: [Article] = [testNews1, testNews2, testNews1, testNews2]
     var articles: [Article] = [] {
         didSet {
                 self.newsTableView.reloadData()
@@ -39,6 +38,7 @@ final class HomeViewController: UIViewController {
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 90)
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
+        tableView.backgroundColor = Res.MyColors.homeBackground
 //        tableView.rowHeight = 80
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
@@ -89,7 +89,8 @@ final class HomeViewController: UIViewController {
         sourceSegment.widthAnchor.constraint(equalToConstant: 270).isActive = true
     }
     private func setupView() {
-        view.backgroundColor = .secondarySystemBackground
+//        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = Res.MyColors.homeBackground
 
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)

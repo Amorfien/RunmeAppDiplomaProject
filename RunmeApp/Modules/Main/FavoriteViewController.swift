@@ -23,15 +23,29 @@ final class FavoriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemOrange
+        setupNavigation()
+        setupView()
+        bindViewModel()
 
-        self.navigationItem.title = "Избранное"
-        navigationController?.navigationBar.backgroundColor = .systemMint
     }
 
     deinit {
         print(#function, " FavoriteViewController 📱")
     }
+
+
+    private func setupNavigation() {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.backgroundColor = .systemMint
+        self.navigationItem.title = "Избранное"
+    }
+
+    private func setupView() {
+        view.backgroundColor = Res.MyColors.favoriteBackground
+    }
+
+
+    func bindViewModel() {}
 
 
 

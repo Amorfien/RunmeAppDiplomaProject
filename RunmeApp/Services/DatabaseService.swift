@@ -43,6 +43,7 @@ final class DatabaseService {
             let nickname = data["nickname"] as? String
             let name = data["name"] as? String
             let surname = data["surname"] as? String
+            let isMale = data["isMale"] as? Bool
             let email = data["email"] as? String
             let telegram = data["telegram"] as? String
             let birthday = data["birthday"] as? String
@@ -52,7 +53,7 @@ final class DatabaseService {
             let achievements = data["achievements"] as? [Int]
             let posts = data["posts"] as? [String]
             // дописать
-            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
+            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, isMale: isMale, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
 
             completion(.success(runner))
         }

@@ -33,7 +33,7 @@ final class FriendCardCell: UICollectionViewCell {
 
     // MARK: - UI
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .white//Res.MyColors.homeBackground
 
         layer.borderWidth = 1
         layer.borderColor = UIColor.tintColor.cgColor

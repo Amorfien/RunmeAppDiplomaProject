@@ -18,4 +18,14 @@ struct Res {
         case large = 40
     }
 
+
+
+    enum MyColors {
+        static let myBackground = UIColor(named: "myBackground")
+        static let homeBackground = UIColor(named: "homeBackground")
+        static let profileBackground = UIColor(named: "profileBackground")
+        static let favoriteBackground = UIColor(named: "favoriteBackground")
+
+    }
+
 }

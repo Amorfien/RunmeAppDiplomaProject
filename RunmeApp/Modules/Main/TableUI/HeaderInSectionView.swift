@@ -17,7 +17,8 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
     private let titleLabel: LabelWithPadding = {
         let label = LabelWithPadding()
         label.layer.borderWidth = 1
-        label.layer.cornerRadius = 16
+        label.layer.borderColor = UIColor.tintColor.cgColor
+        label.layer.cornerRadius = 12
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,7 +37,7 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
         self.addSubview(titleLabel)
         let lines = [leftLineView, rightLineView]
         lines.forEach { line in
-            line.layer.borderWidth = 1
+            line.layer.borderWidth = 1.5
             line.layer.borderColor = UIColor.tintColor.cgColor
             line.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(line)

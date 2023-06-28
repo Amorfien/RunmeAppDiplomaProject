@@ -50,7 +50,19 @@ final class RegistrationViewController: UIViewController {
     private let surnameTextField = CustomTextField(type: .surname)
     private let emailTextField = CustomTextField(type: .email)
     private let telegramTextField = CustomTextField(type: .telegram)
+    private let hStack = UIStackView()
     private let birthdayTextField = CustomTextField(type: .birthday)
+//    private let sexSegment = UISegmentedControl(items: ["Муж", "Жен"])
+
+    private lazy var sexSegment: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["Муж", "Жен"])
+//        segmentedControl.backgroundColor = .secondarySystemBackground
+        segmentedControl.selectedSegmentTintColor = .tintColor
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(changeSource), for: .valueChanged)
+        return segmentedControl
+    }()
 
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
@@ -88,10 +100,17 @@ final class RegistrationViewController: UIViewController {
         let textFields = [nicknameTextField, nameTextField, surnameTextField, emailTextField, telegramTextField, birthdayTextField]
 
         for (tag, textField) in textFields.enumerated() {
-            vStack.addArrangedSubview(textField)
+            if textField != birthdayTextField {
+                vStack.addArrangedSubview(textField)
+            }
             textField.delegate = self
             textField.tag = tag
         }
+        hStack.addArrangedSubview(birthdayTextField)
+        hStack.addArrangedSubview(sexSegment)
+        hStack.spacing = 16
+        hStack.distribution = .fillProportionally
+        vStack.addArrangedSubview(hStack)
 
         birthdayTextField.keyboardType = .decimalPad
         emailTextField.keyboardType = .emailAddress
@@ -106,12 +125,12 @@ final class RegistrationViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
+            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24),
             avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             avatarImageView.heightAnchor.constraint(equalToConstant: 160),
             avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
-            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 44),
+            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
@@ -132,6 +151,10 @@ final class RegistrationViewController: UIViewController {
         present(imagePicker, animated: true)
     }
 
+    @objc private func changeSource() {
+
+    }
+
     @objc private func nextDidTap() {
 
         let runner = Runner(
@@ -140,6 +163,7 @@ final class RegistrationViewController: UIViewController {
             nickname: nicknameTextField.text,
             name: nameTextField.text,
             surname: surnameTextField.text,
+            isMale: sexSegment.selectedSegmentIndex == 0 ? true : false,
             email: emailTextField.text,
             telegram: telegramTextField.text,
             avatar: avatarImageView.image,
