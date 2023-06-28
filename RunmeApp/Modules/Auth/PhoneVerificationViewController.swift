@@ -19,6 +19,14 @@ class PhoneVerificationViewController: UIViewController {
 
     private let type: VCType
 
+    private lazy var topImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: self.type == .phone ? "phone" : "sms")
+        image.contentMode = .scaleAspectFit
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
     private lazy var phoneTextField: TextFieldWithPadding = {
         var phone = TextFieldWithPadding()
         phone.backgroundColor = .systemGray5
@@ -99,12 +107,18 @@ class PhoneVerificationViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .secondarySystemBackground
+        view.addSubview(topImageView)
         view.addSubview(phoneTextField)
         view.addSubview(nextButton)
 
         NSLayoutConstraint.activate([
+            topImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            topImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
+            topImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+
             phoneTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
+            phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
             phoneTextField.widthAnchor.constraint(equalToConstant: self.type == .phone ? 280 : 192),
             phoneTextField.heightAnchor.constraint(equalToConstant: 48),
 
