@@ -67,9 +67,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-            coordinator?.pushPhoneViewController()            //true
+//            coordinator?.pushPhoneViewController()            //true
 
-//            coordinator?.pushRegistrationViewController()     //test
+            coordinator?.pushRegistrationViewController()     //test
 //            coordinator?.pushToMain()                         //test
 
         case .loginWithBio:

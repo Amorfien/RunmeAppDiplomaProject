@@ -22,7 +22,8 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     enum ViewInput {
-        case reload
+        case forYouSegment
+        case newsSegment
     }
 
     private let newsService: NewsService
@@ -45,23 +46,38 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .reload:
+        case .forYouSegment:
             self.state = .loading
-//            newsService.loadNews { result in
-//                switch result {
-//                case .success(let news):
-//                    print(news.count)
-//                    self.state = .loaded(news)
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
+
             ///заглушка чтобы не расходывать трафик/запросы
-            let news: [Article] = [testNews1, testNews2, testNews1, testNews2]
+            let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
             self.state = .loaded(news)
 
-
-
+        case .newsSegment:
+            self.state = .loading
+            newsService.loadNews { result in
+                switch result {
+                case .success(let news):
+                    print(news.count)
+                    self.state = .loaded(news)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.state = .error(error)
+                }
+            }
         }
     }
+
+
+    ///достать аватары юзеров
+    func getAllAvatars(completion: @escaping ([Data]) -> Void) {
+
+
+
+
+    }
+
+
+
+
 }

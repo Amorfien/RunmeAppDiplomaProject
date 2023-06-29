@@ -12,9 +12,11 @@ final class RegistrationViewController: UIViewController {
     // MARK: - Properties
     let viewModel: LoginViewModel
 
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.bounces = false
+        scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -64,6 +66,15 @@ final class RegistrationViewController: UIViewController {
         return segmentedControl
     }()
 
+    private let doneImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "done")
+        image.contentMode = .scaleAspectFit
+        image.alpha = 0
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
         button.setTitle("Готово", for: .normal)
@@ -97,6 +108,7 @@ final class RegistrationViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(avatarImageView)
         scrollView.addSubview(vStack)
+        scrollView.addSubview(doneImageView)
         let textFields = [nicknameTextField, nameTextField, surnameTextField, emailTextField, telegramTextField, birthdayTextField]
 
         for (tag, textField) in textFields.enumerated() {
@@ -133,7 +145,13 @@ final class RegistrationViewController: UIViewController {
             vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
+//            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
+
+            doneImageView.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 32),
+            doneImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -32),
+            doneImageView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 0),
+            doneImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.65),
+            doneImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.65),
 
             nextButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -238,4 +256,15 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
         picker.dismiss(animated: true)
     }
 
+}
+
+extension RegistrationViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            let alpha = (100 + scrollView.contentOffset.y - 20) / 100
+            doneImageView.alpha = alpha
+        } else {
+            doneImageView.alpha = 1
+        }
+    }
 }

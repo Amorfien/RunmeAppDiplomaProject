@@ -13,7 +13,8 @@ final class FriendCardCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? #colorLiteral(red: 0.1254901961, green: 0.3058823529, blue: 0.7803921569, alpha: 1) : .white
+            layer.borderColor = isSelected ? UIColor.systemOrange.cgColor : #colorLiteral(red: 0.1254901961, green: 0.3058823529, blue: 0.7803921569, alpha: 1)
+            layer.borderWidth = isSelected ? 2 : 1
         }
     }
 
@@ -24,7 +25,7 @@ final class FriendCardCell: UICollectionViewCell {
         super.init(frame: .zero)
 
         setupView()
-        setupConstraints()
+//        setupConstraints()
     }
 
     required init?(coder: NSCoder) {
@@ -33,11 +34,14 @@ final class FriendCardCell: UICollectionViewCell {
 
     // MARK: - UI
     private func setupView() {
-        backgroundColor = .white//Res.MyColors.homeBackground
-
+        let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
+        addSubview(circle)
+//        self = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
+//        backgroundColor = .white//Res.MyColors.homeBackground
+//
         layer.borderWidth = 1
-        layer.borderColor = UIColor.tintColor.cgColor
-        layer.cornerRadius = 30
+//        layer.borderColor = UIColor.red.cgColor
+        layer.cornerRadius = circle.layer.cornerRadius
     }
 
     private func setupConstraints() {

@@ -18,7 +18,7 @@ final class HomeViewController: UIViewController {
     }
 
     private lazy var sourceSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Новости", "Для вас"])
+        let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
 //        segmentedControl.backgroundColor = .secondarySystemBackground
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
@@ -39,11 +39,10 @@ final class HomeViewController: UIViewController {
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
         tableView.backgroundColor = Res.MyColors.homeBackground
-//        tableView.rowHeight = 80
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.isHidden = true
+        tableView.isHidden = true
         tableView.sectionHeaderHeight = 50
         tableView.delegate = self
         tableView.dataSource = self
@@ -70,12 +69,13 @@ final class HomeViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
+        viewModel.updateState(viewInput: .forYouSegment)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.updateState(viewInput: .reload)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        viewModel.updateState(viewInput: .forYouSegment)
+//    }
 
     private func setupNavigation() {
         navigationItem.title = "Главная"
@@ -90,7 +90,7 @@ final class HomeViewController: UIViewController {
     }
     private func setupView() {
 //        view.backgroundColor = .secondarySystemBackground
-        view.backgroundColor = Res.MyColors.homeBackground
+        view.backgroundColor = Res.MyColors.myBackground
 
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)
@@ -150,7 +150,16 @@ final class HomeViewController: UIViewController {
 
     }
     @objc private func changeSource() {
-
+        switch sourceSegment.selectedSegmentIndex {
+        case 0:
+            newsTableView.tableHeaderView  = tableHeaderView
+            viewModel.updateState(viewInput: .forYouSegment)
+        case 1:
+            newsTableView.tableHeaderView = nil
+            viewModel.updateState(viewInput: .newsSegment)
+        default:
+            ()
+        }
     }
 
 

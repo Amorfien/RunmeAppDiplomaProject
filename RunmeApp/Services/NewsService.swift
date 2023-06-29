@@ -20,7 +20,7 @@ final class NewsService: NewsProtocol {
         case requestError
     }
 
-    let keywords = ["ironman"]//, "зож", "спорт+бег"]
+    let keywords = ["ironman", "зож", "спорт+бег"]
 
     // MARK: - URL session
     func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
