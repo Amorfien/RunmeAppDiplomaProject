@@ -11,6 +11,8 @@ final class FriendCardCell: UICollectionViewCell {
 
     static let id = "FriendCardCell"
 
+    let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
+
     override var isSelected: Bool {
         didSet {
             layer.borderColor = isSelected ? UIColor.systemOrange.cgColor : #colorLiteral(red: 0.1254901961, green: 0.3058823529, blue: 0.7803921569, alpha: 1)
@@ -34,7 +36,7 @@ final class FriendCardCell: UICollectionViewCell {
 
     // MARK: - UI
     private func setupView() {
-        let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
+//        let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
         addSubview(circle)
 //        self = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
 //        backgroundColor = .white//Res.MyColors.homeBackground
@@ -53,8 +55,8 @@ final class FriendCardCell: UICollectionViewCell {
     }
 
     // MARK: - public method
-    func fillCardCell() {
-
+    func fillCardCell(avatar: UIImage) {
+        circle.image = avatar
     }
 
 }

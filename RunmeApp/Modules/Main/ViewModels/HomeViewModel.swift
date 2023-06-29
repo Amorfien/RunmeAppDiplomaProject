@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//import UIKit////////////////
 
 protocol HomeViewModelProtocol: AnyObject {
     var onStateDidChange: ((HomeViewModel.State) -> Void)? { get set }
@@ -17,7 +18,8 @@ final class HomeViewModel: HomeViewModelProtocol {
     enum State {
         case initial
         case loading
-        case loaded([Article])
+        case loadedNews([Article])
+        case loadedAvatars([Data])
         case error(Error)
     }
 
@@ -49,9 +51,18 @@ final class HomeViewModel: HomeViewModelProtocol {
         case .forYouSegment:
             self.state = .loading
 
+            FirebaseStorageService.shared.downloadAllAvatars { result in
+                switch result {
+                case .success(let image):
+                    self.state = .loadedAvatars(image)
+                case .failure(let error):
+                    print("Download avatars Error, \(error.localizedDescription)")
+                }
+            }
+
             ///заглушка чтобы не расходывать трафик/запросы
             let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
-            self.state = .loaded(news)
+            self.state = .loadedNews(news)
 
         case .newsSegment:
             self.state = .loading
@@ -59,7 +70,7 @@ final class HomeViewModel: HomeViewModelProtocol {
                 switch result {
                 case .success(let news):
                     print(news.count)
-                    self.state = .loaded(news)
+                    self.state = .loadedNews(news)
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.state = .error(error)

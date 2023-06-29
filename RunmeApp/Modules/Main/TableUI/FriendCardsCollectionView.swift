@@ -9,6 +9,12 @@ import UIKit
 
 final class FriendCardsCollectionView: UICollectionView {
 
+    private var avatars: [UIImage] = [] {
+        didSet {
+                self.reloadData()
+        }
+    }
+
     private let weatherCardsLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -40,7 +46,8 @@ final class FriendCardsCollectionView: UICollectionView {
     }
 
     // MARK: - public method
-    func fillCardsCollection() {
+    func fillCardsCollection(avatars: [UIImage]) {
+        self.avatars = avatars
     }
 
 }
@@ -48,14 +55,14 @@ final class FriendCardsCollectionView: UICollectionView {
 // MARK: - setup collectionview
 extension FriendCardsCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        avatars.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCardCell.id, for: indexPath) as? FriendCardCell {
            
-
-            cell.fillCardCell()
+            let avatar = avatars[indexPath.item]
+            cell.fillCardCell(avatar: avatar)
             return cell
         } else {
             return UICollectionViewCell()

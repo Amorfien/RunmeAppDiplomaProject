@@ -16,6 +16,11 @@ final class HomeViewController: UIViewController {
                 self.newsTableView.reloadData()
         }
     }
+//    var avatars: [UIImage] = [] {
+//        didSet {
+//                self.newsTableView.reloadData()
+//        }
+//    }
 
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
@@ -121,9 +126,20 @@ final class HomeViewController: UIViewController {
             case .loading:
                 updateTableViewVisibility(isHidden: true)
                 updateLoadingAnimation(isLoading: true)
-            case .loaded(let news):
+            case .loadedNews(let news):
                 DispatchQueue.main.async {
                     self.articles = news
+                    self.updateLoadingAnimation(isLoading: false)
+                    self.updateTableViewVisibility(isHidden: false)
+                }
+            case .loadedAvatars(let dataArray):
+                let imgArray = dataArray.map { data in
+                    UIImage(data: data) ?? UIImage(named: "dafault-avatar")!
+                }
+                DispatchQueue.main.async {
+//                    self.avatars = imgArray
+                    let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
+                    header.fillCardsCollection(avatars: imgArray)
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
