@@ -11,8 +11,8 @@ final class AvatarCircleView: UIImageView {
 
     enum Size: CGFloat {
         case small = 80
-        case middle = 120
-        case large = 180
+        case middle = 160
+        case large = 240
     }
 
 
@@ -22,7 +22,7 @@ final class AvatarCircleView: UIImageView {
         backgroundColor = .systemBackground
         layer.cornerRadius = size.rawValue / 2
 
-        layer.borderWidth = size.rawValue / 60
+        layer.borderWidth = size.rawValue / 80
         layer.borderColor = UIColor.tintColor.cgColor
 
         clipsToBounds = true

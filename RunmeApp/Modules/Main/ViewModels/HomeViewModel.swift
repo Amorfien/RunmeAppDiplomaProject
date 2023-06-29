@@ -25,6 +25,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     enum ViewInput {
         case forYouSegment
         case newsSegment
+        case chooseUser(String)
     }
 
     private let newsService: NewsService
@@ -60,6 +61,8 @@ final class HomeViewModel: HomeViewModelProtocol {
             self.state = .loading
 
             getAllNews()
+        case .chooseUser(let id):
+            chooseUser(id: id)
         }
     }
 
@@ -85,6 +88,17 @@ final class HomeViewModel: HomeViewModelProtocol {
                 self.state = .loadedAvatars(dict)
             case .failure(let error):
                 print("Download avatars Error, \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func chooseUser(id: String) {
+        DatabaseService.shared.getUser(userId: id) { result in
+            switch result {
+            case .success(let user):
+                self.coordinator?.presentSheetPresentationController(user: user)
+            case .failure(let error):
+                print("Choose User Error, \(error.localizedDescription)")
             }
         }
     }

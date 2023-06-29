@@ -13,7 +13,7 @@ struct Runner: Identifiable {
 
     let phoneNumber: String
 
-    var nickname: String?
+    var nickname: String
     let name: String?
     let surname: String?
     let isMale: Bool?
@@ -25,13 +25,13 @@ struct Runner: Identifiable {
     var avatarURL: String?
 
     let birthday: String?
-    var birthdayShow = true
-    var isAdmin = false
+    var birthdayShow: Bool?// = true
+    var isAdmin: Bool?// = false
 
-    var personalBests: [Int] = [0, 0, 0, 0]
-    var achievements: [Int] = []
+    var personalBests: [Int]? = [0, 0, 0, 0]
+    var achievements: [Int]? = []
 
-    var posts: [String] = []
+    var posts: [String]? = []
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
         repres["id"] = self.id
@@ -44,8 +44,8 @@ struct Runner: Identifiable {
         repres["telegram"] = self.telegram
         repres["avatarURL"] = self.avatarURL
         repres["birthday"] = self.birthday
-        repres["birthdayShow"] = true
-        repres["isAdmin"] = false
+        repres["birthdayShow"] = self.birthdayShow
+        repres["isAdmin"] = self.isAdmin
         repres["personalBests"] = self.personalBests
         repres["achievements"] = self.achievements
         return repres

@@ -39,8 +39,8 @@ final class DatabaseService {
 
             guard let id = data["id"] as? String else { return }
             guard let phoneNumber = data["phoneNumber"] as? String else { return }
+            guard let nickname = data["nickname"] as? String else { return }
 
-            let nickname = data["nickname"] as? String
             let name = data["name"] as? String
             let surname = data["surname"] as? String
             let isMale = data["isMale"] as? Bool

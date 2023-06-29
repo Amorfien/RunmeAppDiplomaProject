@@ -43,8 +43,21 @@ final class FirebaseStorageService {
 
 
     ///достать аватар по URL
-    func download(avatarURL: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func downloadByUrl(avatarURL: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         let ref = Storage.storage().reference(forURL: avatarURL)
+        let megaByte = Int64(1 * 1024 * 1024)
+        ref.getData(maxSize: megaByte) { data, error in
+            guard let data, error == nil else {
+                completion(.failure(error!))
+                return
+            }
+            let image = UIImage(data: data)
+            completion(.success(image ?? UIImage(systemName: "person.and.background.dotted")!))
+        }
+    }
+    ///достать аватар по ID
+    func downloadById(id: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let ref = Storage.storage().reference().child("avatars").child(id)
         let megaByte = Int64(1 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { data, error in
             guard let data, error == nil else {
@@ -62,7 +75,6 @@ final class FirebaseStorageService {
 
         var imgArray: [String: Data] = [:]
 
-//        let ref = Storage.storage().reference(withPath: "avatars")
         let ref = Storage.storage().reference().child("avatars")
         ref.listAll { result in
             switch result {
@@ -85,17 +97,6 @@ final class FirebaseStorageService {
                     }
                 }
 
-
-
-//                let item = storageList.items.first?.getData(maxSize: megaByte, completion: { dataRes in
-//                    switch dataRes {
-//                    case .success(let data):
-//                        imgArray.append(data)
-//                        completion(.success(imgArray))
-//                    case .failure(let dataError):
-//                        completion(.failure(dataError))
-//                    }
-//                })
             case .failure(let error):
                 completion(.failure(error))
             }

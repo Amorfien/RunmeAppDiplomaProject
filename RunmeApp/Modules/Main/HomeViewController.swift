@@ -221,8 +221,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: UsersTableHeaderDelegate {
     func chooseUser(id: String) {
-        showAlert(title: "User", message: id) {
-            self.dismiss(animated: true)
-        }
+//        showAlert(title: "User", message: id) {
+//            self.dismiss(animated: true)
+//        }
+        viewModel.updateState(viewInput: .chooseUser(id))
     }
 }

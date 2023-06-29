@@ -178,7 +178,7 @@ final class RegistrationViewController: UIViewController {
         let runner = Runner(
             id: AuthManager.shared.currentUser?.uid ?? "---",
             phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
-            nickname: nicknameTextField.text,
+            nickname: nicknameTextField.text ?? "---",
             name: nameTextField.text,
             surname: surnameTextField.text,
             isMale: sexSegment.selectedSegmentIndex == 0 ? true : false,
