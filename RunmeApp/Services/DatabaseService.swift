@@ -80,12 +80,12 @@ final class DatabaseService {
 
 
     ///достать всех юзеров
-    func getAllUsers (completion: @escaping (Result<Runner, Error>) -> Void) {
-
-
-
-
-    }
+//    func getAllUsers (completion: @escaping (Result<Runner, Error>) -> Void) {
+//
+//
+//
+//
+//    }
 
 
 

@@ -58,6 +58,8 @@ final class NewsService: NewsProtocol {
     }
 
     // MARK: - Public method
+
+    ///достать  все новости
     func loadNews(completion: @escaping (Result<[Article], NewsError>) -> Void) {
 
         let group = DispatchGroup()

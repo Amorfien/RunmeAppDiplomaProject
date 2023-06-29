@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import UIKit////////////////
 
 protocol HomeViewModelProtocol: AnyObject {
     var onStateDidChange: ((HomeViewModel.State) -> Void)? { get set }
@@ -19,7 +18,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case initial
         case loading
         case loadedNews([Article])
-        case loadedAvatars([Data])
+        case loadedAvatars([String: Data])
         case error(Error)
     }
 
@@ -51,14 +50,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case .forYouSegment:
             self.state = .loading
 
-            FirebaseStorageService.shared.downloadAllAvatars { result in
-                switch result {
-                case .success(let image):
-                    self.state = .loadedAvatars(image)
-                case .failure(let error):
-                    print("Download avatars Error, \(error.localizedDescription)")
-                }
-            }
+            getAllAvatars()
 
             ///заглушка чтобы не расходывать трафик/запросы
             let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
@@ -66,26 +58,35 @@ final class HomeViewModel: HomeViewModelProtocol {
 
         case .newsSegment:
             self.state = .loading
-            newsService.loadNews { result in
-                switch result {
-                case .success(let news):
-                    print(news.count)
-                    self.state = .loadedNews(news)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.state = .error(error)
-                }
+
+            getAllNews()
+        }
+    }
+
+    ///достать новости
+    private func getAllNews() {
+        newsService.loadNews { result in
+            switch result {
+            case .success(let news):
+                print(news.count)
+                self.state = .loadedNews(news)
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.state = .error(error)
             }
         }
     }
 
-
     ///достать аватары юзеров
-    func getAllAvatars(completion: @escaping ([Data]) -> Void) {
-
-
-
-
+    private func getAllAvatars() {
+        FirebaseStorageService.shared.downloadAllAvatars { result in
+            switch result {
+            case .success(let dict):
+                self.state = .loadedAvatars(dict)
+            case .failure(let error):
+                print("Download avatars Error, \(error.localizedDescription)")
+            }
+        }
     }
 
 

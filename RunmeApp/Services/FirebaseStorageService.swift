@@ -58,15 +58,16 @@ final class FirebaseStorageService {
 
 
     ///достать все аватары
-    func downloadAllAvatars(completion: @escaping (Result<[Data], Error>) -> Void) {
+    func downloadAllAvatars(completion: @escaping (Result<[String: Data], Error>) -> Void) {
 
-        var imgArray: [Data] = []
+        var imgArray: [String: Data] = [:]
 
 //        let ref = Storage.storage().reference(withPath: "avatars")
         let ref = Storage.storage().reference().child("avatars")
         ref.listAll { result in
             switch result {
             case .success(let storageList):
+
                 let megaByte = Int64(1 * 1024 * 1024)
 
                 for item in storageList.items {
@@ -74,7 +75,7 @@ final class FirebaseStorageService {
                     item.getData(maxSize: megaByte) { dataRes in
                         switch dataRes {
                         case .success(let data):
-                            imgArray.append(data)
+                            imgArray[item.name] = data
                             if imgArray.count == storageList.items.count {
                                 completion(.success(imgArray))
                             }

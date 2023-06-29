@@ -94,6 +94,7 @@ final class HomeViewController: UIViewController {
         sourceSegment.widthAnchor.constraint(equalToConstant: 270).isActive = true
     }
     private func setupView() {
+        tableHeaderView.headerDelegate = self
 //        view.backgroundColor = .secondarySystemBackground
         view.backgroundColor = Res.MyColors.myBackground
 
@@ -132,14 +133,17 @@ final class HomeViewController: UIViewController {
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
-            case .loadedAvatars(let dataArray):
-                let imgArray = dataArray.map { data in
-                    UIImage(data: data) ?? UIImage(named: "dafault-avatar")!
+            case .loadedAvatars(let dict):
+                var users: [String] = []
+                var images: [UIImage] = []
+                for (user, data) in dict {
+                    users.append(user)
+                    images.append(UIImage(data: data) ?? UIImage(named: "dafault-avatar")!)
                 }
+
                 DispatchQueue.main.async {
-//                    self.avatars = imgArray
                     let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
-                    header.fillCardsCollection(avatars: imgArray)
+                    header.fillCardsCollection(users: users, images: images)
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
@@ -211,4 +215,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
 
+}
+
+
+
+extension HomeViewController: UsersTableHeaderDelegate {
+    func chooseUser(id: String) {
+        showAlert(title: "User", message: id) {
+            self.dismiss(animated: true)
+        }
+    }
 }

@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol UsersTableHeaderDelegate: AnyObject {
+    func chooseUser(id: String)
+}
+
 final class FriendCardsCollectionView: UICollectionView {
 
-    private var avatars: [UIImage] = [] {
+    weak var headerDelegate: UsersTableHeaderDelegate?
+
+    private var users: [String] = []
+    private var images: [UIImage] = [] {
         didSet {
                 self.reloadData()
         }
@@ -46,8 +53,9 @@ final class FriendCardsCollectionView: UICollectionView {
     }
 
     // MARK: - public method
-    func fillCardsCollection(avatars: [UIImage]) {
-        self.avatars = avatars
+    func fillCardsCollection(users: [String], images: [UIImage]) {
+            self.users = users
+            self.images = images
     }
 
 }
@@ -55,13 +63,13 @@ final class FriendCardsCollectionView: UICollectionView {
 // MARK: - setup collectionview
 extension FriendCardsCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        avatars.count
+        images.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCardCell.id, for: indexPath) as? FriendCardCell {
            
-            let avatar = avatars[indexPath.item]
+            let avatar = images[indexPath.item]
             cell.fillCardCell(avatar: avatar)
             return cell
         } else {
@@ -74,6 +82,6 @@ extension FriendCardsCollectionView: UICollectionViewDelegateFlowLayout {
         CGSize(width: 80, height: 80)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        headerDelegate?.chooseUser(id: users[indexPath.row])
     }
 }
