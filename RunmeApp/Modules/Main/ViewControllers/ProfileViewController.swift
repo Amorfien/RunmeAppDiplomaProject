@@ -10,28 +10,30 @@ import UIKit
 final class ProfileViewController: UIViewController {
 
     private let viewModel: ProfileViewModel
-    private lazy var profile: Runner? = nil {
-        didSet {
-            self.navigationItem.title = "Привет, \(profile!.nickname)!"
-            self.statusLabel.text = profile?.statusText
-        }
-    }
-    private lazy var avatar: UIImage? = nil {
-        didSet {
-            self.avatarImageView.image = avatar
-        }
-    }
-    private var isEditable = false
-    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .xLarge, isEditable: self.isEditable, completion: changeAvatar)
+    private var isEditable: Bool = false
+//    private lazy var profile: Runner? = nil {
+//        didSet {
+//            self.navigationItem.title = "Привет, \(profile!.nickname)!"
+////            self.statusTextField.text = profile?.statusText
+//            if profile?.id != AuthManager.shared.currentUser?.uid {
+////                statusTextField.isEnabled = false
+////                statusTextField.backgroundColor = .systemGray6
+//            }
+//        }
+//    }
+//    private lazy var avatar: UIImage? = nil {
+//        didSet {
+////            self.avatarImageView.image = avatar
+//        }
+//    }
 
-    private let statusLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .secondaryLabel)
-    private let statusTextField = CustomTextField(type: .status)
-
+    private lazy var profileCardView = ProfileCardView(isEditable: self.isEditable)
     
     //MARK: - Init
     
-    init(viewModel: ProfileViewModel) {
+    init(viewModel: ProfileViewModel, isEditable: Bool = false) {
         self.viewModel = viewModel
+        self.isEditable = isEditable
         super.init(nibName: nil, bundle: nil)
     }
     @available(*, unavailable)
@@ -76,9 +78,7 @@ final class ProfileViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = Res.MyColors.profileBackground
-        view.addSubview(avatarImageView)
-        view.addSubview(statusLabel)
-        view.addSubview(statusTextField)
+        view.addSubview(profileCardView)
 
 
 //            FirebaseStorageService.shared.downloadById(id: profile!.id, completion: { result in
@@ -98,36 +98,28 @@ final class ProfileViewController: UIViewController {
 
 
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-
-            statusLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
-            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            statusLabel.heightAnchor.constraint(equalToConstant: 22),
-
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 12),
-            statusTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            statusTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            statusTextField.heightAnchor.constraint(equalToConstant: 22),
+            profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 28),
+            profileCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             ])
     }
 
 
     func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
-            //            guard let self = self else {
-            //                return
-            //            }
+            guard let self = self else {
+                return
+            }
             switch state {
             case .initial:
                 ()
             case .error(_):
                 ()
             case .loadedProfile(let profile):
-                self?.profile = profile
+//                self.profile = profile
+                self.profileCardView.fillProfile(profile: profile)
             case .loadedImageData(let imgData):
-                self?.avatar = UIImage(data: imgData)
+//                self.avatar = UIImage(data: imgData)
+                self.profileCardView.fillAvatar(avatar: UIImage(data: imgData))
             }
         }
     }
@@ -136,9 +128,7 @@ final class ProfileViewController: UIViewController {
         viewModel.updateState(viewInput: .logOut)
     }
 
-    @objc private func changeAvatar() {
-        print("ImagePicker")
-    }
+
 
     //  жест чтобы скрывать клавиатуру по тапу
     private func setupGestures() {

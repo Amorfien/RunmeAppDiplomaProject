@@ -31,7 +31,7 @@ final class AvatarCircleImageView: UIImageView {
             let button = UIButton(frame: CGRect(x: 0, y: size.rawValue - size.rawValue / 4
                                                 , width: size.rawValue, height: size.rawValue / 4))
             button.backgroundColor = .white.withAlphaComponent(0.8)
-            button.setTitle("➕", for: .normal)
+            button.setTitle("🔄", for: .normal)
             button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
             addSubview(button)
         }

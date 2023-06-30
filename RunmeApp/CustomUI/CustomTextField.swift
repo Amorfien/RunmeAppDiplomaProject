@@ -33,7 +33,7 @@ final class CustomTextField: TextFieldWithPadding {
             case .email:
                 return "адрес@почта.бег"
             case .status:
-                return "Бегу..."
+                return "бегу..."
 //            default:
 //                return ""
             }
@@ -55,9 +55,9 @@ final class CustomTextField: TextFieldWithPadding {
             widthAnchor.constraint(equalToConstant: 120).isActive = true
         }
 
-        let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel)
+        let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel, lines: 1)
         topLabel.translatesAutoresizingMaskIntoConstraints = true
-        topLabel.frame = CGRect(x: 12, y: -20, width: 150, height: 20)
+        topLabel.frame = CGRect(x: 10, y: -20, width: 150, height: 20)
 
         addSubview(topLabel)
 

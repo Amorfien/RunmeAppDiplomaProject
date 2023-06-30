@@ -25,7 +25,7 @@ final class FriendCardsCollectionView: UICollectionView {
     private let weatherCardsLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 12, right: 24)
         return layout
     }()
 

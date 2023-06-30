@@ -31,9 +31,8 @@ final class HomeCoordinator: Coordinatable {
     }
 
     func presentSheetPresentationController(user: Runner) {
-//        let profileVC = ProfileViewController(viewModel: nil, profile: user)
-        let vm = ProfileViewModel(userId: user.id)
-        let profileVC = ProfileViewController(viewModel: vm)
+        let pvm = ProfileViewModel(userId: user.id)
+        let profileVC = ProfileViewController(viewModel: pvm)
         profileVC.view.alpha = 0.97
 
         if let sheet = profileVC.sheetPresentationController {

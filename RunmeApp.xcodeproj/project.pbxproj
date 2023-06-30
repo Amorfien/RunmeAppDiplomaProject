@@ -15,6 +15,7 @@
 		18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F022A462D1E00D615D7 /* AuthManager.swift */; };
 		180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* CustomTextField.swift */; };
 		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
+		1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1849A4392A4F59BA00401500 /* ProfileCardView.swift */; };
 		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
 		186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B52A48689F00001093 /* FirebaseStorageService.swift */; };
 		186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */; };
@@ -65,6 +66,7 @@
 		18020F022A462D1E00D615D7 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		180AC2FA2A47669E000FD11F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		1849A4392A4F59BA00401500 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		186AD0B52A48689F00001093 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
@@ -138,6 +140,16 @@
 				187A3C692A4B4FB900DFC2C2 /* NewsService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1849A4382A4F597D00401500 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1880D69A2A44984C008DBE6C /* HomeViewController.swift */,
+				1880D69C2A449857008DBE6C /* ProfileViewController.swift */,
+				1880D69E2A44987A008DBE6C /* FavoriteViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		187525D92A4C62F300BBD8E1 /* TableUI */ = {
@@ -284,10 +296,9 @@
 			isa = PBXGroup;
 			children = (
 				18DC3BF52A473EA500438728 /* ViewModels */,
+				1849A4382A4F597D00401500 /* ViewControllers */,
 				187525D92A4C62F300BBD8E1 /* TableUI */,
-				1880D69A2A44984C008DBE6C /* HomeViewController.swift */,
-				1880D69C2A449857008DBE6C /* ProfileViewController.swift */,
-				1880D69E2A44987A008DBE6C /* FavoriteViewController.swift */,
+				1849A4392A4F59BA00401500 /* ProfileCardView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -432,6 +443,7 @@
 				1880D6A12A449C58008DBE6C /* HomeCoordinator.swift in Sources */,
 				1880D6AD2A44A94B008DBE6C /* ViewModelProtocol.swift in Sources */,
 				18DC3BEE2A46FEEA00438728 /* Post.swift in Sources */,
+				1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */,
 				1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */,
 				1880D6A52A449C70008DBE6C /* FavoriteCoordinator.swift in Sources */,
 				187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */,

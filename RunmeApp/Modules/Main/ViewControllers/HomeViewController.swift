@@ -40,15 +40,20 @@ final class HomeViewController: UIViewController {
     private lazy var newsTableView: UITableView = {
         let tableView = UITableView()
         tableView.tableHeaderView = tableHeaderView
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 120)
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
-        tableView.backgroundColor = Res.MyColors.homeBackground
-        tableView.separatorStyle = .none
+//        tableView.estimatedSectionHeaderHeight = 20
+        tableView.sectionFooterHeight = 0
+        tableView.sectionHeaderTopPadding = 0
+        tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground//Res.MyColors.homeBackground
+//        tableView.separatorStyle = .singleLine
+//        tableView.separatorInset = .zero
+//        tableView.separatorColor = .tintColor
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
-        tableView.sectionHeaderHeight = 50
+//        tableView.sectionHeaderHeight = 50
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -96,7 +101,7 @@ final class HomeViewController: UIViewController {
     private func setupView() {
         tableHeaderView.headerDelegate = self
 //        view.backgroundColor = .secondarySystemBackground
-        view.backgroundColor = Res.MyColors.myBackground
+        view.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground//Res.MyColors.myBackground
 
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)
@@ -198,19 +203,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //удаление повторяющихся хэдеров секций (одинаковые даты)
-        if section > 0 && articles[section - 1].publishedAt == articles[section].publishedAt {
-            return UIView(frame: .zero)
-        } else {
+//        if section > 0 && articles[section - 1].publishedAt == articles[section].publishedAt {
+//            return nil//UIView(frame: .zero)
+//        } else {
             let sectionHeader = HeaderInSectionView()
             sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? "2001-01-01")
             return sectionHeader
-        }
+//        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
         else { return NewsPostTableViewCell() }
 
+        cell.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground
         cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
         return cell
     }

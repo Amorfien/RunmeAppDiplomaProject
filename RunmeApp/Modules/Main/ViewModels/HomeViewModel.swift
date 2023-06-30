@@ -68,24 +68,24 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     ///достать новости
     private func getAllNews() {
-        newsService.loadNews { result in
+        newsService.loadNews { [weak self] result in
             switch result {
             case .success(let news):
                 print(news.count)
-                self.state = .loadedNews(news)
+                self?.state = .loadedNews(news)
             case .failure(let error):
                 print(error.localizedDescription)
-                self.state = .error(error)
+                self?.state = .error(error)
             }
         }
     }
 
     ///достать аватары юзеров
     private func getAllAvatars() {
-        FirebaseStorageService.shared.downloadAllAvatars { result in
+        FirebaseStorageService.shared.downloadAllAvatars { [weak self] result in
             switch result {
             case .success(let dict):
-                self.state = .loadedAvatars(dict)
+                self?.state = .loadedAvatars(dict)
             case .failure(let error):
                 print("Download avatars Error, \(error.localizedDescription)")
             }
@@ -93,10 +93,10 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     private func chooseUser(id: String) {
-        DatabaseService.shared.getUser(userId: id) { result in
+        DatabaseService.shared.getUser(userId: id) { [weak self] result in
             switch result {
             case .success(let user):
-                self.coordinator?.presentSheetPresentationController(user: user)
+                self?.coordinator?.presentSheetPresentationController(user: user)
             case .failure(let error):
                 print("Choose User Error, \(error.localizedDescription)")
             }
