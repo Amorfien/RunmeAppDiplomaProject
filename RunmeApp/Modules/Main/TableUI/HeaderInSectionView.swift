@@ -61,7 +61,7 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
     }
 
     func fillHeader(date: String) {
-        titleLabel.text = String(date.dropLast(10))
+        titleLabel.text = date//String(date.dropLast(10))
     }
     
 }

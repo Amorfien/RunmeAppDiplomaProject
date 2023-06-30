@@ -21,24 +21,11 @@ final class RegistrationViewController: UIViewController {
         return scrollView
     }()
 
-    private lazy var avatarImageView = AvatarCircleImageView(image: UIImage(named: "dafault-avatar"), size: .large, isEditable: true, completion: addButtonDidTap)
-
-//    private lazy var avatarImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(named: "dafault-avatar")
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.layer.cornerRadius = 80
-//        imageView.layer.borderWidth = 1
-//        imageView.clipsToBounds = true
-//        imageView.isUserInteractionEnabled = true
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 160, height: 40))
-//        button.backgroundColor = .white.withAlphaComponent(0.8)
-//        button.setTitle("➕", for: .normal)
-//        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
-//        imageView.addSubview(button)
-//        return imageView
-//    }()
+    private lazy var avatarImageView = AvatarCircleImageView(
+        image: UIImage(named: "dafault-avatar"),
+        size: .large, isEditable: true,
+        completion: addButtonDidTap
+    )
 
     private let vStack: UIStackView = {
         let stack = UIStackView()
@@ -56,15 +43,13 @@ final class RegistrationViewController: UIViewController {
     private let telegramTextField = CustomTextField(type: .telegram)
     private let hStack = UIStackView()
     private let birthdayTextField = CustomTextField(type: .birthday)
-//    private let sexSegment = UISegmentedControl(items: ["Муж", "Жен"])
 
     private lazy var sexSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Муж", "Жен"])
-//        segmentedControl.backgroundColor = .secondarySystemBackground
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(changeSource), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(changeSex), for: .valueChanged)
         return segmentedControl
     }()
 
@@ -76,6 +61,28 @@ final class RegistrationViewController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
+
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(dateChange), for: UIControl.Event.valueChanged)
+        datePicker.frame.size = CGSize(width: .zero, height: 300)
+        datePicker.preferredDatePickerStyle = .wheels
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        let minDate = formatter.date(from: "01.01.1930")
+        let startDate = formatter.date(from: "15.06.1998")
+
+        datePicker.maximumDate = Date()
+        datePicker.minimumDate = minDate
+        datePicker.date = startDate ?? Date()
+        return datePicker
+    }()
+
+
+
+
 
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
@@ -126,7 +133,11 @@ final class RegistrationViewController: UIViewController {
         hStack.distribution = .fillProportionally
         vStack.addArrangedSubview(hStack)
 
-        birthdayTextField.keyboardType = .decimalPad
+        birthdayTextField.inputView = datePicker
+//        birthdayTextField.text = formatDate(date: Date()) // todays Date
+
+
+//        birthdayTextField.keyboardType = .decimalPad
         emailTextField.keyboardType = .emailAddress
         telegramTextField.keyboardType = .emailAddress
 
@@ -171,8 +182,11 @@ final class RegistrationViewController: UIViewController {
         present(imagePicker, animated: true)
     }
 
-    @objc private func changeSource() {
+    @objc private func changeSex() {
 
+    }
+    @objc private func dateChange() {
+        birthdayTextField.text = formatDate(date: datePicker.date)
     }
 
     @objc private func nextDidTap() {
@@ -200,6 +214,15 @@ final class RegistrationViewController: UIViewController {
     }
     @objc private func hideKeyboard() {
         view.endEditing(true)
+    }
+
+
+
+    private func formatDate(date: Date) -> String
+    {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        return formatter.string(from: date)
     }
 
 }
@@ -231,15 +254,9 @@ extension RegistrationViewController: UITextFieldDelegate {
                 nextButton.isEnabled = false
             }
         }
-        guard textField.tag == 5 else { return }
-        guard let text = textField.text else { return }
-        if text.count > 8 {
-            textField.deleteBackward()
-        } else if text.count == 2 || text.count == 5 {
-            textField.text! += "." //проблема со стиранием (нельзя ошибаться)
-        }
     }
 
+    ///прокрутка контента
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 
         let bottom = -scrollView.contentInset.top + scrollView.contentSize.height - scrollView.frame.height

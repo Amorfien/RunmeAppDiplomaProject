@@ -91,7 +91,7 @@ final class HomeViewController: UIViewController {
 
 //        navigationController?.navigationBar.addSubview(sourceSegment)
         navigationItem.titleView = sourceSegment
-        sourceSegment.widthAnchor.constraint(equalToConstant: 270).isActive = true
+        sourceSegment.widthAnchor.constraint(equalToConstant: 240).isActive = true
     }
     private func setupView() {
         tableHeaderView.headerDelegate = self
@@ -197,9 +197,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeader = HeaderInSectionView()
-        sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? Date().description)
-        return sectionHeader
+        //удаление повторяющихся хэдеров секций (одинаковые даты)
+        if section > 0 && articles[section - 1].publishedAt == articles[section].publishedAt {
+            return UIView(frame: .zero)
+        } else {
+            let sectionHeader = HeaderInSectionView()
+            sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? "2001-01-01")
+            return sectionHeader
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

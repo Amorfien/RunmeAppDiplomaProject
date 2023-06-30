@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
 
     private let profile: Runner?
 
-    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .large, isEditable: true, completion: changeAvatar)
+    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .xLarge, isEditable: true, completion: changeAvatar)
 
     init(viewModel: ProfileViewModel?, profile: Runner?) {
         self.viewModel = viewModel

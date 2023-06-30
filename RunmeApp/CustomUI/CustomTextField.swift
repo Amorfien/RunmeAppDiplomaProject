@@ -26,7 +26,7 @@ final class CustomTextField: TextFieldWithPadding {
             case .surname:
                 return "Сова"
             case .birthday:
-                return "22.10.98"
+                return "22.10.1998"
             case .telegram:
                 return "@telegram"
             case .email:
@@ -47,9 +47,14 @@ final class CustomTextField: TextFieldWithPadding {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 36).isActive = true
 
+        if type == .birthday {
+            font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+            widthAnchor.constraint(equalToConstant: 120).isActive = true
+        }
+
         let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel)
         topLabel.translatesAutoresizingMaskIntoConstraints = true
-        topLabel.frame = CGRect(x: 16, y: -20, width: 150, height: 20)
+        topLabel.frame = CGRect(x: 12, y: -20, width: 150, height: 20)
 
         addSubview(topLabel)
 

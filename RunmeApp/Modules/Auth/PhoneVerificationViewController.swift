@@ -113,13 +113,13 @@ class PhoneVerificationViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             topImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -80),
-            topImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            topImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -72),
+            topImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66),
+            topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66),
 
             phoneTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
-            phoneTextField.widthAnchor.constraint(equalToConstant: self.type == .phone ? 280 : 192),
+            phoneTextField.widthAnchor.constraint(equalToConstant: self.type == .phone ? 280 : 200),
             phoneTextField.heightAnchor.constraint(equalToConstant: 48),
 
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

@@ -67,9 +67,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-//            coordinator?.pushPhoneViewController()            //true
+            coordinator?.pushPhoneViewController()            //true
 
-            coordinator?.pushRegistrationViewController()     //test
+//            coordinator?.pushRegistrationViewController()     //test
 //            coordinator?.pushToMain()                         //test
 
         case .loginWithBio:
@@ -103,7 +103,7 @@ final class LoginViewModel: LoginViewModelProtocol {
 
                 case .success(let url):
                     print("Avatar upload")
-                    runner.avatarURL = url.absoluteString
+//                    runner.avatarURL = url.absoluteString
 
                     DatabaseService.shared.setUser(user: runner) { [weak self] result in
                         switch result {

@@ -67,7 +67,8 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
+        setupView()
+        setupGestures()
     }
 
 
@@ -75,7 +76,7 @@ final class NewsPostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setup() {
+    private func setupView() {
 
         backgroundColor = Res.MyColors.homeBackground
         
@@ -87,10 +88,10 @@ final class NewsPostTableViewCell: UITableViewCell {
             authorLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
 
 //            postImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor),
-            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
+            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 0.8),
 
             descriptionText.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
             descriptionText.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
@@ -131,7 +132,8 @@ final class NewsPostTableViewCell: UITableViewCell {
     }
 
     @objc private func favoriteDoubleTap() {
-
+        animation()
+        print("DoubleTap")
 //        let newDBService = CDserviceVer3()
 //
 //        // сравниммаю хранимые посты по названию фотографии

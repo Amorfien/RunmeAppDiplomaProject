@@ -16,13 +16,14 @@ struct Runner: Identifiable {
     var nickname: String
     let name: String?
     let surname: String?
+    var statusText: String?
     let isMale: Bool?
 
     let email: String?
     let telegram: String?
 
     var avatar: UIImage?
-    var avatarURL: String?
+//    var avatarURL: String?
 
     let birthday: String?
     var birthdayShow: Bool?// = true
@@ -39,10 +40,11 @@ struct Runner: Identifiable {
         repres["nickname"] = self.nickname
         repres["name"] = self.name
         repres["surname"] = self.surname
+        repres["statusText"] = self.statusText
         repres["isMale"] = self.isMale
         repres["email"] = self.email
         repres["telegram"] = self.telegram
-        repres["avatarURL"] = self.avatarURL
+//        repres["avatarURL"] = self.avatarURL
         repres["birthday"] = self.birthday
         repres["birthdayShow"] = self.birthdayShow
         repres["isAdmin"] = self.isAdmin

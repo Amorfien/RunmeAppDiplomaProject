@@ -32,7 +32,7 @@ final class HomeCoordinator: Coordinatable {
 
     func presentSheetPresentationController(user: Runner) {
         let profileVC = ProfileViewController(viewModel: nil, profile: user)
-        profileVC.view.alpha = 0.95
+        profileVC.view.alpha = 0.97
 
         if let sheet = profileVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

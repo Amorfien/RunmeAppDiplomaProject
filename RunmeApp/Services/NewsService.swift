@@ -89,7 +89,7 @@ final class NewsService: NewsProtocol {
 
         group.notify(queue: .global(), work: DispatchWorkItem(block: {
             sleep(1)
-            completion(.success(articles))
+            completion(.success(articles.sorted(by: >)))
         }))
 
     }
