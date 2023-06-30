@@ -46,7 +46,7 @@ final class AppCoordinator: Coordinatable {
         let homeViewModel = HomeViewModel(newsService: newsService)
         let homeCoordinator = HomeCoordinator(vc: UINavigationController(), vm: homeViewModel)
 
-        let profileViewModel = ProfileViewModel()
+        let profileViewModel = ProfileViewModel(userId: AuthManager.shared.currentUser!.uid) ////// !!!!!!!
         let profileCoordinator = ProfileCoordinator(vc: UINavigationController(), vm: profileViewModel)
         profileCoordinator.flowCompletionHandler = { [weak self] in
             self?.goToLogin()

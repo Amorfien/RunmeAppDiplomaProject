@@ -16,6 +16,7 @@ final class CustomTextField: TextFieldWithPadding {
         case telegram = "Telegram"
         case email = "E-mail"
         case birthday = "День рождения"
+        case status = "Статус"
 
         var placeholder: String {
             switch self {
@@ -31,6 +32,8 @@ final class CustomTextField: TextFieldWithPadding {
                 return "@telegram"
             case .email:
                 return "адрес@почта.бег"
+            case .status:
+                return "Бегу..."
 //            default:
 //                return ""
             }

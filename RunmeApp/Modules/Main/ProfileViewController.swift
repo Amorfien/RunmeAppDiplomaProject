@@ -9,18 +9,31 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
-    private let viewModel: ProfileViewModel?
+    private let viewModel: ProfileViewModel
+    private lazy var profile: Runner? = nil {
+        didSet {
+            self.navigationItem.title = "Привет, \(profile!.nickname)!"
+            self.statusLabel.text = profile?.statusText
+        }
+    }
+    private lazy var avatar: UIImage? = nil {
+        didSet {
+            self.avatarImageView.image = avatar
+        }
+    }
+    private var isEditable = false
+    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .xLarge, isEditable: self.isEditable, completion: changeAvatar)
 
-    private let profile: Runner?
+    private let statusLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .secondaryLabel)
+    private let statusTextField = CustomTextField(type: .status)
 
-    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .xLarge, isEditable: true, completion: changeAvatar)
-
-    init(viewModel: ProfileViewModel?, profile: Runner?) {
+    
+    //MARK: - Init
+    
+    init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
-        self.profile = profile
         super.init(nibName: nil, bundle: nil)
     }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,20 +43,23 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
         setupView()
+        setupGestures()
 
         bindViewModel()
 
-        DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
-            switch result {
-            case .success(let runner):
-                DispatchQueue.main.async {
-                    self.navigationItem.title = "Привет, \(runner.nickname)!"
-//                    print(runner)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        })
+        viewModel.updateState(viewInput: .showUser)
+
+//        DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
+//            switch result {
+//            case .success(let runner):
+//                DispatchQueue.main.async {
+//                    self.profile = runner
+//
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        })
 
     }
 
@@ -54,7 +70,6 @@ final class ProfileViewController: UIViewController {
     private func setupNavigation() {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Профиль"
-//        navigationController?.navigationBar.backgroundColor = .cyan
         let logoutButton = UIBarButtonItem(image: UIImage(systemName: "door.right.hand.open"), style: .done, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
     }
@@ -62,33 +77,44 @@ final class ProfileViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Res.MyColors.profileBackground
         view.addSubview(avatarImageView)
+        view.addSubview(statusLabel)
+        view.addSubview(statusTextField)
 
-        if viewModel == nil {
-            FirebaseStorageService.shared.downloadById(id: profile!.id, completion: { result in
-                switch result {
-                case .success(let image):
-                    DispatchQueue.main.async {
-                        self.avatarImageView.image = image
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        self.avatarImageView.image = UIImage(named: "dafault-avatar")!
-                    }
-                }
-            })
 
-        }
+//            FirebaseStorageService.shared.downloadById(id: profile!.id, completion: { result in
+//                switch result {
+//                case .success(let image):
+//                    DispatchQueue.main.async {
+//                        self.avatarImageView.image = image
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    DispatchQueue.main.async {
+//                        self.avatarImageView.image = UIImage(named: "dafault-avatar")!
+//                    }
+//                }
+//            })
+
+
 
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+
+            statusLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
+            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            statusLabel.heightAnchor.constraint(equalToConstant: 22),
+
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 12),
+            statusTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            statusTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            statusTextField.heightAnchor.constraint(equalToConstant: 22),
             ])
     }
 
 
     func bindViewModel() {
-        guard let viewModel else { return }
         viewModel.onStateDidChange = { [weak self] state in
             //            guard let self = self else {
             //                return
@@ -98,17 +124,29 @@ final class ProfileViewController: UIViewController {
                 ()
             case .error(_):
                 ()
+            case .loadedProfile(let profile):
+                self?.profile = profile
+            case .loadedImageData(let imgData):
+                self?.avatar = UIImage(data: imgData)
             }
         }
     }
 
     @objc private func logout() {
-        guard let viewModel else { return }
         viewModel.updateState(viewInput: .logOut)
     }
 
     @objc private func changeAvatar() {
         print("ImagePicker")
+    }
+
+    //  жест чтобы скрывать клавиатуру по тапу
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
     }
 
 }

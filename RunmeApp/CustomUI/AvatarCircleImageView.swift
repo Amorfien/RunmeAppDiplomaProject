@@ -22,7 +22,7 @@ final class AvatarCircleImageView: UIImageView {
         super.init(image: image)
 
         self.handler = completion
-        backgroundColor = .systemBackground
+        backgroundColor = .tintColor
 
         contentMode = .scaleAspectFill
 

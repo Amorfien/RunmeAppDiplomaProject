@@ -17,11 +17,13 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     enum State {
         case initial
 //        case loading
-//        case loaded
+        case loadedProfile(Runner)
+        case loadedImageData(Data)
         case error(Error)
     }
 
     enum ViewInput {
+        case showUser
         case logOut
     }
 
@@ -34,12 +36,36 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
 
+    private let userId: String
+
+    init(userId: String) {
+        self.userId = userId
+    }
     deinit {
         print(#function, " ProfileViewModel ⚙️")
     }
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
+        case .showUser:
+            DatabaseService.shared.getUser(userId: userId) { [weak self] dbResult in
+                switch dbResult {
+                case .success(let profile):
+                    self?.state = .loadedProfile(profile)
+
+                case .failure(_):
+                    ()
+                }
+            }
+
+            FirebaseStorageService.shared.downloadById(id: userId) { [weak self] imgResult in
+                switch imgResult {
+                case .success(let data):
+                    self?.state = .loadedImageData(data)
+                case .failure(_):
+                    ()
+                }
+            }
         case .logOut:
             AuthManager.shared.signOut()
             coordinator?.logOut()

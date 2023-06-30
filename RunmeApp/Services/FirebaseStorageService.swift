@@ -56,7 +56,7 @@ final class FirebaseStorageService {
 //        }
 //    }
     ///достать аватар по ID
-    func downloadById(id: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func downloadById(id: String, completion: @escaping (Result<Data, Error>) -> Void) {
         let ref = Storage.storage().reference().child("avatars").child(id)
         let megaByte = Int64(1 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { data, error in
@@ -64,8 +64,8 @@ final class FirebaseStorageService {
                 completion(.failure(error!))
                 return
             }
-            let image = UIImage(data: data)
-            completion(.success(image ?? UIImage(systemName: "person.and.background.dotted")!))
+//            let image = UIImage(data: data)
+            completion(.success(data))
         }
     }
 
