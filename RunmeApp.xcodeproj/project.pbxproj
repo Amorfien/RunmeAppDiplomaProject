@@ -47,7 +47,7 @@
 		1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */; };
 		1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B02A44F897008DBE6C /* HomeViewModel.swift */; };
 		1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */; };
-		189EBF0F2A4DEC8E00716711 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EBF0E2A4DEC8E00716711 /* AvatarCircleView.swift */; };
+		189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */; };
 		18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */; };
 		18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */; };
 		18ACD0BB2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */; };
@@ -100,7 +100,7 @@
 		1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		1880D6B02A44F897008DBE6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
-		189EBF0E2A4DEC8E00716711 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
+		189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleImageView.swift; sourceTree = "<group>"; };
 		18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInSectionView.swift; sourceTree = "<group>"; };
 		18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
 		18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCardsCollectionView.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 				18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */,
 				18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */,
 				180AC2FA2A47669E000FD11F /* CustomTextField.swift */,
-				189EBF0E2A4DEC8E00716711 /* AvatarCircleView.swift */,
+				189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -405,7 +405,7 @@
 				186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */,
 				1880D6AB2A44A8E0008DBE6C /* LoginViewModel.swift in Sources */,
 				187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */,
-				189EBF0F2A4DEC8E00716711 /* AvatarCircleView.swift in Sources */,
+				189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
 				187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */,
@@ -580,7 +580,7 @@
 				DEVELOPMENT_TEAM = 4V4XBFRF5Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RunmeApp/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RunMeApp;
+				INFOPLIST_KEY_CFBundleDisplayName = RunmeApp;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = FaceID;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -609,7 +609,7 @@
 				DEVELOPMENT_TEAM = 4V4XBFRF5Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RunmeApp/App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RunMeApp;
+				INFOPLIST_KEY_CFBundleDisplayName = RunmeApp;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = FaceID;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

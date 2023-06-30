@@ -21,22 +21,24 @@ final class RegistrationViewController: UIViewController {
         return scrollView
     }()
 
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "dafault-avatar")
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 80
-        imageView.layer.borderWidth = 1
-        imageView.clipsToBounds = true
-        imageView.isUserInteractionEnabled = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 160, height: 40))
-        button.backgroundColor = .white.withAlphaComponent(0.8)
-        button.setTitle("➕", for: .normal)
-        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
-        imageView.addSubview(button)
-        return imageView
-    }()
+    private lazy var avatarImageView = AvatarCircleImageView(image: UIImage(named: "dafault-avatar"), size: .large, isEditable: true, completion: addButtonDidTap)
+
+//    private lazy var avatarImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(named: "dafault-avatar")
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.layer.cornerRadius = 80
+//        imageView.layer.borderWidth = 1
+//        imageView.clipsToBounds = true
+//        imageView.isUserInteractionEnabled = true
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        let button = UIButton(frame: CGRect(x: 0, y: 120, width: 160, height: 40))
+//        button.backgroundColor = .white.withAlphaComponent(0.8)
+//        button.setTitle("➕", for: .normal)
+//        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+//        imageView.addSubview(button)
+//        return imageView
+//    }()
 
     private let vStack: UIStackView = {
         let stack = UIStackView()
@@ -139,8 +141,8 @@ final class RegistrationViewController: UIViewController {
 
             avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24),
             avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
+//            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
+//            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
             vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
@@ -239,9 +241,10 @@ extension RegistrationViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField.frame.midY + 330 > view.frame.midY {
-            scrollView.contentOffset.y = textField.frame.minY - 100
-        }
+
+        let bottom = -scrollView.contentInset.top + scrollView.contentSize.height - scrollView.frame.height
+        scrollView.setContentOffset(CGPoint(x: .zero, y: bottom - (28 * (4 - CGFloat(textField.tag)))), animated: true)
+
         return true
     }
 
@@ -260,11 +263,20 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
 
 extension RegistrationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
-            let alpha = (100 + scrollView.contentOffset.y - 20) / 100
-            doneImageView.alpha = alpha
-        } else {
-            doneImageView.alpha = 1
+
+        let screen = UIScreen.main.bounds.height
+        let content = scrollView.contentSize.height
+        if content > screen {
+            let diff = (content - screen)// / screen
+            let hidden = diff - scrollView.contentOffset.y
+            let alpha = (diff - hidden) / diff
+
+            if hidden > 0 && alpha > 0 {
+                doneImageView.alpha = alpha
+//                print(alpha)
+            }
         }
+
+
     }
 }

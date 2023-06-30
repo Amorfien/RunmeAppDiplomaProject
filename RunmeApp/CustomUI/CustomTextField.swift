@@ -20,17 +20,17 @@ final class CustomTextField: TextFieldWithPadding {
         var placeholder: String {
             switch self {
             case .nickname:
-                return "Flash"
+                return "Молния"
             case .name:
                 return "Саша"
             case .surname:
-                return "Филин"
+                return "Сова"
             case .birthday:
                 return "22.10.98"
             case .telegram:
                 return "@telegram"
             case .email:
-                return "собака@почта.ру"
+                return "адрес@почта.бег"
 //            default:
 //                return ""
             }

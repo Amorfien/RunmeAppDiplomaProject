@@ -11,7 +11,7 @@ final class FriendCardCell: UICollectionViewCell {
 
     static let id = "FriendCardCell"
 
-    let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
+    let circle = AvatarCircleImageView(image: UIImage(named: "dafault-avatar"), size: .middle)
 
     override var isSelected: Bool {
         didSet {

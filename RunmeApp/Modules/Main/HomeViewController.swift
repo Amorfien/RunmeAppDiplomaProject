@@ -40,7 +40,7 @@ final class HomeViewController: UIViewController {
     private lazy var newsTableView: UITableView = {
         let tableView = UITableView()
         tableView.tableHeaderView = tableHeaderView
-        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 90)
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
         tableView.backgroundColor = Res.MyColors.homeBackground

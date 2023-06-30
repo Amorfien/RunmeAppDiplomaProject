@@ -79,7 +79,7 @@ extension FriendCardsCollectionView: UICollectionViewDataSource {
 }
 extension FriendCardsCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 80, height: 80)
+        CGSize(width: 100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         headerDelegate?.chooseUser(id: users[indexPath.row])

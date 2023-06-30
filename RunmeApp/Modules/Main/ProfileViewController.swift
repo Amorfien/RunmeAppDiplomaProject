@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
 
     private let profile: Runner?
 
-    private let avatarImageView = AvatarCircleView(image: nil, size: .large)
+    private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .large, isEditable: true, completion: changeAvatar)
 
     init(viewModel: ProfileViewModel?, profile: Runner?) {
         self.viewModel = viewModel
@@ -105,6 +105,10 @@ final class ProfileViewController: UIViewController {
     @objc private func logout() {
         guard let viewModel else { return }
         viewModel.updateState(viewInput: .logOut)
+    }
+
+    @objc private func changeAvatar() {
+        print("ImagePicker")
     }
 
 }
