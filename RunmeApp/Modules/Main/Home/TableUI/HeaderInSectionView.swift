@@ -45,6 +45,8 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
 
 
         NSLayoutConstraint.activate([
+            self.heightAnchor.constraint(equalToConstant: 40),
+            
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 

@@ -121,6 +121,9 @@ final class HomeViewController: UIViewController {
         ])
 
     }
+
+    // MARK: - ViewModel Binding
+    
     private func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
             guard let self = self else {
@@ -128,7 +131,8 @@ final class HomeViewController: UIViewController {
             }
             switch state {
             case .initial:
-                ()
+                updateTableViewVisibility(isHidden: true)
+                updateLoadingAnimation(isLoading: false)
             case .loading:
                 updateTableViewVisibility(isHidden: true)
                 updateLoadingAnimation(isLoading: true)

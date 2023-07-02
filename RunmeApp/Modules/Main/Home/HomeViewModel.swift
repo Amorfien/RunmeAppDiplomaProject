@@ -75,7 +75,9 @@ final class HomeViewModel: HomeViewModelProtocol {
                 self?.state = .loadedNews(news)
             case .failure(let newsError):
                 print(newsError.localizedDescription)
-                self?.coordinator?.showErrorAlert(newsError)
+                self?.coordinator?.showErrorAlert(newsError, handler: {
+                    self?.state = .initial
+                })
 //                self?.state = .error(error)
             }
         }
@@ -89,7 +91,9 @@ final class HomeViewModel: HomeViewModelProtocol {
                 self?.state = .loadedAvatars(dict)
             case .failure(let avatarsError):
                 print("Download avatars Error, \(avatarsError.localizedDescription)")
-                self?.coordinator?.showErrorAlert(avatarsError)
+                self?.coordinator?.showErrorAlert(avatarsError, handler: {
+                    self?.state = .initial
+                })
             }
         }
     }
@@ -101,7 +105,7 @@ final class HomeViewModel: HomeViewModelProtocol {
                 self?.coordinator?.presentSheetPresentationController(user: user)
             case .failure(let userError):
                 print("Choose User Error, \(userError.localizedDescription)")
-                self?.coordinator?.showErrorAlert(userError)
+                self?.coordinator?.showErrorAlert(userError, handler: { })
             }
         }
     }

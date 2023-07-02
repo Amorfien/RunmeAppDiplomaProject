@@ -17,7 +17,7 @@ protocol Coordinatable: AnyObject {
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
 
-    func showErrorAlert(_ error: Error)
+    func showErrorAlert(_ error: Error, handler: @escaping () -> Void)
 }
 
 
@@ -25,9 +25,11 @@ extension Coordinatable {
     func addChildCoordinator(_ coordinator: Coordinatable) {}
     func removeChildCoordinator(_ coordinator: Coordinatable) {}
 
-    func showErrorAlert(_ error: Error) {
+    func showErrorAlert(_ error: Error, handler: @escaping () -> Void) {
         DispatchQueue.main.async {
-            self.navigationController.showAlert(title: "Ошибка!", message: error.localizedDescription) {}
+            self.navigationController.showAlert(title: "Ошибка!", message: error.localizedDescription) {
+                handler()
+            }
         }
     }
 }

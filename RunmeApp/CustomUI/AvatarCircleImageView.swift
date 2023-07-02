@@ -21,13 +21,17 @@ final class AvatarCircleImageView: UIImageView {
     init(image: UIImage?, size: Size, isEditable: Bool = false, completion: (() -> Void)? = nil) {
         super.init(image: image)
 
+        if image == nil {
+            self.image = UIImage(named: "dafault-avatar")!
+        }
+
         self.handler = completion
         backgroundColor = .tintColor
 
         contentMode = .scaleAspectFill
 
+        isUserInteractionEnabled = true
         if isEditable {
-            isUserInteractionEnabled = true
             let button = UIButton(frame: CGRect(x: 0, y: size.rawValue - size.rawValue / 4
                                                 , width: size.rawValue, height: size.rawValue / 4))
             button.backgroundColor = .white.withAlphaComponent(0.8)

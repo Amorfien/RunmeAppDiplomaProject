@@ -213,7 +213,7 @@ extension PhoneVerificationViewController: UITextFieldDelegate {
             nextButton.isEnabled = false
         } else if text.count > maxChar {
             textField.deleteBackward()
-        } else if text.count == 0 {
+        } else if text.isEmpty {
                     textField.attributedText = NSAttributedString(string: startChar, attributes: [
                         NSAttributedString.Key.kern: kern
                     ])

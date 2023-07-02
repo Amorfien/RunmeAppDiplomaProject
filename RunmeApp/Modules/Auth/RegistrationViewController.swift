@@ -245,19 +245,27 @@ extension RegistrationViewController: UITextFieldDelegate {
     }
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
         if textField.tag == 0 {
-            guard let text = textField.text else { return }
             if text.count > 2 {
                 nextButton.isEnabled = true
                 nextButton.isSelected = false
             } else {
                 nextButton.isEnabled = false
             }
+        } else if textField.tag == 4, text.isEmpty {
+            textField.text = "@"
         }
     }
 
     ///прокрутка контента
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+
+        if textField.tag == 4 {
+            if let text = textField.text, text.isEmpty {
+                textField.text = "@"
+            }
+        }
 
         let bottom = -scrollView.contentInset.top + scrollView.contentSize.height - scrollView.frame.height
         scrollView.setContentOffset(CGPoint(x: .zero, y: bottom - (28 * (4 - CGFloat(textField.tag)))), animated: true)

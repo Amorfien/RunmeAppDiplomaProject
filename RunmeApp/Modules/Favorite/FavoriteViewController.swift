@@ -45,6 +45,8 @@ final class FavoriteViewController: UIViewController {
     }
 
 
+    // MARK: - ViewModel Binding
+    
     func bindViewModel() {
         viewModel.onStateDidChange = { [weak self] state in
             guard let self = self else {

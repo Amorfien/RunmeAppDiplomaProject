@@ -67,9 +67,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .helloButtonDidTap:
-            coordinator?.pushPhoneViewController()            //true
+//            coordinator?.pushPhoneViewController()            //true
 
-//            coordinator?.pushRegistrationViewController()     //test
+            coordinator?.pushRegistrationViewController()     //test
 //            coordinator?.pushToMain()                         //test
 
         case .loginWithBio:
@@ -89,7 +89,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 case .success(_):
                     self?.coordinator?.pushOTPViewController()
                 case .failure(let phoneError):
-                    self?.coordinator?.showErrorAlert(phoneError)
+                    self?.coordinator?.showErrorAlert(phoneError, handler: { })
                 }
             }
 
@@ -104,7 +104,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 case .success(_):
                     self?.checkFullRegistration()
                 case .failure(let smsError):
-                    self?.coordinator?.showErrorAlert(smsError)
+                    self?.coordinator?.showErrorAlert(smsError, handler: { })
                 }
             }
 
@@ -131,14 +131,14 @@ final class LoginViewModel: LoginViewModelProtocol {
                         case .failure(let error):
                             print("Set User Error \(error.localizedDescription)")
 //                            self?.state = .error(error)
-                            self?.coordinator?.showErrorAlert(error)
+                            self?.coordinator?.showErrorAlert(error, handler: { })
                         }
                     }
 
                 case .failure(let error):
                     print("Upload Error \(error.localizedDescription)")
 //                    self.state = .error(error)
-                    self.coordinator?.showErrorAlert(error)
+                    self.coordinator?.showErrorAlert(error, handler: { })
                 }
             }
         }

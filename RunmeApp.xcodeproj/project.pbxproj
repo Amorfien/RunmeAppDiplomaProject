@@ -48,6 +48,7 @@
 		1880D6AF2A44F23D008DBE6C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */; };
 		1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B02A44F897008DBE6C /* HomeViewModel.swift */; };
 		1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */; };
+		188320062A51A4DB00E08AF0 /* AchievementsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */; };
 		189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */; };
 		18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */; };
 		18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */; };
@@ -102,6 +103,7 @@
 		1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		1880D6B02A44F897008DBE6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsScrollView.swift; sourceTree = "<group>"; };
 		189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleImageView.swift; sourceTree = "<group>"; };
 		18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInSectionView.swift; sourceTree = "<group>"; };
 		18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */,
 				180AC2FA2A47669E000FD11F /* CustomTextField.swift */,
 				189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */,
+				188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				1880D69B2A44984C008DBE6C /* HomeViewController.swift in Sources */,
 				1880D6A32A449C66008DBE6C /* ProfileCoordinator.swift in Sources */,
 				1880D69F2A44987A008DBE6C /* FavoriteViewController.swift in Sources */,
+				188320062A51A4DB00E08AF0 /* AchievementsScrollView.swift in Sources */,
 				1880D6952A44963F008DBE6C /* AppTabBarController.swift in Sources */,
 				1880D6792A4490E4008DBE6C /* SceneDelegate.swift in Sources */,
 				1880D69D2A449857008DBE6C /* ProfileViewController.swift in Sources */,

@@ -27,7 +27,7 @@ final class ProfileViewController: UIViewController {
 //        }
 //    }
 
-    private lazy var profileCardView = ProfileCardView(isEditable: self.isEditable)
+    private lazy var profileCardView = ProfileCardView(delegate: self, isEditable: self.isEditable)
     
     //MARK: - Init
     
@@ -51,18 +51,6 @@ final class ProfileViewController: UIViewController {
 
         viewModel.updateState(viewInput: .showUser)
 
-//        DatabaseService.shared.getUser(userId: AuthManager.shared.currentUser?.uid ?? "---", completion: { result in
-//            switch result {
-//            case .success(let runner):
-//                DispatchQueue.main.async {
-//                    self.profile = runner
-//
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        })
-
     }
 
     deinit {
@@ -72,7 +60,7 @@ final class ProfileViewController: UIViewController {
     private func setupNavigation() {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Профиль"
-        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "door.right.hand.open"), style: .done, target: self, action: #selector(logout))
+        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
     }
 
@@ -80,21 +68,7 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = Res.MyColors.profileBackground
         view.addSubview(profileCardView)
 
-
-//            FirebaseStorageService.shared.downloadById(id: profile!.id, completion: { result in
-//                switch result {
-//                case .success(let image):
-//                    DispatchQueue.main.async {
-//                        self.avatarImageView.image = image
-//                    }
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                    DispatchQueue.main.async {
-//                        self.avatarImageView.image = UIImage(named: "dafault-avatar")!
-//                    }
-//                }
-//            })
-
+//        profileCardView.delegate = self
 
 
         NSLayoutConstraint.activate([
@@ -137,6 +111,40 @@ final class ProfileViewController: UIViewController {
     }
     @objc private func hideKeyboard() {
         view.endEditing(true)
+    }
+
+}
+
+
+//MARK: - Extensions
+extension ProfileViewController: UITextFieldDelegate {
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.9) {
+            textField.backgroundColor = .white.withAlphaComponent(0.9)
+
+        }
+    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        UIView.animate(withDuration: 0.4) {
+            textField.backgroundColor = .white.withAlphaComponent(0.1)
+        }
+        return true
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        hideKeyboard()
+        return true
+    }
+    
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profileCardView.avatar = pickedImage
+        }
+        picker.dismiss(animated: true)
     }
 
 }
