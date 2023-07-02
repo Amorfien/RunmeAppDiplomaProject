@@ -17,7 +17,7 @@ struct Runner: Identifiable {
     let name: String?
     let surname: String?
     var statusText: String?
-    let isMale: Bool?
+    let isMale: Bool
 
     let email: String?
     let telegram: String?
@@ -26,10 +26,10 @@ struct Runner: Identifiable {
 
     let birthday: String?
     var birthdayShow: Bool?// = true
-    var isAdmin: Bool?// = false
+    var isAdmin: Bool = false
 
-    var personalBests: [Int]? = [0, 0, 0, 0]
-    var achievements: [String]? = []
+    var personalBests: [Int] = [0, 0, 0, 0]
+    var achievements: [String] = []
 
     var posts: [String]? = []
     var representation: [String: Any] {

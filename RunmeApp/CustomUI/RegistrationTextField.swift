@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CustomTextField: TextFieldWithPadding {
+final class RegistrationTextField: TextFieldWithPadding {
 
     enum RegisterLabel: String {
         case nickname = "Никнейм (обязательно)"

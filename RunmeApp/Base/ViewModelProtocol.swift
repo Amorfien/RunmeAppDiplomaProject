@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ViewModelProtocol: AnyObject {
+//    var coordinator: Coordinatable? { get set }
     func phoneFormatter(number: String?) -> String
 }
 

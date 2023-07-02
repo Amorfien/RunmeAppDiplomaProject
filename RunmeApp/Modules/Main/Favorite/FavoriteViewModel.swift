@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FavoriteViewModelProtocol: AnyObject {
+protocol FavoriteViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((FavoriteViewModel.State) -> Void)? { get set }
     func updateState(viewInput: FavoriteViewModel.ViewInput)
 }

@@ -7,13 +7,15 @@
 
 import Foundation
 
-protocol ProfileViewModelProtocol: AnyObject {
+protocol ProfileViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
     func updateState(viewInput: ProfileViewModel.ViewInput)
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol {
 
+    weak var coordinator: ProfileCoordinator?
+    
     enum State {
         case initial
 //        case loading
@@ -27,7 +29,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case logOut
     }
 
-    weak var coordinator: ProfileCoordinator?
     var onStateDidChange: ((State) -> Void)?
 
     private(set) var state: State = .initial {

@@ -55,19 +55,25 @@ final class AppCoordinator: Coordinatable {
         let favoriteViewModel = FavoriteViewModel()
         let favoriteCoordinator = FavoriteCoordinator(vc: UINavigationController(), vm: favoriteViewModel)
 
+        let resultsViewModl = ResultsViewModel()
+        let resultsCoordinator = ResultsCoordinator(vc: UINavigationController(), vm: resultsViewModl)
+
         let appTabBarController = AppTabBarController(viewControllers: [
             homeCoordinator.navigationController,
             profileCoordinator.navigationController,
-            favoriteCoordinator.navigationController
+            favoriteCoordinator.navigationController,
+            resultsCoordinator.navigationController
         ])
 
         homeCoordinator.start()
         profileCoordinator.start()
         favoriteCoordinator.start()
+        resultsCoordinator.start()
 
         addChildCoordinator(homeCoordinator)
         addChildCoordinator(profileCoordinator)
         addChildCoordinator(favoriteCoordinator)
+        addChildCoordinator(resultsCoordinator)
 
         navigationController.navigationBar.isHidden = true
         navigationController.setViewControllers([appTabBarController], animated: true)

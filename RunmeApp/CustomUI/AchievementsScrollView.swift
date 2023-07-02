@@ -22,6 +22,7 @@ final class AchievementsScrollView: UIScrollView {
     }
 
     private func setupView() {
+        self.backgroundColor = .systemBackground.withAlphaComponent(0.25)
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.showsHorizontalScrollIndicator = false
         self.layer.borderWidth = 0.3

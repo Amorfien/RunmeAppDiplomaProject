@@ -36,13 +36,13 @@ final class RegistrationViewController: UIViewController {
         return stack
     }()
 
-    private let nicknameTextField = CustomTextField(type: .nickname)
-    private let nameTextField = CustomTextField(type: .name)
-    private let surnameTextField = CustomTextField(type: .surname)
-    private let emailTextField = CustomTextField(type: .email)
-    private let telegramTextField = CustomTextField(type: .telegram)
+    private let nicknameTextField = RegistrationTextField(type: .nickname)
+    private let nameTextField = RegistrationTextField(type: .name)
+    private let surnameTextField = RegistrationTextField(type: .surname)
+    private let emailTextField = RegistrationTextField(type: .email)
+    private let telegramTextField = RegistrationTextField(type: .telegram)
     private let hStack = UIStackView()
-    private let birthdayTextField = CustomTextField(type: .birthday)
+    private let birthdayTextField = RegistrationTextField(type: .birthday)
 
     private lazy var sexSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Муж", "Жен"])

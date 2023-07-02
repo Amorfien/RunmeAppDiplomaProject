@@ -13,7 +13,7 @@
 		18020EFE2A46211F00D615D7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 18020EFD2A46211F00D615D7 /* FirebaseFirestore */; };
 		18020F002A46211F00D615D7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 18020EFF2A46211F00D615D7 /* FirebaseStorage */; };
 		18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18020F022A462D1E00D615D7 /* AuthManager.swift */; };
-		180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* CustomTextField.swift */; };
+		180AC2FB2A47669E000FD11F /* RegistrationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* RegistrationTextField.swift */; };
 		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
 		1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1849A4392A4F59BA00401500 /* ProfileCardView.swift */; };
 		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
@@ -49,6 +49,9 @@
 		1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B02A44F897008DBE6C /* HomeViewModel.swift */; };
 		1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */; };
 		188320062A51A4DB00E08AF0 /* AchievementsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */; };
+		188320082A51F31200E08AF0 /* ResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188320072A51F31200E08AF0 /* ResultsCoordinator.swift */; };
+		1883200B2A51F58200E08AF0 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883200A2A51F58200E08AF0 /* ResultsViewModel.swift */; };
+		1883200D2A51F7FD00E08AF0 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883200C2A51F7FD00E08AF0 /* ResultsViewController.swift */; };
 		189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */; };
 		18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */; };
 		18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */; };
@@ -60,12 +63,13 @@
 		18DC3BF72A474B7000438728 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BF62A474B7000438728 /* RegistrationViewController.swift */; };
 		18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */; };
 		18DC3BFB2A47512800438728 /* LabelTextFieldHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */; };
+		18FE16E42A520BBE00145305 /* DistanceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE16E32A520BBE00145305 /* DistanceLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18020EF62A461F1F00D615D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18020F022A462D1E00D615D7 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		180AC2FA2A47669E000FD11F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		180AC2FA2A47669E000FD11F /* RegistrationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextField.swift; sourceTree = "<group>"; };
 		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		1849A4392A4F59BA00401500 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
@@ -104,6 +108,9 @@
 		1880D6B02A44F897008DBE6C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsScrollView.swift; sourceTree = "<group>"; };
+		188320072A51F31200E08AF0 /* ResultsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCoordinator.swift; sourceTree = "<group>"; };
+		1883200A2A51F58200E08AF0 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
+		1883200C2A51F7FD00E08AF0 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleImageView.swift; sourceTree = "<group>"; };
 		18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInSectionView.swift; sourceTree = "<group>"; };
 		18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
@@ -115,6 +122,7 @@
 		18DC3BF62A474B7000438728 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extensions.swift"; sourceTree = "<group>"; };
 		18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldHStack.swift; sourceTree = "<group>"; };
+		18FE16E32A520BBE00145305 /* DistanceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +180,8 @@
 				18768A892A45D56900720EC3 /* TextFieldWithPadding.swift */,
 				18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */,
 				18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */,
-				180AC2FA2A47669E000FD11F /* CustomTextField.swift */,
+				180AC2FA2A47669E000FD11F /* RegistrationTextField.swift */,
+				18FE16E32A520BBE00145305 /* DistanceLabel.swift */,
 				189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */,
 				188320052A51A4DB00E08AF0 /* AchievementsScrollView.swift */,
 			);
@@ -232,6 +241,7 @@
 				1880D6A02A449C58008DBE6C /* HomeCoordinator.swift */,
 				1880D6A22A449C66008DBE6C /* ProfileCoordinator.swift */,
 				1880D6A42A449C70008DBE6C /* FavoriteCoordinator.swift */,
+				188320072A51F31200E08AF0 /* ResultsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -283,12 +293,20 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		188320092A51F54300E08AF0 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				1883200A2A51F58200E08AF0 /* ResultsViewModel.swift */,
+				1883200C2A51F7FD00E08AF0 /* ResultsViewController.swift */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
 		18DC3BF12A473DD100438728 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				18DC3BF22A473DE800438728 /* Auth */,
 				18DC3BF32A473E0000438728 /* Main */,
-				188320042A5169D400E08AF0 /* Favorite */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -310,6 +328,8 @@
 			children = (
 				18DC3BF52A473EA500438728 /* Home */,
 				1849A4382A4F597D00401500 /* Profile */,
+				188320042A5169D400E08AF0 /* Favorite */,
+				188320092A51F54300E08AF0 /* Results */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -417,6 +437,7 @@
 				18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */,
 				186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */,
 				1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */,
+				1883200D2A51F7FD00E08AF0 /* ResultsViewController.swift in Sources */,
 				18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */,
 				1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */,
 				1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */,
@@ -428,6 +449,8 @@
 				1880D6AB2A44A8E0008DBE6C /* LoginViewModel.swift in Sources */,
 				187A3C682A4B4F9800DFC2C2 /* News.swift in Sources */,
 				189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */,
+				188320082A51F31200E08AF0 /* ResultsCoordinator.swift in Sources */,
+				1883200B2A51F58200E08AF0 /* ResultsViewModel.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
 				187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */,
@@ -447,7 +470,8 @@
 				180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */,
 				18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */,
 				18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */,
-				180AC2FB2A47669E000FD11F /* CustomTextField.swift in Sources */,
+				180AC2FB2A47669E000FD11F /* RegistrationTextField.swift in Sources */,
+				18FE16E42A520BBE00145305 /* DistanceLabel.swift in Sources */,
 				18ACD0BD2A4C9C71008B7FDB /* FriendCardCell.swift in Sources */,
 				186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */,
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,

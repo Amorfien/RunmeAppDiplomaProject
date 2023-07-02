@@ -22,7 +22,7 @@ final class ProfileCardView: UIView {
     weak var delegate: UIViewController?
     private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .large, isEditable: self.isEditable, completion: changeAvatar)
 
-    private let statusTextField = CustomTextField(type: .status)
+    private let statusTextField = RegistrationTextField(type: .status)
     private let nicknameLabel = UILabel(text: "Никнэйм", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .label, lines: 2)
     private let nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
     private let surnameLabel = UILabel(text: "Фамилия", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
@@ -31,6 +31,12 @@ final class ProfileCardView: UIView {
     private let birthdayLabel = UILabel(text: "--.--.----", font: .monospacedDigitSystemFont(ofSize: 14, weight: .semibold), textColor: .secondaryLabel, lines: 1)
 
     private let achiewmentsView = AchievementsScrollView(frame: .zero)
+
+    private let distanceStack = UIStackView()
+    private let fiveLabel = DistanceLabel(type: .five)
+    private let tenLabel = DistanceLabel(type: .ten)
+    private let twentyLabel = DistanceLabel(type: .twenty)
+    private let fortyLabel = DistanceLabel(type: .forty)
 
 
     private lazy var bigAvatar: UIImageView = {
@@ -59,7 +65,7 @@ final class ProfileCardView: UIView {
 
 
     private func setupView() {
-        backgroundColor = .tertiarySystemBackground.withAlphaComponent(0.5)
+        backgroundColor = .tertiarySystemBackground.withAlphaComponent(0.7)
 
         layer.cornerRadius = 10
         layer.borderWidth = 1
@@ -88,6 +94,15 @@ final class ProfileCardView: UIView {
 
         addSubview(achiewmentsView)
 
+        addSubview(distanceStack)
+        distanceStack.axis = .vertical
+//        distanceStack.alignment = .trailing
+        distanceStack.distribution = .equalSpacing
+        let distanceViews = [fiveLabel, tenLabel, twentyLabel, fortyLabel]
+        distanceViews.forEach { label in
+            distanceStack.addArrangedSubview(label)
+        }
+
         addSubview(bigAvatar) //last
 
     }
@@ -95,10 +110,11 @@ final class ProfileCardView: UIView {
     private func constraints() {
         translatesAutoresizingMaskIntoConstraints = false
         vStack.translatesAutoresizingMaskIntoConstraints = false
+        distanceStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9),
-            self.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1.2),
+//            self.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1.3),
 
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -118,6 +134,12 @@ final class ProfileCardView: UIView {
             achiewmentsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             achiewmentsView.trailingAnchor.constraint(equalTo: trailingAnchor),
             achiewmentsView.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 12),
+
+            distanceStack.topAnchor.constraint(equalTo: achiewmentsView.bottomAnchor, constant: 16),
+            distanceStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            distanceStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48),
+            distanceStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            distanceStack.heightAnchor.constraint(equalToConstant: 180),
 
             bigAvatar.leadingAnchor.constraint(equalTo: leadingAnchor),
             bigAvatar.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -146,14 +168,38 @@ final class ProfileCardView: UIView {
         telegramLabel.text = profile.telegram
         statusTextField.text = profile.statusText
         birthdayLabel.text = profile.birthday
-        bigAvatar.backgroundColor = (profile.isAdmin ?? false) ? .tintColor.withAlphaComponent(0.9) : .black.withAlphaComponent(0.82)
-        achiewmentsView.fillAchievements(with: Set(profile.achievements ?? []))
-//        achiewmentsView.
+        bigAvatar.backgroundColor = profile.isAdmin ? .tintColor.withAlphaComponent(0.9) : .black.withAlphaComponent(0.82)
+        achiewmentsView.fillAchievements(with: Set(profile.achievements))
+        fiveLabel.text = timeFormat(sec: profile.personalBests[0], isMale: profile.isMale)
+        tenLabel.text = timeFormat(sec: profile.personalBests[1], isMale: profile.isMale)
+        twentyLabel.text = timeFormat(sec: profile.personalBests[2], isMale: profile.isMale)
+        fortyLabel.text = timeFormat(sec: profile.personalBests[3], isMale: profile.isMale)
+        if profile.isAdmin {
+            distanceStack.heightAnchor.constraint(equalToConstant: 0).isActive = true
+//            distanceStack.isHidden = true
+//            fiveLabel.isHidden = true
+//            tenLabel.isHidden = true
+//            twentyLabel.isHidden = true
+//            fortyLabel.isHidden = true
+        }
     }
     func fillAvatar(avatar: UIImage?) {
         self.avatar = avatar
 //        avatarImageView.image = avatar
 //        bigAvatar.image = avatar
+    }
+
+    private func timeFormat(sec: Int, isMale: Bool = true) -> String {
+
+        if sec > 0 {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute, .second]
+            formatter.unitsStyle = .abbreviated
+
+            return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
+        } else {
+            return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
+        }
     }
 
     private func changeAvatar() {

@@ -54,7 +54,7 @@ final class DatabaseService {
             let achievements = data["achievements"] as? [String]
             let posts = data["posts"] as? [String]
             // дописать
-            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
+            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale ?? true, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
 
             completion(.success(runner))
         }

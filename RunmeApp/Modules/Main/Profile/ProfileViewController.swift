@@ -58,7 +58,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Профиль"
         let logoutButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(logout))
         navigationItem.rightBarButtonItem = logoutButton
@@ -72,8 +72,9 @@ final class ProfileViewController: UIViewController {
 
 
         NSLayoutConstraint.activate([
-            profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 28),
-            profileCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            profileCardView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
     }
 

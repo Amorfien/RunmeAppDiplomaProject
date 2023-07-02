@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HomeViewModelProtocol: AnyObject {
+protocol HomeViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((HomeViewModel.State) -> Void)? { get set }
     func updateState(viewInput: HomeViewModel.ViewInput)
 }
