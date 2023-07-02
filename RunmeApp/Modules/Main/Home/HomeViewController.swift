@@ -152,8 +152,8 @@ final class HomeViewController: UIViewController {
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
-            case .error(_):
-                ()
+//            case .error(_):
+//                ()
             }
         }
     }

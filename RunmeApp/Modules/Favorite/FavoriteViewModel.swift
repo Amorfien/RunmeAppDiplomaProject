@@ -18,7 +18,7 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
         case initial
 //        case loading
 //        case loaded
-        case error(Error)
+//        case error(Error)
     }
 
     enum ViewInput {

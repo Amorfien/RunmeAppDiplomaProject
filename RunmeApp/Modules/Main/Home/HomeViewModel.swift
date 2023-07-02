@@ -19,7 +19,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case loading
         case loadedNews([Article])
         case loadedAvatars([String: Data])
-        case error(Error)
+//        case error(Error)
     }
 
     enum ViewInput {
@@ -73,9 +73,10 @@ final class HomeViewModel: HomeViewModelProtocol {
             case .success(let news):
                 print(news.count)
                 self?.state = .loadedNews(news)
-            case .failure(let error):
-                print(error.localizedDescription)
-                self?.state = .error(error)
+            case .failure(let newsError):
+                print(newsError.localizedDescription)
+                self?.coordinator?.showErrorAlert(newsError)
+//                self?.state = .error(error)
             }
         }
     }
@@ -86,8 +87,9 @@ final class HomeViewModel: HomeViewModelProtocol {
             switch result {
             case .success(let dict):
                 self?.state = .loadedAvatars(dict)
-            case .failure(let error):
-                print("Download avatars Error, \(error.localizedDescription)")
+            case .failure(let avatarsError):
+                print("Download avatars Error, \(avatarsError.localizedDescription)")
+                self?.coordinator?.showErrorAlert(avatarsError)
             }
         }
     }
@@ -97,8 +99,9 @@ final class HomeViewModel: HomeViewModelProtocol {
             switch result {
             case .success(let user):
                 self?.coordinator?.presentSheetPresentationController(user: user)
-            case .failure(let error):
-                print("Choose User Error, \(error.localizedDescription)")
+            case .failure(let userError):
+                print("Choose User Error, \(userError.localizedDescription)")
+                self?.coordinator?.showErrorAlert(userError)
             }
         }
     }

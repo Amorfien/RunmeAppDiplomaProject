@@ -16,10 +16,18 @@ protocol Coordinatable: AnyObject {
 
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
+
+    func showErrorAlert(_ error: Error)
 }
 
 
 extension Coordinatable {
     func addChildCoordinator(_ coordinator: Coordinatable) {}
     func removeChildCoordinator(_ coordinator: Coordinatable) {}
+
+    func showErrorAlert(_ error: Error) {
+        DispatchQueue.main.async {
+            self.navigationController.showAlert(title: "Ошибка!", message: error.localizedDescription) {}
+        }
+    }
 }

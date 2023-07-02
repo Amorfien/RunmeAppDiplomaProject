@@ -142,14 +142,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		1849A4382A4F597D00401500 /* ViewControllers */ = {
+		1849A4382A4F597D00401500 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				1880D69A2A44984C008DBE6C /* HomeViewController.swift */,
+				1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */,
 				1880D69C2A449857008DBE6C /* ProfileViewController.swift */,
-				1880D69E2A44987A008DBE6C /* FavoriteViewController.swift */,
+				1849A4392A4F59BA00401500 /* ProfileCardView.swift */,
 			);
-			path = ViewControllers;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		187525D92A4C62F300BBD8E1 /* TableUI */ = {
@@ -271,11 +271,21 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		188320042A5169D400E08AF0 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */,
+				1880D69E2A44987A008DBE6C /* FavoriteViewController.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
 		18DC3BF12A473DD100438728 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				18DC3BF22A473DE800438728 /* Auth */,
 				18DC3BF32A473E0000438728 /* Main */,
+				188320042A5169D400E08AF0 /* Favorite */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -295,10 +305,8 @@
 		18DC3BF32A473E0000438728 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				18DC3BF52A473EA500438728 /* ViewModels */,
-				1849A4382A4F597D00401500 /* ViewControllers */,
-				187525D92A4C62F300BBD8E1 /* TableUI */,
-				1849A4392A4F59BA00401500 /* ProfileCardView.swift */,
+				18DC3BF52A473EA500438728 /* Home */,
+				1849A4382A4F597D00401500 /* Profile */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -312,14 +320,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		18DC3BF52A473EA500438728 /* ViewModels */ = {
+		18DC3BF52A473EA500438728 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				187525D92A4C62F300BBD8E1 /* TableUI */,
 				1880D6B02A44F897008DBE6C /* HomeViewModel.swift */,
-				1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */,
-				1880D6B22A44F8DE008DBE6C /* FavoriteViewModel.swift */,
+				1880D69A2A44984C008DBE6C /* HomeViewController.swift */,
 			);
-			path = ViewModels;
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

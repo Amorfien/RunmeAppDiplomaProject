@@ -45,7 +45,20 @@ final class FavoriteViewController: UIViewController {
     }
 
 
-    func bindViewModel() {}
+    func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
+            switch state {
+
+            case .initial:
+                ()
+
+            }
+        }
+
+    }
 
 
 

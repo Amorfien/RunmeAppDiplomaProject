@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.appCoordinator = appCoordinator
         appCoordinator.start()
         window?.rootViewController = navigationController
+        window?.overrideUserInterfaceStyle = .light    //запрет тёмной темы
         window?.makeKeyAndVisible()
     }
 

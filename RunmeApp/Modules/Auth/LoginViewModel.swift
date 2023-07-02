@@ -17,16 +17,16 @@ final class LoginViewModel: LoginViewModelProtocol {
     enum State {
         case identifiedUser
         case noUser
-        case okay
-        case error(Error)
+        case fastLogin
+//        case error(Error)
     }
 
     enum ViewInput {
         case helloButtonDidTap
         case loginWithBio
-        case phoneButtonDidTap
+        case phoneButtonDidTap(String)
         case termsButtonDidTap
-        case smsButtonDidTap
+        case smsButtonDidTap(String)
         case registerButtonDidTap(Runner)
     }
 
@@ -76,24 +76,42 @@ final class LoginViewModel: LoginViewModelProtocol {
             localAuthorizationService.authorizeIfPossible { [weak self] bioResult in
                 if bioResult {
                     print("🟢")
-                    self?.state = .okay
-//                    sleep(1)
+                    self?.state = .fastLogin
                     self?.checkFullRegistration()
                 } else {
                     print("⛔️")
-                    //                     self?.state = .noBiometry
                 }
             }
             
-        case .phoneButtonDidTap:
-            coordinator?.pushOTPViewController()
+        case .phoneButtonDidTap(let text):
+            AuthManager.shared.startAuth(phoneNumber: text) { [weak self] result in
+                switch result {
+                case .success(_):
+                    self?.coordinator?.pushOTPViewController()
+                case .failure(let phoneError):
+                    self?.coordinator?.showErrorAlert(phoneError)
+                }
+            }
+
+
+
         case .termsButtonDidTap:
             coordinator?.pushTermsViewController()
 
-        case .smsButtonDidTap:
-            checkFullRegistration()
+        case .smsButtonDidTap(let code):
+            AuthManager.shared.verifyCode(smsCode: code) { [weak self] result in
+                switch result {
+                case .success(_):
+                    self?.checkFullRegistration()
+                case .failure(let smsError):
+                    self?.coordinator?.showErrorAlert(smsError)
+                }
+            }
+
+
+
             
-        case .registerButtonDidTap(var runner):
+        case .registerButtonDidTap(let runner):
 
 //            let semaphore = DispatchSemaphore(value: 1)
             //не получилось реализовать семафор. Оставил вложенность.
@@ -102,8 +120,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 switch result {
 
                 case .success(let url):
-                    print("Avatar upload")
-//                    runner.avatarURL = url.absoluteString
+                    print("Avatar upload ", url) //Прямая ссылка на аватар
 
                     DatabaseService.shared.setUser(user: runner) { [weak self] result in
                         switch result {
@@ -113,11 +130,15 @@ final class LoginViewModel: LoginViewModelProtocol {
                             self?.coordinator?.pushToMain()
                         case .failure(let error):
                             print("Set User Error \(error.localizedDescription)")
+//                            self?.state = .error(error)
+                            self?.coordinator?.showErrorAlert(error)
                         }
                     }
 
                 case .failure(let error):
                     print("Upload Error \(error.localizedDescription)")
+//                    self.state = .error(error)
+                    self.coordinator?.showErrorAlert(error)
                 }
             }
         }

@@ -166,19 +166,27 @@ class PhoneVerificationViewController: UIViewController {
         switch type {
 
         case .phone:
-            AuthManager.shared.startAuth(phoneNumber: text) { [weak self] success in
-                guard success else { return }
-                DispatchQueue.main.async {
-                    self?.viewModel.updateState(viewInput: .phoneButtonDidTap)
-                }
-            }
+            viewModel.updateState(viewInput: .phoneButtonDidTap(text))
+
+
+
+//                guard success else { return }
+//                DispatchQueue.main.async {
+//                    self?.viewModel.updateState(viewInput: .phoneButtonDidTap)
+//                }
+            
         case .sms:
             var code = text
             code.removeFirst()
-            AuthManager.shared.verifyCode(smsCode: code) { [weak self] success in
-                guard success else { return }
-                self?.viewModel.updateState(viewInput: .smsButtonDidTap)
-            }
+            viewModel.updateState(viewInput: .smsButtonDidTap(code))
+
+
+
+
+//            AuthManager.shared.verifyCode(smsCode: code) { [weak self] success in
+//                guard success else { return }
+//                self?.viewModel.updateState(viewInput: .smsButtonDidTap)
+//            }
         }
 
 
@@ -209,6 +217,14 @@ extension PhoneVerificationViewController: UITextFieldDelegate {
                     textField.attributedText = NSAttributedString(string: startChar, attributes: [
                         NSAttributedString.Key.kern: kern
                     ])
+        }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if nextButton.isEnabled {
+            nextDidTap()
+            return true
+        } else {
+            return false
         }
     }
 

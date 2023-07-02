@@ -85,12 +85,12 @@ final class HelloViewController: UIViewController {
             case .noUser:
                 self.loginButton.setTitle("Войти по номеру телефона  📲", for: .normal)
                 self.bioLoginButton.isHidden = true
-            case .okay:
+            case .fastLogin:
                   DispatchQueue.main.async {
                       self.bioLoginButton.tintColor = .systemBlue
                   }
-            case .error(_):
-                ()
+//            case .error(let error):
+//                self.showAlert(title: "Ошибка", message: error.localizedDescription) {}
             }
         }
     }

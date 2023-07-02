@@ -53,4 +53,10 @@ final class LoginCoordinator: Coordinatable {
         navigationController.pushViewController(registrationViewController, animated: true)
     }
 
+//    func showErrorAlert(_ error: Error) {
+//        DispatchQueue.main.async {
+//            self.navigationController.showAlert(title: "Ошибка!", message: error.localizedDescription) {}
+//        }
+//    }
+
 }

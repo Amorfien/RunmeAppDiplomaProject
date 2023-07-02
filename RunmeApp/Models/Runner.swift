@@ -23,7 +23,6 @@ struct Runner: Identifiable {
     let telegram: String?
 
     var avatar: UIImage?
-//    var avatarURL: String?
 
     let birthday: String?
     var birthdayShow: Bool?// = true
@@ -44,7 +43,6 @@ struct Runner: Identifiable {
         repres["isMale"] = self.isMale
         repres["email"] = self.email
         repres["telegram"] = self.telegram
-//        repres["avatarURL"] = self.avatarURL
         repres["birthday"] = self.birthday
         repres["birthdayShow"] = self.birthdayShow
         repres["isAdmin"] = self.isAdmin

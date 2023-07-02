@@ -23,25 +23,28 @@ final class AuthManager {
     private init() {}
 
 
-    func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
+    func startAuth(phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> Void) {
 
         //TODO: - TestSMS
-        Auth.auth().settings?.isAppVerificationDisabledForTesting = true ///тестовый режим, отключение капчи, только забитые юзеры
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = true ///true - тестовый режим, отключение капчи, только забитые юзеры
 
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
-            guard let verificationID, error == nil else {
-                completion(false)
-                return
-            }
+            if let verificationID, error == nil {
+//                return
             self?.verificationID = verificationID
-            completion(true)
+                completion(.success(true))
+            } else if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(false))
+            }
         }
     }
 
-    func verifyCode(smsCode: String, completion: @escaping (Bool) -> Void) {
+    func verifyCode(smsCode: String, completion: @escaping (Result<Bool, Error>) -> Void) {
 
         guard let verificationID else {
-            completion(false)
+            completion(.success(false))
             return
         }
         let credential = PhoneAuthProvider.provider().credential(
@@ -49,11 +52,13 @@ final class AuthManager {
             verificationCode: smsCode
         )
         auth.signIn(with: credential) { result, error in
-            guard result != nil, error == nil else {
-                completion(false)
-                return
+            if result != nil, error == nil {
+                completion(.success(true))
+            } else if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(false))
             }
-            completion(true)
         }
 
     }
