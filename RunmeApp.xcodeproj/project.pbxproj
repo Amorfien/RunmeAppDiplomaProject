@@ -65,6 +65,7 @@
 		18DC3BFB2A47512800438728 /* LabelTextFieldHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */; };
 		18FE16E42A520BBE00145305 /* DistanceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE16E32A520BBE00145305 /* DistanceLabel.swift */; };
 		18FE16E62A52D06200145305 /* RunnerPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE16E52A52D06200145305 /* RunnerPostTableViewCell.swift */; };
+		18FE16E82A53395800145305 /* UIView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE16E72A53395800145305 /* UIView + Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldHStack.swift; sourceTree = "<group>"; };
 		18FE16E32A520BBE00145305 /* DistanceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceLabel.swift; sourceTree = "<group>"; };
 		18FE16E52A52D06200145305 /* RunnerPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerPostTableViewCell.swift; sourceTree = "<group>"; };
+		18FE16E72A53395800145305 /* UIView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 				1880D6A82A44A48D008DBE6C /* String + Extensions.swift */,
 				18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */,
 				186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */,
+				18FE16E72A53395800145305 /* UIView + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				1880D67B2A4490E4008DBE6C /* HelloViewController.swift in Sources */,
 				1880D6772A4490E4008DBE6C /* AppDelegate.swift in Sources */,
 				18DC3BFB2A47512800438728 /* LabelTextFieldHStack.swift in Sources */,
+				18FE16E82A53395800145305 /* UIView + Extensions.swift in Sources */,
 				18ACD0BB2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift in Sources */,
 				1880D6A72A449C7F008DBE6C /* LoginCoordinator.swift in Sources */,
 				1880D6922A449480008DBE6C /* Res.swift in Sources */,

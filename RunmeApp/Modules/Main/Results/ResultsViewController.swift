@@ -11,9 +11,19 @@ final class ResultsViewController: UIViewController {
 
     private let viewModel: ResultsViewModel
 
+//    private let fiveKmArray: [String: Int] = [:]
+//    private let tenKmArray: [Int] = []
+//    private let twentyKmArray: [Int] = []
+//    private let fortyKmArray: [Int] = []
+
+    private var runners: [RunnersBests] = [] {
+        didSet {
+            resultsTableView.reloadData()
+        }
+    }
+
     private lazy var distanceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.0975", "МАРАФОН"])
-//        segmentedControl.backgroundColor = .secondarySystemBackground
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -54,7 +64,9 @@ final class ResultsViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
-        viewModel.updateState(viewInput: .changeDist(0))
+        viewModel.updateState(viewInput: .needUpdate)
+
+
     }
 
     
@@ -91,16 +103,21 @@ final class ResultsViewController: UIViewController {
                 ()
             case .loading:
                 ()
-            case .loadedResults(_):
-                ()
+            case .loadedResults(let bests):
+                self.runners = bests
             }
         }
     }
 
 
 
-    @objc private func changeDistance() {
-        viewModel.updateState(viewInput: .changeDist(distanceSegment.selectedSegmentIndex))
+    @objc private func changeDistance(_ sender: UISegmentedControl) {
+//        viewModel.updateState(viewInput: .changeDist(sender.selectedSegmentIndex))
+                runners.sort { lhs, rhs in
+                    lhs.personalBests[sender.selectedSegmentIndex] < rhs.personalBests[sender.selectedSegmentIndex]
+                }
+//        resultsTableView.reloadData()
+//        print(dump(runners))
     }
 
 
@@ -112,7 +129,8 @@ final class ResultsViewController: UIViewController {
 
 extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        50
+        runners.count
+//        runners.filter{$0.personalBests[distanceSegment.selectedSegmentIndex] != 0}.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,7 +138,10 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 //        else { return UITableViewCell() }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath)
-        cell.textLabel?.text = String(indexPath.row + 1)
+        let runner = runners[indexPath.row]
+        var time = runner.personalBests[distanceSegment.selectedSegmentIndex]
+        let nickname = runner.nickname
+        cell.textLabel?.text = "\(indexPath.row + 1)  \(timeFormat(sec: time, isMale: runner.isMale))  \(nickname)"
         return cell
     }
 

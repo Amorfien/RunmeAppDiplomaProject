@@ -17,10 +17,11 @@ final class ResultsViewModel: ResultsViewModelProtocol {
     enum State {
         case initial
         case loading
-        case loadedResults([String])
+        case loadedResults([RunnersBests])
     }
 
     enum ViewInput {
+        case needUpdate
         case changeDist(Int)
         case chooseUser(String)
     }
@@ -30,12 +31,31 @@ final class ResultsViewModel: ResultsViewModelProtocol {
 
     var onStateDidChange: ((State) -> Void)?
 
+    private(set) var state: State = .initial {
+        didSet {
+            onStateDidChange?(state)
+        }
+    }
+
     deinit {
         print(#function, " ResultsViewModel ⚙️")
     }
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
+        case .needUpdate:
+            DatabaseService.shared.getAllUsers { result in
+                switch result {
+                case .success(var bests):
+
+                    bests.sort { lhs, rhs in
+                        lhs.personalBests[0] < rhs.personalBests[0]
+                    }
+                    self.state = .loadedResults(bests)
+                case .failure(_):
+                    print("No results")
+                }
+            }
         case .changeDist(let index):
             print(index)
         case .chooseUser(_):

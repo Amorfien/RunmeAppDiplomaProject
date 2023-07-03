@@ -34,6 +34,7 @@ final class DatabaseService {
     func getUser(userId: String, completion: @escaping (Result<Runner, Error>) -> Void) {
         usersRef.document(userId).getDocument { docSnapshot, error in
 
+            guard error == nil else { completion(.failure(error!)); return }
             guard let docSnapshot else { return }
             guard let data = docSnapshot.data() else { return }
 
@@ -81,13 +82,54 @@ final class DatabaseService {
 
 
     ///достать всех юзеров
-//    func getAllUsers (completion: @escaping (Result<Runner, Error>) -> Void) {
-//
-//
-//
-//
-//    }
+    func getAllUsers (completion: @escaping (Result<[RunnersBests], Error>) -> Void) {
+
+        var runnersBests: [RunnersBests] = []
+//        usersRef.whereField("personalBests", isGreaterThan: [0, 0, 0, 0]).getDocuments
+        usersRef.getDocuments { snapshot, error in
+            if let error {
+                completion(.failure(error))
+            } else if (snapshot?.isEmpty)! {
+                completion(.success([]))
+            } else {
+                for document in (snapshot?.documents)! {
+                    guard let id = document.data()["id"] as? String else { print("0001"); return }
+                    let personalBests = document.data()["personalBests"] as? [Int]
+                    let nickname = document.data()["nickname"] as? String ?? "???"
+                    let isMale = document.data()["isMale"] as? Bool ?? true
+
+                    var updBests: [Int] = personalBests ?? [0, 0, 0, 0]
+                    for (i, item) in updBests.enumerated() {
+                        if item == 0 {
+                            updBests[i] = 100_000
+                        }
+                    }
+
+                    let bests = RunnersBests(id: id, nickname: nickname, isMale: isMale, personalBests: updBests)
+                    runnersBests.append(bests)
+
+                    if runnersBests.count == snapshot?.count {//storageList.items.count {
+                        completion(.success(runnersBests))
+                    }
+                }
+            }
+        }
+
+
+
+    }
 
 
 
 }
+
+
+//enum DatabaseServiceError: String, Error {
+//
+//    case emptySnapshot
+//
+//    var localizedDescription: String {
+//        return self.rawValue
+//    }
+//
+//}

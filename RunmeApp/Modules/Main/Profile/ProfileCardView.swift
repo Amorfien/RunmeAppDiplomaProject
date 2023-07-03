@@ -189,18 +189,18 @@ final class ProfileCardView: UIView {
 //        bigAvatar.image = avatar
     }
 
-    private func timeFormat(sec: Int, isMale: Bool = true) -> String {
-
-        if sec > 0 {
-            let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.hour, .minute, .second]
-            formatter.unitsStyle = .abbreviated
-
-            return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
-        } else {
-            return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
-        }
-    }
+//    private func timeFormat(sec: Int, isMale: Bool = true) -> String {
+//
+//        if sec > 0 {
+//            let formatter = DateComponentsFormatter()
+//            formatter.allowedUnits = [.hour, .minute, .second]
+//            formatter.unitsStyle = .abbreviated
+//
+//            return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
+//        } else {
+//            return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
+//        }
+//    }
 
     private func changeAvatar() {
         print("ImagePicker")

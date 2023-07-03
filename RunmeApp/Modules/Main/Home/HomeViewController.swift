@@ -53,9 +53,9 @@ final class HomeViewController: UIViewController {
         tableView.sectionFooterHeight = 0
         tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground//Res.MyColors.homeBackground
-//        tableView.separatorStyle = .singleLine
-//        tableView.separatorInset = .zero
-//        tableView.separatorColor = .tintColor
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = .zero
+        tableView.separatorColor = .tintColor
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
@@ -198,6 +198,7 @@ final class HomeViewController: UIViewController {
             newsTableView.tableHeaderView  = tableHeaderView
             viewModel.updateState(viewInput: .runnersSegment)
             view.backgroundColor = Res.MyColors.homeBackground
+            newsTableView.backgroundColor = Res.MyColors.homeBackground
         case 1:
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)

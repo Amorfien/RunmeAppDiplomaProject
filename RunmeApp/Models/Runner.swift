@@ -68,3 +68,12 @@ struct Runner: Identifiable {
 //    case silver
 //    case bronze
 //}
+
+
+struct RunnersBests: Identifiable {
+
+    var id: String
+    var nickname: String
+    var isMale: Bool
+    var personalBests: [Int] = [0, 0, 0, 0]
+}
