@@ -104,6 +104,9 @@ final class DatabaseService {
                             updBests[i] = 100_000
                         }
                     }
+                    if id == "_adminadmin" {
+                        updBests = [100_001, 100_001, 100_001, 100_001]
+                    }
 
                     let bests = RunnersBests(id: id, nickname: nickname, isMale: isMale, personalBests: updBests)
                     runnersBests.append(bests)

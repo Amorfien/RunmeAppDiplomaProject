@@ -41,7 +41,7 @@ final class FavoriteViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.MyColors.favoriteBackground
+        view.backgroundColor = Res.PRColors.prLight
     }
 
 

@@ -137,16 +137,25 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 //        guard let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath) as? UITableViewCell
 //        else { return UITableViewCell() }
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath)
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "standartCell")
         let runner = runners[indexPath.row]
-        var time = runner.personalBests[distanceSegment.selectedSegmentIndex]
+        let time = runner.personalBests[distanceSegment.selectedSegmentIndex]
         let nickname = runner.nickname
-        cell.textLabel?.text = "\(indexPath.row + 1)  \(timeFormat(sec: time, isMale: runner.isMale))  \(nickname)"
+
+        cell.textLabel?.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
+        cell.textLabel?.text = timeFormat(sec: time, isMale: runner.isMale)
+        cell.detailTextLabel?.lineBreakMode = .byTruncatingMiddle
+        cell.detailTextLabel?.text = "\(nickname)  - \(indexPath.row + 1)"
+
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let runner = runners[indexPath.row]
+        print(runner.personalBests)
+        viewModel.updateState(viewInput: .chooseUser(runner.id))
     }
 
 

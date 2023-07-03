@@ -104,7 +104,8 @@ final class HomeViewModel: HomeViewModelProtocol {
         DatabaseService.shared.getUser(userId: id) { [weak self] result in
             switch result {
             case .success(let user):
-                self?.coordinator?.presentSheetPresentationController(user: user)
+//                self?.coordinator?.presentSheetPresentationController(user: user)
+                self?.coordinator?.flowCompletionHandler!(user)
             case .failure(let userError):
                 print("Choose User Error, \(userError.localizedDescription)")
                 self?.coordinator?.showErrorAlert(userError, handler: { })

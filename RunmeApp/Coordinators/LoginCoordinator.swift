@@ -8,7 +8,7 @@
 import UIKit
 
 final class LoginCoordinator: Coordinatable {
-    var flowCompletionHandler: (() -> Void)?
+    var flowCompletionHandler: ((Runner?) -> Void)?
 
     private(set) var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
@@ -30,7 +30,7 @@ final class LoginCoordinator: Coordinatable {
 
     func pushToMain() {
 
-        self.flowCompletionHandler?()
+        self.flowCompletionHandler?(nil) ///maybe here
 
     }
 

@@ -34,7 +34,7 @@ final class AchievementsScrollView: UIScrollView {
     func fillAchievements(with ach: Set<String>) {
         for (i, achievment) in ach.enumerated() {
             let imageView = UIImageView()
-            imageView.frame = CGRect(x: 44 * i + 12, y: 8, width: 30, height: 30)
+            imageView.frame = CGRect(x: 44 * i + 12, y: 8, width: 32, height: 32)
             imageView.contentMode = .scaleAspectFit
             if let image = UIImage(named: achievment) {
                 imageView.image = image

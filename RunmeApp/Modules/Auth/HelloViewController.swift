@@ -98,7 +98,7 @@ final class HelloViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        view.backgroundColor = Res.MyColors.myBackground
+        view.backgroundColor = Res.PRColors.prLight
         view.addSubview(helloImageView)
         view.addSubview(loginButton)
         view.addSubview(bioLoginButton)

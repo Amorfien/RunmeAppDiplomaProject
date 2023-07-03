@@ -10,7 +10,7 @@ import FirebaseAuth
 
 final class AppCoordinator: Coordinatable {
     
-    var flowCompletionHandler: (() -> Void)?
+    var flowCompletionHandler: ((Runner?) -> Void)?
 
     private(set) var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
@@ -33,7 +33,7 @@ final class AppCoordinator: Coordinatable {
         let loginCoordinator = LoginCoordinator(vc: navigationController, vm: loginViewModel)
         addChildCoordinator(loginCoordinator)
 
-        loginCoordinator.flowCompletionHandler = { [weak self] in
+        loginCoordinator.flowCompletionHandler = { [weak self] _ in ///maybe
             self?.goToMain()
         }
         loginCoordinator.start()
@@ -45,10 +45,13 @@ final class AppCoordinator: Coordinatable {
         let newsService = NewsService()
         let homeViewModel = HomeViewModel(newsService: newsService)
         let homeCoordinator = HomeCoordinator(vc: UINavigationController(), vm: homeViewModel)
+        homeCoordinator.flowCompletionHandler = { [weak self] runner in
+            self?.presentSheetPresentationController(user: runner!)
+        }
 
         let profileViewModel = ProfileViewModel(userId: AuthManager.shared.currentUser!.uid) ////// !!!!!!!
         let profileCoordinator = ProfileCoordinator(vc: UINavigationController(), vm: profileViewModel)
-        profileCoordinator.flowCompletionHandler = { [weak self] in
+        profileCoordinator.flowCompletionHandler = { [weak self] _ in
             self?.goToLogin()
         }
 
@@ -57,6 +60,9 @@ final class AppCoordinator: Coordinatable {
 
         let resultsViewModl = ResultsViewModel()
         let resultsCoordinator = ResultsCoordinator(vc: UINavigationController(), vm: resultsViewModl)
+        resultsCoordinator.flowCompletionHandler = { [weak self] runner in
+            self?.presentSheetPresentationController(user: runner!)
+        }
 
         let appTabBarController = AppTabBarController(viewControllers: [
             homeCoordinator.navigationController,
@@ -94,4 +100,20 @@ final class AppCoordinator: Coordinatable {
     func removeChildCoordinator(_ coordinator: Coordinatable) {
         childCoordinators = childCoordinators.filter { $0 === coordinator }
     }
+
+
+    private func presentSheetPresentationController(user: Runner) {
+        let pvm = ProfileViewModel(userId: user.id)
+        let profileVC = ProfileViewController(viewModel: pvm)
+        profileVC.view.alpha = 0.97
+
+        if let sheet = profileVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersGrabberVisible = true
+        }
+
+        navigationController.present(profileVC, animated: true)
+    }
+
 }

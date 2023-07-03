@@ -8,7 +8,7 @@
 import UIKit
 
 final class FavoriteCoordinator: Coordinatable {
-    var flowCompletionHandler: (() -> Void)?
+    var flowCompletionHandler: ((Runner?) -> Void)?
 
     var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController

@@ -52,7 +52,7 @@ final class HomeViewController: UIViewController {
 //        tableView.estimatedSectionHeaderHeight = 20
         tableView.sectionFooterHeight = 0
         tableView.sectionHeaderTopPadding = 0
-        tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground//Res.MyColors.homeBackground
+        tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.PRColors.prLight : Res.MyColors.myBackground//Res.MyColors.homeBackground
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = .zero
         tableView.separatorColor = .tintColor
@@ -108,7 +108,7 @@ final class HomeViewController: UIViewController {
     private func setupView() {
         tableHeaderView.headerDelegate = self
 //        view.backgroundColor = .secondarySystemBackground
-        view.backgroundColor = Res.MyColors.homeBackground
+        view.backgroundColor = Res.PRColors.prLight
 
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)
@@ -197,8 +197,8 @@ final class HomeViewController: UIViewController {
         case 0:
             newsTableView.tableHeaderView  = tableHeaderView
             viewModel.updateState(viewInput: .runnersSegment)
-            view.backgroundColor = Res.MyColors.homeBackground
-            newsTableView.backgroundColor = Res.MyColors.homeBackground
+            view.backgroundColor = Res.PRColors.prLight
+            newsTableView.backgroundColor = Res.PRColors.prLight
         case 1:
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)

@@ -13,7 +13,7 @@ final class ResultsCoordinator: Coordinatable {
     var childCoordinators: [Coordinatable] = []
     private(set) var vm: ResultsViewModel
     
-    var flowCompletionHandler: (() -> Void)?
+    var flowCompletionHandler: ((Runner?) -> Void)?
 
     init(vc: UINavigationController, vm: ResultsViewModel) {
         self.navigationController = vc

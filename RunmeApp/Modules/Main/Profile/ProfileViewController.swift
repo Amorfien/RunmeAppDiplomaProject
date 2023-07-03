@@ -65,7 +65,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.MyColors.profileBackground
+        view.backgroundColor = Res.PRColors.prRegular
         view.addSubview(profileCardView)
 
 //        profileCardView.delegate = self

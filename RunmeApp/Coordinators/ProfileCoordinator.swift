@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileCoordinator: Coordinatable {
 
-    var flowCompletionHandler: (() -> Void)?
+    var flowCompletionHandler: ((Runner?) -> Void)?
 
     var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
@@ -32,7 +32,7 @@ final class ProfileCoordinator: Coordinatable {
 
     func logOut() {
 
-        self.flowCompletionHandler?()
+        self.flowCompletionHandler?(nil)
 
     }
 

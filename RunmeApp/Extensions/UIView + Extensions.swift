@@ -13,9 +13,12 @@ func timeFormat(sec: Int, isMale: Bool = true) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.unitsStyle = .abbreviated
+        formatter.zeroFormattingBehavior = .pad
 
         return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
+    } else if sec == 100001 {
+        return "admin__🚶‍♂️_"
     } else {
-        return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
+        return isMale ? "____🏃‍♂️~~~~" : "____🏃‍♀️~~~~"
     }
 }

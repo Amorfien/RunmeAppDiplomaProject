@@ -15,10 +15,10 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
     private let avatarImageView = AvatarCircleImageView(image: nil, size: .small)
 
-    private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .bold), textColor: .tintColor, lines: 2)
+    private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .bold), textColor: .tintColor, lines: 1)
     private let distanceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
 
-    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 0)
+    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 2)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,7 +32,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
     private func setupView() {
 
-        backgroundColor = Res.MyColors.homeBackground
+        backgroundColor = Res.PRColors.prLight
 
         [avatarImageView, nicknameLabel, distanceLabel, descriptionText].forEach(contentView.addSubview)
 
@@ -49,7 +49,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 2),
 
-            descriptionText.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+            descriptionText.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 8),
             descriptionText.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             descriptionText.trailingAnchor.constraint(equalTo: nicknameLabel.trailingAnchor),
         ])

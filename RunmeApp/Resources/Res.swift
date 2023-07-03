@@ -25,6 +25,13 @@ struct Res {
         static let homeBackground = UIColor(named: "homeBackground")
         static let profileBackground = UIColor(named: "profileBackground")
         static let favoriteBackground = UIColor(named: "favoriteBackground")
+    }
+
+    enum PRColors {
+        static let prLight = UIColor(named: "prLight")
+        static let prRegular = UIColor(named: "prRegular")
+        static let prMedium = UIColor(named: "prMedium")
+        static let prDark = UIColor(named: "prDark")
 
     }
 

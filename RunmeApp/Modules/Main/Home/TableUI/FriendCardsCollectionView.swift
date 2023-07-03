@@ -25,7 +25,7 @@ final class FriendCardsCollectionView: UICollectionView {
     private let weatherCardsLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 12, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         return layout
     }()
 
@@ -43,13 +43,13 @@ final class FriendCardsCollectionView: UICollectionView {
     }
 
     private func setupView() {
-        backgroundColor = Res.MyColors.homeBackground
+        backgroundColor = Res.PRColors.prLight
         showsHorizontalScrollIndicator = false
-//        self.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            self.heightAnchor.constraint(equalToConstant: 100),
-//            self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-//        ])
+        let separator = UIView(frame: CGRect(x: 0, y: 119, width: UIScreen.main.bounds.width / 3, height: 1))
+        separator.backgroundColor = tintColor
+
+        addSubview(separator)
+
     }
 
     // MARK: - public method

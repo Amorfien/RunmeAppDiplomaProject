@@ -65,7 +65,7 @@ final class ProfileCardView: UIView {
 
 
     private func setupView() {
-        backgroundColor = .tertiarySystemBackground.withAlphaComponent(0.7)
+        backgroundColor = .white.withAlphaComponent(0.7)
 
         layer.cornerRadius = 10
         layer.borderWidth = 1

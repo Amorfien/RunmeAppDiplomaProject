@@ -106,7 +106,7 @@ class PhoneVerificationViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = Res.PRColors.prLight
         view.addSubview(topImageView)
         view.addSubview(phoneTextField)
         view.addSubview(nextButton)

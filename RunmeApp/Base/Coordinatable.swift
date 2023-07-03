@@ -12,7 +12,7 @@ protocol Coordinatable: AnyObject {
     var navigationController: UINavigationController { get set}
     var childCoordinators: [Coordinatable] { get }
 
-    var flowCompletionHandler: (() -> Void)? { get set }
+    var flowCompletionHandler: ((Runner?) -> Void)? { get set }
 
     func addChildCoordinator(_ coordinator: Coordinatable)
     func removeChildCoordinator(_ coordinator: Coordinatable)
