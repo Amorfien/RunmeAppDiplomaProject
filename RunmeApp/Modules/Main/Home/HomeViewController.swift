@@ -11,16 +11,21 @@ final class HomeViewController: UIViewController {
 
     private let viewModel: HomeViewModel
 
+    //    var avatars: [UIImage] = [] {
+    //        didSet {
+    //                self.newsTableView.reloadData()
+    //        }
+    //    }
     var articles: [Article] = [] {
         didSet {
                 self.newsTableView.reloadData()
         }
     }
-//    var avatars: [UIImage] = [] {
-//        didSet {
-//                self.newsTableView.reloadData()
-//        }
-//    }
+    var runnerPosts: [RunnerPost] = [] {
+        didSet {
+                self.newsTableView.reloadData()
+        }
+    }
 
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
@@ -41,6 +46,7 @@ final class HomeViewController: UIViewController {
         let tableView = UITableView()
         tableView.tableHeaderView = tableHeaderView
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 120)
+        tableView.register(RunnerPostTableViewCell.self, forCellReuseIdentifier: RunnerPostTableViewCell.reuseId)
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
 //        tableView.estimatedSectionHeaderHeight = 20
@@ -79,7 +85,7 @@ final class HomeViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
-        viewModel.updateState(viewInput: .forYouSegment)
+        viewModel.updateState(viewInput: .runnersSegment)
     }
 
 //    override func viewWillAppear(_ animated: Bool) {
@@ -90,9 +96,10 @@ final class HomeViewController: UIViewController {
     private func setupNavigation() {
         navigationItem.title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
-        lazy var notifyButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(notifyButtonTap))
+//        lazy var notifyButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(notifyButtonTap))
         lazy var searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTap))
-        navigationItem.rightBarButtonItems = [notifyButton, searchButton]
+//        navigationItem.rightBarButtonItems = [notifyButton, searchButton]
+        navigationItem.rightBarButtonItem = searchButton
 
 //        navigationController?.navigationBar.addSubview(sourceSegment)
         navigationItem.titleView = sourceSegment
@@ -101,7 +108,7 @@ final class HomeViewController: UIViewController {
     private func setupView() {
         tableHeaderView.headerDelegate = self
 //        view.backgroundColor = .secondarySystemBackground
-        view.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground//Res.MyColors.myBackground
+        view.backgroundColor = Res.MyColors.homeBackground
 
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)
@@ -136,12 +143,7 @@ final class HomeViewController: UIViewController {
             case .loading:
                 updateTableViewVisibility(isHidden: true)
                 updateLoadingAnimation(isLoading: true)
-            case .loadedNews(let news):
-                DispatchQueue.main.async {
-                    self.articles = news
-                    self.updateLoadingAnimation(isLoading: false)
-                    self.updateTableViewVisibility(isHidden: false)
-                }
+
             case .loadedAvatars(let dict):
                 var users: [String] = []
                 var images: [UIImage] = []
@@ -151,13 +153,24 @@ final class HomeViewController: UIViewController {
                 }
 
                 DispatchQueue.main.async {
-                    let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
-                    header.fillCardsCollection(users: users, images: images)
+//                    let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
+//                    header.fillCardsCollection(users: users, images: images)
+                    self.tableHeaderView.fillCardsCollection(users: users, images: images)
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
-//            case .error(_):
-//                ()
+            case .loadedNews(let news):
+                DispatchQueue.main.async {
+                    self.articles = news
+                    self.updateLoadingAnimation(isLoading: false)
+                    self.updateTableViewVisibility(isHidden: false)
+                }
+            case.loadedPosts(let posts):
+                DispatchQueue.main.async {
+                    self.runnerPosts = posts
+                    self.updateLoadingAnimation(isLoading: false)
+                    self.updateTableViewVisibility(isHidden: false)
+                }
             }
         }
     }
@@ -179,13 +192,17 @@ final class HomeViewController: UIViewController {
 
     }
     @objc private func changeSource() {
+//        cell.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground
         switch sourceSegment.selectedSegmentIndex {
         case 0:
             newsTableView.tableHeaderView  = tableHeaderView
-            viewModel.updateState(viewInput: .forYouSegment)
+            viewModel.updateState(viewInput: .runnersSegment)
+            view.backgroundColor = Res.MyColors.homeBackground
         case 1:
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)
+            view.backgroundColor = Res.MyColors.myBackground
+            newsTableView.backgroundColor = Res.MyColors.myBackground
         default:
             ()
         }
@@ -198,31 +215,41 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        sourceSegment.selectedSegmentIndex == 0 ? self.runnerPosts.count : 1
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.articles.count
+        sourceSegment.selectedSegmentIndex == 0 ? 1 : self.articles.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //удаление повторяющихся хэдеров секций (одинаковые даты)
-//        if section > 0 && articles[section - 1].publishedAt == articles[section].publishedAt {
-//            return nil//UIView(frame: .zero)
-//        } else {
+
+        if sourceSegment.selectedSegmentIndex == 1 {
             let sectionHeader = HeaderInSectionView()
             sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? "2001-01-01")
             return sectionHeader
-//        }
+        } else {
+            return nil
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
-        else { return NewsPostTableViewCell() }
+        switch sourceSegment.selectedSegmentIndex {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RunnerPostTableViewCell.reuseId, for: indexPath) as? RunnerPostTableViewCell
+            else { return RunnerPostTableViewCell() }
 
-        cell.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground
-        cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
-        return cell
+            cell.fillData(with: runnerPosts[indexPath.row], indexPath: indexPath)
+            return cell
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
+            else { return NewsPostTableViewCell() }
+
+            cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
+            return cell
+        }
+
+
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

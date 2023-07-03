@@ -12,14 +12,9 @@ final class NewsPostTableViewCell: UITableViewCell {
     static let reuseId = "NewsPostTableViewCell"
 
     // MARK: - Properties
-    private var authorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-//        label.textColor = Palette.title
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+
+    private let authorLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .bold), textColor: .tintColor, lines: 2)
+    private let sourceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
 
     private var postImageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,31 +24,7 @@ final class NewsPostTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    private var descriptionText: UILabel = {
-        let desc = UILabel()
-        desc.numberOfLines = 0
-        desc.textColor = .systemGray
-        desc.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        desc.translatesAutoresizingMaskIntoConstraints = false
-        return desc
-    }()
-
-    private var likesLabel: UILabel = {
-        let likes = UILabel()
-//        likes.textColor = Palette.tabbar
-        likes.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        likes.translatesAutoresizingMaskIntoConstraints = false
-        return likes
-    }()
-
-    private var viewsLabel: UILabel = {
-        let views = UILabel()
-//        views.textColor = Palette.tabbar
-        views.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        views.textAlignment = .right
-        views.translatesAutoresizingMaskIntoConstraints = false
-        return views
-    }()
+    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 0)
 
     private let saveToFavoriteImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "heart"))
@@ -63,7 +34,16 @@ final class NewsPostTableViewCell: UITableViewCell {
         return image
     }()
 
-    private var post: Article?
+    private lazy var linkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("https://", for: .normal)
+        button.setTitleColor(.link, for: .normal)
+        button.titleLabel?.font = .italicSystemFont(ofSize: 14)
+        button.contentHorizontalAlignment = .leading
+        button.addTarget(self, action: #selector(linkTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,33 +58,31 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     private func setupView() {
 
-        backgroundColor = Res.MyColors.homeBackground
+        backgroundColor = Res.MyColors.myBackground
         
-        [authorLabel, postImageView, descriptionText, likesLabel, viewsLabel, saveToFavoriteImage].forEach(contentView.addSubview)
+        [authorLabel, sourceLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            authorLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-            authorLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
-//            postImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
+            sourceLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            sourceLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 2),
+
+            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 24),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 0.8),
+            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 0.7),
 
             descriptionText.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
-            descriptionText.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-            descriptionText.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            descriptionText.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            descriptionText.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
 
-            likesLabel.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
-            likesLabel.leftAnchor.constraint(equalTo: descriptionText.leftAnchor),
-            likesLabel.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - 16),
-            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-
-            viewsLabel.topAnchor.constraint(equalTo: likesLabel.topAnchor),
-            viewsLabel.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - 16),
-            viewsLabel.rightAnchor.constraint(equalTo: descriptionText.rightAnchor),
+            linkButton.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            linkButton.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
+            linkButton.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 4),
+            linkButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
             saveToFavoriteImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             saveToFavoriteImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 50),
@@ -143,11 +121,16 @@ final class NewsPostTableViewCell: UITableViewCell {
 //        }
     }
 
+    @objc private func linkTap(_ sender: UIButton) {
+        guard let url = URL(string: sender.titleLabel?.text ?? "") else { return }
+        UIApplication.shared.open(url)
+    }
+
     // MARK: - Public method
 
     func fillData(with article: Article, indexPath: IndexPath) {
         authorLabel.text = article.author
-        //        postImageView.image = UIImage(named: "mosaic")
+        sourceLabel.text = article.source
         if let url = URL(string: article.urlToImage ?? "") {
             let queue = DispatchQueue.global()
             queue.async {
@@ -160,8 +143,7 @@ final class NewsPostTableViewCell: UITableViewCell {
             }
         }
         descriptionText.text = article.description
-        likesLabel.text = "Likes: \(article.likes) ♡"
-        viewsLabel.text = "Section-\(indexPath.section), Row-\(indexPath.row)"
+        linkButton.setTitle(article.url, for: .normal)
     }
 
 

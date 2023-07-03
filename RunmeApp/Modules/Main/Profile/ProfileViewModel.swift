@@ -26,6 +26,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
 
     enum ViewInput {
         case showUser
+        case saveStatus(String)
         case logOut
     }
 
@@ -38,6 +39,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
 
     private let userId: String
+    private var fetchedUser: Runner? = nil
 
     init(userId: String) {
         self.userId = userId
@@ -52,6 +54,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             DatabaseService.shared.getUser(userId: userId) { [weak self] dbResult in
                 switch dbResult {
                 case .success(let profile):
+                    self?.fetchedUser = profile
                     self?.state = .loadedProfile(profile)
 
                 case .failure(_):
@@ -65,6 +68,17 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     self?.state = .loadedImageData(data)
                 case .failure(_):
                     ()
+                }
+            }
+        case .saveStatus(let status):
+            guard var user = fetchedUser else { return }
+            user.statusText = status
+            DatabaseService.shared.setUser(user: user) { uplResult in
+                switch uplResult {
+                case .success(_):
+                    print("Status success")
+                case .failure(_):
+                    print("Status failed")
                 }
             }
         case .logOut:

@@ -17,13 +17,14 @@ final class HomeViewModel: HomeViewModelProtocol {
     enum State {
         case initial
         case loading
-        case loadedNews([Article])
         case loadedAvatars([String: Data])
+        case loadedNews([Article])
+        case loadedPosts([RunnerPost])
 //        case error(Error)
     }
 
     enum ViewInput {
-        case forYouSegment
+        case runnersSegment
         case newsSegment
         case chooseUser(String)
     }
@@ -48,14 +49,15 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .forYouSegment:
+        case .runnersSegment:
             self.state = .loading
 
             getAllAvatars()
 
             ///заглушка чтобы не расходывать трафик/запросы
-            let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
-            self.state = .loadedNews(news)
+//            let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
+            let posts: [RunnerPost] = [testRunnerPost1, testRunnerPost2, testRunnerPost3, testRunnerPost4]
+            self.state = .loadedPosts(posts)
 
         case .newsSegment:
             self.state = .loading

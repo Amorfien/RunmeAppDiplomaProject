@@ -130,6 +130,7 @@ extension ProfileViewController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.4) {
             textField.backgroundColor = .white.withAlphaComponent(0.1)
         }
+        viewModel.updateState(viewInput: .saveStatus(textField.text ?? ""))
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
