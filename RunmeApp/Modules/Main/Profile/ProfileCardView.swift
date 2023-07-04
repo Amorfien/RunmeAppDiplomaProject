@@ -39,8 +39,7 @@ final class ProfileCardView: UIView {
 
     private lazy var bigAvatar: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .black.withAlphaComponent(0.8)
-//        view.alpha = 0.75
+        view.backgroundColor = Res.PRColors.prDark!.withAlphaComponent(0.9)
         view.contentMode = .scaleAspectFit
         view.image = avatarImageView.image
         view.isHidden = true
@@ -63,7 +62,7 @@ final class ProfileCardView: UIView {
 
 
     private func setupView() {
-        backgroundColor = .white.withAlphaComponent(0.85)
+        backgroundColor = .white.withAlphaComponent(0.8)
 
         layer.cornerRadius = 12
         layer.borderWidth = 1
@@ -76,6 +75,7 @@ final class ProfileCardView: UIView {
         addSubview(avatarImageView)
         addSubview(statusTextField)
         statusTextField.isEnabled = self.isEditable
+        statusTextField.returnKeyType = .done
         statusTextField.delegate = delegate as? UITextFieldDelegate
         statusTextField.backgroundColor = .white.withAlphaComponent(0.1)
 
@@ -149,17 +149,19 @@ final class ProfileCardView: UIView {
 
     private func gestureToAvatar() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(avatarTap))
-//        longPressGesture.minimumPressDuration = 1
         avatarImageView.addGestureRecognizer(longPressGesture)
     }
     @objc private func avatarTap(_ sender: UILongPressGestureRecognizer) {
-//        bigAvatar.isHidden.toggle()
         if sender.state != .ended {
             bigAvatar.isHidden = false
         } else {
-            bigAvatar.isHidden = true
+            UIView.animate(withDuration: 0.4) {
+                self.bigAvatar.alpha = 0
+            } completion: { _ in
+                self.bigAvatar.isHidden = true
+                self.bigAvatar.alpha = 1
+            }
         }
-
     }
 
     func fillProfile(profile: Runner) {
@@ -169,7 +171,7 @@ final class ProfileCardView: UIView {
         telegramLabel.text = profile.telegram
         statusTextField.text = profile.statusText
         birthdayLabel.text = profile.birthday
-        bigAvatar.backgroundColor = profile.isAdmin ? .tintColor.withAlphaComponent(0.9) : .black.withAlphaComponent(0.82)
+        bigAvatar.backgroundColor = profile.isAdmin ? .tintColor.withAlphaComponent(0.9) : Res.PRColors.prDark!.withAlphaComponent(0.9)
         achiewmentsView.fillAchievements(with: Set(profile.achievements))
         fiveLabel.text = timeFormat(sec: profile.personalBests[0], isMale: profile.isMale)
         tenLabel.text = timeFormat(sec: profile.personalBests[1], isMale: profile.isMale)

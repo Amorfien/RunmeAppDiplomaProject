@@ -41,14 +41,19 @@ final class SlideMenuViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Res.PRColors.prMedium
 
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: -8, height: 0)
+        view.layer.shadowOpacity = 0.6
+        view.layer.shadowRadius = 10
+
         view.addSubview(menuTableView)
 
         NSLayoutConstraint.activate([
-//            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             menuTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            menuTableView.widthAnchor.constraint(equalToConstant: 150)
+            menuTableView.widthAnchor.constraint(equalToConstant: 156)
         ])
     }
 

@@ -57,14 +57,16 @@ final class ContainerViewController: UIViewController {
     }
 
     private func configureMenuVC() {
-        view.insertSubview(menuVC.view, at: 0)
+//        view.insertSubview(menuVC.view, at: 1)
+        view.addSubview(menuVC.view)
+        menuVC.view.frame.origin.x = UIScreen.main.bounds.width + 20
         addChild(menuVC)
     }
 
     @objc private func showMenu() {
 
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
-            self.profileVC.view.frame.origin.x += self.menuIsVisible ? 152 : -152
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.menuVC.view.frame.origin.x += self.menuIsVisible ? 180 : -180
         }
         self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: !menuIsVisible ? "arrow.right.to.line" : "line.3.horizontal")
         menuIsVisible.toggle()

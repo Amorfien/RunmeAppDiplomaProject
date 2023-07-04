@@ -47,12 +47,6 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = Res.PRColors.prRegular
         view.addSubview(profileCardView)
 
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 8, height: 0)
-        view.layer.shadowOpacity = 0.6
-        view.layer.shadowRadius = 10
-
-
         NSLayoutConstraint.activate([
             profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             profileCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
