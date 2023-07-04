@@ -20,7 +20,7 @@ final class FirebaseStorageService {
 
         let ref = Storage.storage().reference().child("avatars").child(currentUserId)
 
-        guard let imageData = photo.jpegData(compressionQuality: 0.4) else { return }
+        guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
 
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
@@ -41,24 +41,10 @@ final class FirebaseStorageService {
         }
     }
 
-
-    ///достать аватар по URL
-//    func downloadByUrl(avatarURL: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-//        let ref = Storage.storage().reference(forURL: avatarURL)
-//        let megaByte = Int64(1 * 1024 * 1024)
-//        ref.getData(maxSize: megaByte) { data, error in
-//            guard let data, error == nil else {
-//                completion(.failure(error!))
-//                return
-//            }
-//            let image = UIImage(data: data)
-//            completion(.success(image ?? UIImage(systemName: "person.and.background.dotted")!))
-//        }
-//    }
     ///достать аватар по ID
     func downloadById(id: String, completion: @escaping (Result<Data, Error>) -> Void) {
         let ref = Storage.storage().reference().child("avatars").child(id)
-        let megaByte = Int64(1 * 1024 * 1024)
+        let megaByte = Int64(3 * 1024 * 1024)
         ref.getData(maxSize: megaByte) { data, error in
             guard let data, error == nil else {
                 completion(.failure(error!))
@@ -80,7 +66,7 @@ final class FirebaseStorageService {
             switch result {
             case .success(let storageList):
 
-                let megaByte = Int64(1 * 1024 * 1024)
+                let megaByte = Int64(3 * 1024 * 1024)
 
                 for item in storageList.items {
                     print(item.name)

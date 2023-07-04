@@ -41,7 +41,7 @@ final class ContainerViewController: UIViewController {
 
     private func setupNavigation() {
         self.navigationItem.title = "Профиль"
-        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(logout))
+        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(showMenu))
         navigationItem.rightBarButtonItem = logoutButton
     }
 
@@ -55,7 +55,7 @@ final class ContainerViewController: UIViewController {
         addChild(menuVC)
     }
 
-    @objc private func logout() {
+    @objc private func showMenu() {
 
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut) {
             self.profileVC.view.frame.origin.x += self.menuIsVisible ? 152 : -152

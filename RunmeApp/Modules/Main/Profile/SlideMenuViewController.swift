@@ -44,10 +44,11 @@ final class SlideMenuViewController: UIViewController {
         view.addSubview(menuTableView)
 
         NSLayoutConstraint.activate([
-            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             menuTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            menuTableView.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
 
@@ -75,6 +76,25 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell.textLabel?.text = SlideMenu.allCases[indexPath.row].rawValue
         cell.textLabel?.textAlignment = .right
+
+        let item = SlideMenu.allCases[indexPath.row]
+        let cellImgView = UIImageView()
+        switch item {
+        case .files:
+            cellImgView.image = UIImage(systemName: "")
+        case .bookmarks:
+            cellImgView.image = UIImage(systemName: "")
+        case .favorite:
+            cellImgView.image = UIImage(systemName: "")
+        case .settings:
+            cellImgView.image = UIImage(systemName: "gearshape")
+        case .exit:
+            cellImgView.image = UIImage(systemName: "door.right.hand.open")
+        }
+
+
+        cellImgView.frame = CGRect(x: 0, y: 12, width: 20, height: 20)
+        cell.addSubview(cellImgView)
 
         return cell
     }

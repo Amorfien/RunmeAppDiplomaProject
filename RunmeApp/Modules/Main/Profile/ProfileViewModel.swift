@@ -5,7 +5,7 @@
 //  Created by Pavel Grigorev on 23.06.2023.
 //
 
-import Foundation
+import UIKit
 
 protocol ProfileViewModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((ProfileViewModel.State) -> Void)? { get set }
@@ -27,7 +27,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     enum ViewInput {
         case showUser
         case saveStatus(String)
-        case showMenu
+        case savePhoto(UIImage)
         case logOut
     }
 
@@ -82,9 +82,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     print("Status failed")
                 }
             }
-        case .showMenu:
-            ()
-//            coordinator?.showMenu()
+        case .savePhoto(let image):
+            guard let currentUserId = AuthManager.shared.currentUser?.uid else { return }
+            FirebaseStorageService.shared.upload(currentUserId: currentUserId, photo: image) { imgResult in
+                switch imgResult {
+                case .success(_):
+                    print("The avatar has been uploaded")
+                case .failure(_):
+                    print("Uploading FAIL")
+                }
+            }
         case .logOut:
             AuthManager.shared.signOut()
             coordinator?.logOut()

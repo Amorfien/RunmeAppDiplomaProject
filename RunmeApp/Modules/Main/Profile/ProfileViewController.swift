@@ -124,6 +124,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileCardView.avatar = pickedImage
+            viewModel.updateState(viewInput: .savePhoto(pickedImage))
         }
         picker.dismiss(animated: true)
     }

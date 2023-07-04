@@ -34,6 +34,10 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
         backgroundColor = Res.PRColors.prLight
 
+        let selectedView = UIView()
+        selectedView.backgroundColor = Res.PRColors.prMedium
+        selectedBackgroundView = selectedView
+
         [avatarImageView, nicknameLabel, distanceLabel, descriptionText].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([
