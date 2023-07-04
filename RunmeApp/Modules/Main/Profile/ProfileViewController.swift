@@ -98,8 +98,8 @@ extension ProfileViewController: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         statusTemp = textField.text
-        UIView.animate(withDuration: 0.9) {
-            textField.backgroundColor = .white.withAlphaComponent(0.9)
+        UIView.animate(withDuration: 0.8) {
+            textField.backgroundColor = .white.withAlphaComponent(0.95)
         }
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

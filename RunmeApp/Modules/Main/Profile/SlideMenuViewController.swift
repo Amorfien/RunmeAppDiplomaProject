@@ -46,7 +46,7 @@ final class SlideMenuViewController: UIViewController {
         NSLayoutConstraint.activate([
 //            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            menuTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             menuTableView.widthAnchor.constraint(equalToConstant: 150)
         ])
@@ -76,6 +76,7 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell.textLabel?.text = SlideMenu.allCases[indexPath.row].rawValue
         cell.textLabel?.textAlignment = .right
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: .regular)
 
         let item = SlideMenu.allCases[indexPath.row]
         let cellImgView = UIImageView()
@@ -93,7 +94,7 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
 
-        cellImgView.frame = CGRect(x: 0, y: 12, width: 20, height: 20)
+        cellImgView.frame = CGRect(x: 12, y: 12, width: 20, height: 20)
         cell.addSubview(cellImgView)
 
         return cell

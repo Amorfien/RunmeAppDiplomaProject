@@ -65,7 +65,7 @@ final class ProfileCardView: UIView {
     private func setupView() {
         backgroundColor = .white.withAlphaComponent(0.85)
 
-        layer.cornerRadius = 10
+        layer.cornerRadius = 12
         layer.borderWidth = 1
 
         layer.shadowColor = UIColor.black.cgColor
@@ -148,15 +148,18 @@ final class ProfileCardView: UIView {
     }
 
     private func gestureToAvatar() {
-        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(avatarTap))
-//        tapGesture.minimumPressDuration = 1
-        avatarImageView.addGestureRecognizer(tapGesture)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(avatarTap))
+//        longPressGesture.minimumPressDuration = 1
+        avatarImageView.addGestureRecognizer(longPressGesture)
     }
-    @objc private func avatarTap() {
-//        print("1sec")
-        bigAvatar.isHidden.toggle()
+    @objc private func avatarTap(_ sender: UILongPressGestureRecognizer) {
+//        bigAvatar.isHidden.toggle()
+        if sender.state != .ended {
+            bigAvatar.isHidden = false
+        } else {
+            bigAvatar.isHidden = true
+        }
 
-//        avatarImageView.layer.cornerRadius = 0
     }
 
     func fillProfile(profile: Runner) {
@@ -174,31 +177,12 @@ final class ProfileCardView: UIView {
         fortyLabel.text = timeFormat(sec: profile.personalBests[3], isMale: profile.isMale)
         if profile.isAdmin {
             distanceStack.heightAnchor.constraint(equalToConstant: 0).isActive = true
-//            distanceStack.isHidden = true
-//            fiveLabel.isHidden = true
-//            tenLabel.isHidden = true
-//            twentyLabel.isHidden = true
-//            fortyLabel.isHidden = true
         }
     }
     func fillAvatar(avatar: UIImage?) {
         self.avatar = avatar
-//        avatarImageView.image = avatar
-//        bigAvatar.image = avatar
-    }
 
-//    private func timeFormat(sec: Int, isMale: Bool = true) -> String {
-//
-//        if sec > 0 {
-//            let formatter = DateComponentsFormatter()
-//            formatter.allowedUnits = [.hour, .minute, .second]
-//            formatter.unitsStyle = .abbreviated
-//
-//            return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
-//        } else {
-//            return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
-//        }
-//    }
+    }
 
     private func changeAvatar() {
         print("ImagePicker")

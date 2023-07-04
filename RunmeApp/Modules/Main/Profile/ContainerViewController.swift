@@ -12,7 +12,13 @@ final class ContainerViewController: UIViewController {
     private var profileVC: UIViewController
     private var menuVC: UIViewController
 
-    private var menuIsVisible = false
+    private var menuIsVisible = false {
+        didSet {
+            menuIsVisible ?
+            profileVC.view.addGestureRecognizer(tapProfileGesture) : profileVC.view.removeGestureRecognizer(tapProfileGesture)
+        }
+    }
+    private lazy var tapProfileGesture = UITapGestureRecognizer(target: self, action: #selector(showMenu))
 
     //MARK: - Init
 
@@ -36,7 +42,7 @@ final class ContainerViewController: UIViewController {
         setupNavigation()
         configureProfileVC()
         configureMenuVC()
-
+//        setupGestures()
     }
 
     private func setupNavigation() {
@@ -45,19 +51,19 @@ final class ContainerViewController: UIViewController {
         navigationItem.rightBarButtonItem = logoutButton
     }
 
-    func configureProfileVC() {
+    private func configureProfileVC() {
         view.addSubview(profileVC.view)
         addChild(profileVC)
     }
 
-    func configureMenuVC() {
+    private func configureMenuVC() {
         view.insertSubview(menuVC.view, at: 0)
         addChild(menuVC)
     }
 
     @objc private func showMenu() {
 
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.profileVC.view.frame.origin.x += self.menuIsVisible ? 152 : -152
         }
         self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: !menuIsVisible ? "arrow.right.to.line" : "line.3.horizontal")
