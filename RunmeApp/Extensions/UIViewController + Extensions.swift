@@ -18,18 +18,4 @@ extension UIViewController {
         present(alertController, animated: true)
     }
 
-//    func timeFormat(sec: Int, isMale: Bool = true) -> String {
-//
-//        if sec > 0 {
-//            let formatter = DateComponentsFormatter()
-//            formatter.allowedUnits = [.hour, .minute, .second]
-//            formatter.unitsStyle = .abbreviated
-//
-//            return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
-//        } else {
-//            return isMale ? ".....🏃‍♂️____" : ".....🏃‍♀️____"
-//        }
-//    }
-
-
 }

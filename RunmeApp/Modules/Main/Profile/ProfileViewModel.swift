@@ -27,6 +27,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     enum ViewInput {
         case showUser
         case saveStatus(String)
+        case showMenu
         case logOut
     }
 
@@ -81,6 +82,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     print("Status failed")
                 }
             }
+        case .showMenu:
+            ()
+//            coordinator?.showMenu()
         case .logOut:
             AuthManager.shared.signOut()
             coordinator?.logOut()

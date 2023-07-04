@@ -9,14 +9,12 @@ import UIKit
 
 final class ProfileCardView: UIView {
 
-//    private let profile: Runner? = nil
     var avatar: UIImage? = nil {
         didSet {
             self.avatarImageView.image = avatar
             self.bigAvatar.image = avatar
         }
     }
-//    var achiewments: [String] = []
 
     private var isEditable = false
     weak var delegate: UIViewController?
@@ -65,7 +63,7 @@ final class ProfileCardView: UIView {
 
 
     private func setupView() {
-        backgroundColor = .white.withAlphaComponent(0.7)
+        backgroundColor = .white.withAlphaComponent(0.85)
 
         layer.cornerRadius = 10
         layer.borderWidth = 1
@@ -113,7 +111,7 @@ final class ProfileCardView: UIView {
         distanceStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9),
+//            self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9),
 //            self.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1.3),
 
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),

@@ -23,7 +23,7 @@ final class ResultsViewController: UIViewController {
     }
 
     private lazy var distanceSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.0975", "МАРАФОН"])
+        let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.1 км", "МАРАФОН"])
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -112,12 +112,9 @@ final class ResultsViewController: UIViewController {
 
 
     @objc private func changeDistance(_ sender: UISegmentedControl) {
-//        viewModel.updateState(viewInput: .changeDist(sender.selectedSegmentIndex))
-                runners.sort { lhs, rhs in
-                    lhs.personalBests[sender.selectedSegmentIndex] < rhs.personalBests[sender.selectedSegmentIndex]
-                }
-//        resultsTableView.reloadData()
-//        print(dump(runners))
+        runners.sort { lhs, rhs in
+            lhs.personalBests[sender.selectedSegmentIndex] < rhs.personalBests[sender.selectedSegmentIndex]
+        }
     }
 
 
@@ -130,14 +127,10 @@ final class ResultsViewController: UIViewController {
 extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         runners.count
-//        runners.filter{$0.personalBests[distanceSegment.selectedSegmentIndex] != 0}.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath) as? UITableViewCell
-//        else { return UITableViewCell() }
 
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "standartCell", for: indexPath)
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "standartCell")
         let runner = runners[indexPath.row]
         let time = runner.personalBests[distanceSegment.selectedSegmentIndex]

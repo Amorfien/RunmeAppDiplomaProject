@@ -30,18 +30,5 @@ final class HomeCoordinator: Coordinatable {
         navigationController.setViewControllers([homeViewController], animated: true)
     }
 
-//    func presentSheetPresentationController(user: Runner) {
-//        let pvm = ProfileViewModel(userId: user.id)
-//        let profileVC = ProfileViewController(viewModel: pvm)
-//        profileVC.view.alpha = 0.97
-//
-//        if let sheet = profileVC.sheetPresentationController {
-//            sheet.detents = [.medium(), .large()]
-//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//            sheet.prefersGrabberVisible = true
-//        }
-//
-//        navigationController.present(profileVC, animated: true)
-//    }
 
 }

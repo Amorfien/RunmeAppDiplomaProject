@@ -11,23 +11,10 @@ final class ProfileViewController: UIViewController {
 
     private let viewModel: ProfileViewModel
     private var isEditable: Bool = false
-//    private lazy var profile: Runner? = nil {
-//        didSet {
-//            self.navigationItem.title = "Привет, \(profile!.nickname)!"
-////            self.statusTextField.text = profile?.statusText
-//            if profile?.id != AuthManager.shared.currentUser?.uid {
-////                statusTextField.isEnabled = false
-////                statusTextField.backgroundColor = .systemGray6
-//            }
-//        }
-//    }
-//    private lazy var avatar: UIImage? = nil {
-//        didSet {
-////            self.avatarImageView.image = avatar
-//        }
-//    }
 
     private lazy var profileCardView = ProfileCardView(delegate: self, isEditable: self.isEditable)
+
+    private var statusTemp: String?
     
     //MARK: - Init
     
@@ -43,7 +30,6 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigation()
         setupView()
         setupGestures()
 
@@ -57,24 +43,21 @@ final class ProfileViewController: UIViewController {
         print(#function, " ProfileViewController 📱")
     }
 
-    private func setupNavigation() {
-//        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Профиль"
-        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(logout))
-        navigationItem.rightBarButtonItem = logoutButton
-    }
-
     private func setupView() {
         view.backgroundColor = Res.PRColors.prRegular
         view.addSubview(profileCardView)
 
-//        profileCardView.delegate = self
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 8, height: 0)
+        view.layer.shadowOpacity = 0.6
+        view.layer.shadowRadius = 10
 
 
         NSLayoutConstraint.activate([
-            profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            profileCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            profileCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             profileCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            profileCardView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
     }
 
@@ -90,19 +73,12 @@ final class ProfileViewController: UIViewController {
             case .error(_):
                 ()
             case .loadedProfile(let profile):
-//                self.profile = profile
                 self.profileCardView.fillProfile(profile: profile)
             case .loadedImageData(let imgData):
-//                self.avatar = UIImage(data: imgData)
                 self.profileCardView.fillAvatar(avatar: UIImage(data: imgData))
             }
         }
     }
-
-    @objc private func logout() {
-        viewModel.updateState(viewInput: .logOut)
-    }
-
 
 
     //  жест чтобы скрывать клавиатуру по тапу
@@ -121,16 +97,18 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        statusTemp = textField.text
         UIView.animate(withDuration: 0.9) {
             textField.backgroundColor = .white.withAlphaComponent(0.9)
-
         }
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         UIView.animate(withDuration: 0.4) {
             textField.backgroundColor = .white.withAlphaComponent(0.1)
         }
-        viewModel.updateState(viewInput: .saveStatus(textField.text ?? ""))
+        if statusTemp != textField.text {
+            viewModel.updateState(viewInput: .saveStatus(textField.text ?? ""))
+        }
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -140,6 +118,7 @@ extension ProfileViewController: UITextFieldDelegate {
     
 }
 
+/// делегат пикера картинок
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -149,4 +128,23 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         picker.dismiss(animated: true)
     }
 
+}
+
+/// делегат бокового меню
+extension ProfileViewController: SlideMenuDelegate {
+    func menuItemTap(_ item: SlideMenu) {
+//        print(item.rawValue, " 🗓️")
+        switch item {
+        case .files:
+            ()
+        case .bookmarks:
+            ()
+        case .favorite:
+            ()
+        case .settings:
+            ()
+        case .exit:
+            viewModel.updateState(viewInput: .logOut)
+        }
+    }
 }

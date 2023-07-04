@@ -12,7 +12,7 @@ final class DistanceLabel: LabelWithPadding {
     enum Distance: String {
         case five = "5 км"
         case ten = "10 км"
-        case twenty = "21.0975"
+        case twenty = "21.1 км"
         case forty = "МАРАФОН"
     }
 
@@ -27,7 +27,7 @@ final class DistanceLabel: LabelWithPadding {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 36).isActive = true
 
-        let rightLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+        let rightLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 14, weight: .medium), textColor: .secondaryLabel, lines: 1)
         rightLabel.textAlignment = .center
         rightLabel.translatesAutoresizingMaskIntoConstraints = true
         rightLabel.frame = CGRect(x: 132, y: 10, width: 100, height: 20)

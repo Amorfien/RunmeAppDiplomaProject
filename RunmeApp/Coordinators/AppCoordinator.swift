@@ -70,6 +70,7 @@ final class AppCoordinator: Coordinatable {
             favoriteCoordinator.navigationController,
             resultsCoordinator.navigationController
         ])
+        appTabBarController.selectedIndex = 2//______________________________
 
         homeCoordinator.start()
         profileCoordinator.start()
@@ -86,6 +87,19 @@ final class AppCoordinator: Coordinatable {
 
     }
 
+    private func presentSheetPresentationController(user: Runner) {
+        let pvm = ProfileViewModel(userId: user.id)
+        let profileVC = ProfileViewController(viewModel: pvm)
+        profileVC.view.alpha = 0.97
+        
+        if let sheet = profileVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersGrabberVisible = true
+        }
+        
+        navigationController.present(profileVC, animated: true)
+    }
 
 
 
@@ -102,18 +116,5 @@ final class AppCoordinator: Coordinatable {
     }
 
 
-    private func presentSheetPresentationController(user: Runner) {
-        let pvm = ProfileViewModel(userId: user.id)
-        let profileVC = ProfileViewController(viewModel: pvm)
-        profileVC.view.alpha = 0.97
-
-        if let sheet = profileVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersGrabberVisible = true
-        }
-
-        navigationController.present(profileVC, animated: true)
-    }
 
 }
