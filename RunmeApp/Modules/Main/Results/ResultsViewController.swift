@@ -11,10 +11,7 @@ final class ResultsViewController: UIViewController {
 
     private let viewModel: ResultsViewModel
 
-//    private let fiveKmArray: [String: Int] = [:]
-//    private let tenKmArray: [Int] = []
-//    private let twentyKmArray: [Int] = []
-//    private let fortyKmArray: [Int] = []
+    private lazy var itsMe = AuthManager.shared.currentUser?.uid
 
     private var runners: [RunnersBests] = [] {
         didSet {
@@ -140,6 +137,10 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = timeFormat(sec: time, isMale: runner.isMale)
         cell.detailTextLabel?.lineBreakMode = .byTruncatingMiddle
         cell.detailTextLabel?.text = "\(nickname)  - \(indexPath.row + 1)"
+
+        if time > 0, time < 100000 {
+            cell.backgroundColor = itsMe == runner.id ? .systemYellow.withAlphaComponent(0.5) : .clear
+        }
 
         return cell
     }

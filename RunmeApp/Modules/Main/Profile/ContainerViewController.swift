@@ -15,7 +15,8 @@ final class ContainerViewController: UIViewController {
     private var menuIsVisible = false {
         didSet {
             menuIsVisible ?
-            profileVC.view.addGestureRecognizer(tapProfileGesture) : profileVC.view.removeGestureRecognizer(tapProfileGesture)
+            profileVC.view.addGestureRecognizer(tapProfileGesture) :
+            profileVC.view.removeGestureRecognizer(tapProfileGesture)
         }
     }
     private lazy var tapProfileGesture = UITapGestureRecognizer(target: self, action: #selector(showMenu))
@@ -38,7 +39,7 @@ final class ContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = .black
         setupNavigation()
         configureProfileVC()
         configureMenuVC()
@@ -67,6 +68,8 @@ final class ContainerViewController: UIViewController {
 
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.menuVC.view.frame.origin.x += self.menuIsVisible ? 180 : -180
+            self.profileVC.view.frame.origin.x += self.menuIsVisible ? 16 : -16
+            self.profileVC.view.alpha = self.menuIsVisible ? 1 : 0.85
         }
         self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: !menuIsVisible ? "arrow.right.to.line" : "line.3.horizontal")
         menuIsVisible.toggle()
