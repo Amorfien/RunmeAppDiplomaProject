@@ -7,14 +7,6 @@
 
 import UIKit
 
-enum SlideMenu: String, CaseIterable {
-    case files = "Файлы"
-    case bookmarks = "Закладки"
-    case favorite = "Избранное"
-    case settings = "Настройки"
-    case exit = "Выход"
-}
-
 protocol SlideMenuDelegate: AnyObject {
     func menuItemTap(_ item: SlideMenu)
 }
@@ -86,20 +78,7 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .regular)
 
         let item = SlideMenu.allCases[indexPath.row]
-        let cellImgView = UIImageView()
-        switch item {
-        case .files:
-            cellImgView.image = UIImage(systemName: "")
-        case .bookmarks:
-            cellImgView.image = UIImage(systemName: "")
-        case .favorite:
-            cellImgView.image = UIImage(systemName: "")
-        case .settings:
-            cellImgView.image = UIImage(systemName: "gearshape")
-        case .exit:
-            cellImgView.image = UIImage(systemName: "door.right.hand.open")
-        }
-
+        let cellImgView = UIImageView(image: UIImage(systemName: item.ico))
 
         cellImgView.frame = CGRect(x: 12, y: 12, width: 20, height: 20)
         cell.addSubview(cellImgView)

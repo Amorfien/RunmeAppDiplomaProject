@@ -28,6 +28,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case showUser
         case saveStatus(String)
         case savePhoto(UIImage)
+        case menuSettings
         case logOut
     }
 
@@ -92,6 +93,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     print("Uploading FAIL")
                 }
             }
+        case .menuSettings:
+            coordinator?.showSettings(userSettings: fetchedUser)
         case .logOut:
             AuthManager.shared.signOut()
             coordinator?.logOut()

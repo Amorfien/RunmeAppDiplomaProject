@@ -16,6 +16,7 @@
 		180AC2FB2A47669E000FD11F /* RegistrationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FA2A47669E000FD11F /* RegistrationTextField.swift */; };
 		180AC2FD2A47856D000FD11F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180AC2FC2A47856D000FD11F /* DatabaseService.swift */; };
 		181277FD2A557B2A00E59A3B /* AchievementsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181277FC2A557B2A00E59A3B /* AchievementsCollectionView.swift */; };
+		181277FF2A5597A200E59A3B /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181277FE2A5597A200E59A3B /* SlideMenu.swift */; };
 		1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1849A4392A4F59BA00401500 /* ProfileCardView.swift */; };
 		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
 		186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B52A48689F00001093 /* FirebaseStorageService.swift */; };
@@ -77,6 +78,7 @@
 		180AC2FA2A47669E000FD11F /* RegistrationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextField.swift; sourceTree = "<group>"; };
 		180AC2FC2A47856D000FD11F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		181277FC2A557B2A00E59A3B /* AchievementsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCollectionView.swift; sourceTree = "<group>"; };
+		181277FE2A5597A200E59A3B /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 		1849A4392A4F59BA00401500 /* ProfileCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCardView.swift; sourceTree = "<group>"; };
 		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		186AD0B52A48689F00001093 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				18DC3BEF2A4701A100438728 /* Running.swift */,
 				18DC3BED2A46FEEA00438728 /* RunnerPost.swift */,
 				187A3C672A4B4F9800DFC2C2 /* News.swift */,
+				181277FE2A5597A200E59A3B /* SlideMenu.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,
 				18768A882A45D54600720EC3 /* LoginButton.swift in Sources */,
 				1880D6A12A449C58008DBE6C /* HomeCoordinator.swift in Sources */,
+				181277FF2A5597A200E59A3B /* SlideMenu.swift in Sources */,
 				1880D6AD2A44A94B008DBE6C /* ViewModelProtocol.swift in Sources */,
 				18DC3BEE2A46FEEA00438728 /* RunnerPost.swift in Sources */,
 				1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */,

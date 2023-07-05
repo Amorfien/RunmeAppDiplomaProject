@@ -139,7 +139,7 @@ extension ProfileViewController: SlideMenuDelegate {
         case .favorite:
             ()
         case .settings:
-            ()
+            viewModel.updateState(viewInput: .menuSettings)
         case .exit:
             viewModel.updateState(viewInput: .logOut)
         }

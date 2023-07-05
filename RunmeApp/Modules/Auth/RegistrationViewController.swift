@@ -80,7 +80,7 @@ final class RegistrationViewController: UIViewController {
         return datePicker
     }()
 
-
+    private lazy var constraint = vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48)
 
 
 
@@ -97,6 +97,7 @@ final class RegistrationViewController: UIViewController {
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        print(#function, " RegistrationViewController 📱")
     }
 
     @available(*, unavailable)
@@ -109,6 +110,35 @@ final class RegistrationViewController: UIViewController {
 
         setupView()
         setupGestures()
+
+        bindViewModel()
+        viewModel.updateState(viewInput: .registerOrSettings) //проверяем начальный стейт чтобы сработал дидсет
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        avatarImageView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+//        vStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 48).isActive = true
+    }
+    deinit {
+        print(#function, " RegistrationViewController 📱")
+    }
+
+    func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
+            switch state {
+            case .identifiedUser(sensorType: _, userPhone: _):
+                ()
+            case .noUser:
+                ()
+            case .fastLogin:
+                  ()
+            case .settings(let user):
+                settingsScreen(profile: user)
+            }
+        }
     }
 
     private func setupView() {
@@ -155,7 +185,7 @@ final class RegistrationViewController: UIViewController {
 //            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
 //            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
-            vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48),
+            constraint,
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
 //            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
@@ -174,6 +204,22 @@ final class RegistrationViewController: UIViewController {
     }
 
 
+    private func settingsScreen(profile: Runner) {
+        nextButton.isHidden = true
+        avatarImageView.isHidden = true
+        constraint.isActive = false
+        vStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 48).isActive = true
+
+        nicknameTextField.text = profile.nickname
+        nameTextField.text = profile.name
+        surnameTextField.text = profile.surname
+        emailTextField.text = profile.email
+        telegramTextField.text = profile.telegram
+        birthdayTextField.text = profile.birthday
+        sexSegment.selectedSegmentIndex = profile.isMale ? 0 : 1
+
+
+    }
     // MARK: - Actions
 
     @objc private func addButtonDidTap() {

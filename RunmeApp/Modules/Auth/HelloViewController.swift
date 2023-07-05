@@ -33,6 +33,7 @@ final class HelloViewController: UIViewController {
 
         button.tintColor = .systemGray
         button.setTitleColor(.label, for: .normal)
+        button.backgroundColor = Res.PRColors.prDark?.withAlphaComponent(0.1)
 
         button.titleLabel?.font = .monospacedDigitSystemFont(ofSize: 22, weight: .medium)
         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
@@ -59,11 +60,12 @@ final class HelloViewController: UIViewController {
 
         setupView()
         bindViewModel()
+        viewModel.updateState(viewInput: .initial)
 
-        viewModel.initialState { sensorType, userPhone in
-            bioLoginButton.setImage(UIImage(systemName: sensorType), for: .normal)
-            bioLoginButton.setTitle("    " + userPhone, for: .normal)
-        }
+//        viewModel.initialState { sensorType, userPhone in
+//            bioLoginButton.setImage(UIImage(systemName: sensorType ?? ""), for: .normal)
+//            bioLoginButton.setTitle("    " + userPhone, for: .normal)
+//        }
         
     }
 
@@ -79,9 +81,11 @@ final class HelloViewController: UIViewController {
                 return
             }
             switch state {
-            case .identifiedUser:
+            case .identifiedUser(sensorType: let sensorType, userPhone: let userPhone):
                 self.loginButton.setTitle("Другой пользователь  📲", for: .normal)
                 self.bioLoginButton.isHidden = false
+                self.bioLoginButton.setImage(UIImage(systemName: sensorType ?? ""), for: .normal)
+                self.bioLoginButton.setTitle("    " + userPhone, for: .normal)
             case .noUser:
                 self.loginButton.setTitle("Войти по номеру телефона  📲", for: .normal)
                 self.bioLoginButton.isHidden = true
@@ -89,8 +93,8 @@ final class HelloViewController: UIViewController {
                   DispatchQueue.main.async {
                       self.bioLoginButton.tintColor = .systemBlue
                   }
-//            case .error(let error):
-//                self.showAlert(title: "Ошибка", message: error.localizedDescription) {}
+            case .settings:
+                ()
             }
         }
     }

@@ -34,9 +34,14 @@ final class ProfileCoordinator: Coordinatable {
     }
 
     func logOut() {
-
         self.flowCompletionHandler?(nil)
+    }
 
+    func showSettings(userSettings: Runner?) {
+        let settingsViewModel = LoginViewModel(userSettings: userSettings)
+        let settingsView = RegistrationViewController(viewModel: settingsViewModel)
+//        navigationController.pushViewController(settingsView, animated: true)
+        navigationController.present(settingsView, animated: true)
     }
 
 }

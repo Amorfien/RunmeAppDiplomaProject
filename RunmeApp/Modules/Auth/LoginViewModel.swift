@@ -15,22 +15,26 @@ protocol LoginViewModelProtocol: ViewModelProtocol {
 final class LoginViewModel: LoginViewModelProtocol {
 
     enum State {
-        case identifiedUser
+        case identifiedUser(sensorType: String?, userPhone: String)
         case noUser
         case fastLogin
+        case settings(Runner)
 //        case error(Error)
     }
 
     enum ViewInput {
+        case initial
         case helloButtonDidTap
         case loginWithBio
         case phoneButtonDidTap(String)
         case termsButtonDidTap
         case smsButtonDidTap(String)
+        case registerOrSettings
         case registerButtonDidTap(Runner)
     }
 
-    private let localAuthorizationService: LocalAuthorizationService
+    private let localAuthorizationService: LocalAuthorizationService?
+    private let userSettings: Runner?
     weak var coordinator: LoginCoordinator?
     var onStateDidChange: ((State) -> Void)?
 
@@ -40,8 +44,9 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
-    init(localAuthorizationService: LocalAuthorizationService) {
+    init(localAuthorizationService: LocalAuthorizationService? = nil, userSettings: Runner? = nil) {
         self.localAuthorizationService = localAuthorizationService
+        self.userSettings = userSettings
 //        print(localAuthorizationService.sensorType)
     }
 
@@ -49,23 +54,32 @@ final class LoginViewModel: LoginViewModelProtocol {
         print(#function, " LoginViewModel ⚙️")
     }
 
-    /// дополнительный метод для того чтобы сработал didSet после инициализатора
-    func initialState(completion: (_ sensorType: String, _ userPhone: String) -> Void) {
-        ///только локальная проверка, в базе может не быть полной модели юзера
-        if AuthManager.shared.currentUser != nil {
-            self.state = .identifiedUser
-        } else {
-            self.state = .noUser
-        }
-        let sensorType = localAuthorizationService.sensorType
-        let userPhone = AuthManager.shared.currentUser?.phoneNumber
-
-        completion(sensorType, phoneFormatter(number: userPhone))
-
-    }
+//    /// дополнительный метод для того чтобы сработал didSet после инициализатора
+//    func initialState(completion: (_ sensorType: String?, _ userPhone: String) -> Void) {
+//        ///только локальная проверка, в базе может не быть полной модели юзера
+//        if AuthManager.shared.currentUser != nil {
+//            self.state = .identifiedUser
+//        } else {
+//            self.state = .noUser
+//        }
+//        let sensorType = localAuthorizationService?.sensorType
+//        let userPhone = AuthManager.shared.currentUser?.phoneNumber
+//
+//        completion(sensorType, phoneFormatter(number: userPhone))
+//
+//    }
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
+        case .initial:
+            if AuthManager.shared.currentUser != nil {
+                let sensorType = localAuthorizationService?.sensorType
+                let userPhone = AuthManager.shared.currentUser?.phoneNumber
+                let formatedPhone = phoneFormatter(number: userPhone)
+                self.state = .identifiedUser(sensorType: sensorType, userPhone: formatedPhone)
+            } else {
+                self.state = .noUser
+            }
         case .helloButtonDidTap:
             coordinator?.pushPhoneViewController()            //true
 
@@ -73,7 +87,7 @@ final class LoginViewModel: LoginViewModelProtocol {
 //            coordinator?.pushToMain()                         //test
 
         case .loginWithBio:
-            localAuthorizationService.authorizeIfPossible { [weak self] bioResult in
+            localAuthorizationService?.authorizeIfPossible { [weak self] bioResult in
                 if bioResult {
                     print("🟢")
                     self?.state = .fastLogin
@@ -108,7 +122,12 @@ final class LoginViewModel: LoginViewModelProtocol {
                 }
             }
 
+        case .registerOrSettings:
 
+            if let userSettings {
+                self.state = .settings(userSettings)
+            }
+            
 
             
         case .registerButtonDidTap(let runner):
