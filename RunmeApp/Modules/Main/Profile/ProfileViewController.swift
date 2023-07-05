@@ -11,6 +11,7 @@ final class ProfileViewController: UIViewController {
 
     private let viewModel: ProfileViewModel
     private var isEditable: Bool = false
+    private var achievements: [String] = []
 
     private lazy var profileCardView = ProfileCardView(delegate: self, isEditable: self.isEditable)
 
@@ -68,6 +69,7 @@ final class ProfileViewController: UIViewController {
                 ()
             case .loadedProfile(let profile):
                 self.profileCardView.fillProfile(profile: profile)
+                self.achievements = profile.achievements
             case .loadedImageData(let imgData):
                 self.profileCardView.fillAvatar(avatar: UIImage(data: imgData))
             }
@@ -142,4 +144,46 @@ extension ProfileViewController: SlideMenuDelegate {
             viewModel.updateState(viewInput: .logOut)
         }
     }
+}
+
+/// делегат коллекции ачивок
+extension ProfileViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.achievements.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AchievementCell", for: indexPath)
+        cell.backgroundColor = Res.PRColors.prLight
+        cell.layer.cornerRadius = 10
+        cell.layer.borderColor = UIColor.white.cgColor
+        cell.layer.borderWidth = 1
+        let achImgView = UIImageView(image: UIImage(named: achievements[indexPath.item]))
+        achImgView.contentMode = .scaleAspectFit
+        cell.backgroundView = achImgView
+        return cell
+    }
+
+}
+extension ProfileViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth = (collectionView.frame.width - 48) / 3
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+}
+
+/// делегат скролла ачивок
+extension ProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.x > 0 {
+                self.profileCardView.achButton.alpha = 0
+                self.profileCardView.achButton.isHidden = true
+        } else {
+            profileCardView.achButton.isHidden = false
+            UIView.animate(withDuration: 0.4) {
+                self.profileCardView.achButton.alpha = 1
+            }
+        }
+    }
+
 }

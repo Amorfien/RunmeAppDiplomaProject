@@ -28,7 +28,16 @@ final class ProfileCardView: UIView {
     private let vStack = UIStackView()
     private let birthdayLabel = UILabel(text: "--.--.----", font: .monospacedDigitSystemFont(ofSize: 14, weight: .semibold), textColor: .secondaryLabel, lines: 1)
 
-    private let achiewmentsView = AchievementsScrollView(frame: .zero)
+    private lazy var achiewmentsView = AchievementsScrollView(delegate: delegate!)
+    lazy var achButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "questionmark.app.fill"), for: .normal)
+        button.addTarget(self, action: #selector(achBtnTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    private lazy var achiewmentsCollection = AchievementsCollectionView(delegate: delegate!)
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeLastView))
 
     private let distanceStack = UIStackView()
     private let fiveLabel = DistanceLabel(type: .five)
@@ -91,6 +100,7 @@ final class ProfileCardView: UIView {
         }
 
         addSubview(achiewmentsView)
+        achiewmentsView.addSubview(achButton)
 
         addSubview(distanceStack)
         distanceStack.axis = .vertical
@@ -132,6 +142,10 @@ final class ProfileCardView: UIView {
             achiewmentsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             achiewmentsView.trailingAnchor.constraint(equalTo: trailingAnchor),
             achiewmentsView.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 12),
+            achButton.centerYAnchor.constraint(equalTo: achiewmentsView.centerYAnchor),
+            achButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            achButton.widthAnchor.constraint(equalToConstant: 40),
+            achButton.heightAnchor.constraint(equalToConstant: 40),
 
             distanceStack.topAnchor.constraint(equalTo: achiewmentsView.bottomAnchor, constant: 16),
             distanceStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
@@ -163,6 +177,15 @@ final class ProfileCardView: UIView {
             }
         }
     }
+    @objc private func achBtnTap() {
+        self.addSubview(achiewmentsCollection)
+        achiewmentsCollection.frame = self.bounds
+        achiewmentsCollection.addGestureRecognizer(tapGesture)
+    }
+    @objc func removeLastView() {
+        achiewmentsCollection.removeGestureRecognizer(tapGesture)
+        achiewmentsCollection.removeFromSuperview()
+    }
 
     func fillProfile(profile: Runner) {
         nicknameLabel.text = profile.nickname
@@ -183,7 +206,6 @@ final class ProfileCardView: UIView {
     }
     func fillAvatar(avatar: UIImage?) {
         self.avatar = avatar
-
     }
 
     private func changeAvatar() {
@@ -192,7 +214,5 @@ final class ProfileCardView: UIView {
         imagePicker.delegate = delegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
         delegate?.present(imagePicker, animated: true)
     }
-
-
 
 }

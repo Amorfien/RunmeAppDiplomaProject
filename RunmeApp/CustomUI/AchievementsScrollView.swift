@@ -9,11 +9,10 @@ import UIKit
 
 final class AchievementsScrollView: UIScrollView {
 
-
-    override init(frame: CGRect) {//}, achievments: [String]) {
-        super.init(frame: frame)
+    init(delegate: UIViewController) {
+        super.init(frame: .zero)
+        self.delegate = delegate as? UIScrollViewDelegate
         translatesAutoresizingMaskIntoConstraints = false
-
         setupView()
     }
 
@@ -34,7 +33,7 @@ final class AchievementsScrollView: UIScrollView {
     func fillAchievements(with ach: Set<String>) {
         for (i, achievment) in ach.enumerated() {
             let imageView = UIImageView()
-            imageView.frame = CGRect(x: 44 * i + 12, y: 8, width: 32, height: 32)
+            imageView.frame = CGRect(x: 44 * i + 40, y: 8, width: 32, height: 32)
             imageView.contentMode = .scaleAspectFit
             if let image = UIImage(named: achievment) {
                 imageView.image = image
@@ -43,7 +42,7 @@ final class AchievementsScrollView: UIScrollView {
             }
             self.addSubview(imageView)
         }
-        contentSize.width = CGFloat(ach.count * 44 + 12)
+        contentSize.width = CGFloat(ach.count * 44 + 40)
     }
 
 
