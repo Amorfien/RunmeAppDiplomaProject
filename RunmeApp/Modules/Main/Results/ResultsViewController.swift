@@ -13,7 +13,8 @@ final class ResultsViewController: UIViewController {
 
     private lazy var itsMe = AuthManager.shared.currentUser?.uid
 
-    private var runners: [RunnersBests] = [] {
+    private var rrunners: [RunnersBests] = []
+    private var tableRunners: [RunnersBests] = [] {
         didSet {
             resultsTableView.reloadData()
         }
@@ -29,9 +30,17 @@ final class ResultsViewController: UIViewController {
         return segmentedControl
     }()
 
+    private lazy var sexSegment: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["🚹", "🚺"])
+        segmentedControl.frame.size.height = 20
+        segmentedControl.frame.size.width = 150
+        segmentedControl.addTarget(self, action: #selector(changeSex), for: .valueChanged)
+        return segmentedControl
+    }()
+
     private lazy var resultsTableView: UITableView = {
         let tableView = UITableView()
-
+        tableView.tableHeaderView = sexSegment
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "standartCell")
         tableView.separatorInset = .zero
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +110,8 @@ final class ResultsViewController: UIViewController {
             case .loading:
                 ()
             case .loadedResults(let bests):
-                self.runners = bests
+                self.rrunners = bests
+                self.tableRunners = bests
             }
         }
     }
@@ -109,11 +119,17 @@ final class ResultsViewController: UIViewController {
 
 
     @objc private func changeDistance(_ sender: UISegmentedControl) {
-        runners.sort { lhs, rhs in
+        rrunners.sort { lhs, rhs in
             lhs.personalBests[sender.selectedSegmentIndex] < rhs.personalBests[sender.selectedSegmentIndex]
         }
+        tableRunners = rrunners
+        sexSegment.selectedSegmentIndex = UISegmentedControl.noSegment
     }
 
+    @objc private func changeSex(_ sender: UISegmentedControl) {
+        sender.selectedSegmentTintColor = sender.selectedSegmentIndex == 0 ? .blue : .systemPink
+        tableRunners = rrunners.filter{ sender.selectedSegmentIndex == 0 ? $0.isMale : !$0.isMale }
+    }
 
 
 
@@ -123,13 +139,13 @@ final class ResultsViewController: UIViewController {
 
 extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        runners.count
+        tableRunners.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "standartCell")
-        let runner = runners[indexPath.row]
+        let runner = tableRunners[indexPath.row]
         let time = runner.personalBests[distanceSegment.selectedSegmentIndex]
         let nickname = runner.nickname
 
@@ -137,9 +153,13 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = timeFormat(sec: time, isMale: runner.isMale)
         cell.detailTextLabel?.lineBreakMode = .byTruncatingMiddle
         cell.detailTextLabel?.text = "\(nickname)  - \(indexPath.row + 1)"
+        cell.backgroundColor = runner.isMale ? .systemBlue.withAlphaComponent(0.07) : .systemPink.withAlphaComponent(0.07)
 
-        if time > 0, time < 100000 {
-            cell.backgroundColor = itsMe == runner.id ? .systemYellow.withAlphaComponent(0.5) : .clear
+        if time > 0, time < 100000, itsMe == runner.id {
+            cell.backgroundColor = .systemYellow.withAlphaComponent(0.4)
+        }
+        if runner.id == "_adminadmin" {
+            cell.backgroundColor = .clear
         }
 
         return cell
@@ -147,7 +167,7 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let runner = runners[indexPath.row]
+        let runner = tableRunners[indexPath.row]
         print(runner.personalBests)
         viewModel.updateState(viewInput: .chooseUser(runner.id))
     }

@@ -29,7 +29,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case showUser
         case saveStatus(String)
         case savePhoto(UIImage)
-        case saveUser(Runner)
+        case updateUser(Runner)
         case menuSettings
         case logOut
     }
@@ -74,8 +74,13 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     ()
                 }
             }
-        case .saveUser(let user):
-            DatabaseService.shared.setUser(user: user) { saveResult in
+        case .updateUser(var user):
+            guard let fetchedUser else { return }
+            //дополняю поля, которых нет на экране настроек, чтобы не обнулить
+//            user.achievements = fetchedUser.achievements
+            user.personalBests = fetchedUser.personalBests
+//            user.statusText = fetchedUser.statusText
+            DatabaseService.shared.updateUser(user: user) { saveResult in
                 switch saveResult {
                 case .success(_):
                     print("User update")

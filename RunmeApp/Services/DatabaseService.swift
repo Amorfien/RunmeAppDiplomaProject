@@ -30,6 +30,17 @@ final class DatabaseService {
         }
     }
 
+    ///обновить юзера в базе
+    func updateUser(user: Runner, completion: @escaping (Result<Runner, Error>) -> Void) {
+        usersRef.document(user.id).setData(user.representation, merge: true) { error in
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(user))
+            }
+        }
+    }
+
     ///прочитать юзера из базы
     func getUser(userId: String, completion: @escaping (Result<Runner, Error>) -> Void) {
         usersRef.document(userId).getDocument { docSnapshot, error in

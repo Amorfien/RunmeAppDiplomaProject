@@ -241,7 +241,7 @@ final class RegistrationView: UIView {
             avatar: avatarImageView.image,
             birthday: birthdayTextField.text)
 
-        (delegate as? SettingsViewController)?.viewModel.updateState(viewInput: .saveUser(runner))
+        (delegate as? SettingsViewController)?.viewModel.updateState(viewInput: .updateUser(runner))
 
     }
 

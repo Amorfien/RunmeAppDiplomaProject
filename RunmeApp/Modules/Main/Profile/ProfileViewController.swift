@@ -69,7 +69,7 @@ final class ProfileViewController: UIViewController {
                 ()
             case .loadedProfile(let profile):
                 self.profileCardView.fillProfile(profile: profile)
-                self.achievements = profile.achievements
+                self.achievements = profile.achievements ?? []
             case .loadedImageData(let imgData):
                 self.profileCardView.fillAvatar(avatar: UIImage(data: imgData))
             case .settings(let user):

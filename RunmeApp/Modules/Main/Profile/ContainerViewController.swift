@@ -69,7 +69,7 @@ final class ContainerViewController: UIViewController {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.menuVC.view.frame.origin.x += self.menuIsVisible ? 180 : -180
             self.profileVC.view.frame.origin.x += self.menuIsVisible ? 16 : -16
-            self.profileVC.view.alpha = self.menuIsVisible ? 1 : 0.85
+            self.profileVC.view.alpha = self.menuIsVisible ? 1 : 0.8
         }
         self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: !menuIsVisible ? "arrow.right.to.line" : "line.3.horizontal")
         menuIsVisible.toggle()

@@ -29,7 +29,7 @@ struct Runner: Identifiable {
     var isAdmin: Bool = false
 
     var personalBests: [Int] = [0, 0, 0, 0]
-    var achievements: [String] = []
+    var achievements: [String]?// = []
 
     var posts: [String]? = []
     var representation: [String: Any] {

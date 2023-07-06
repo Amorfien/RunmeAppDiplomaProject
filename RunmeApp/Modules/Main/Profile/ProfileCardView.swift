@@ -31,11 +31,15 @@ final class ProfileCardView: UIView {
     private lazy var achiewmentsView = AchievementsScrollView(delegate: delegate!)
     lazy var achButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "questionmark.app.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "trophy.circle"), for: .normal)
+//        button.contentHorizontalAlignment = .left
+//        button.setTitleColor(.secondaryLabel, for: .normal)
+//        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .light)
         button.addTarget(self, action: #selector(achBtnTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    private let noAchLabel = UILabel(text: "тут скоро будут награды", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
     private lazy var achiewmentsCollection = AchievementsCollectionView(delegate: delegate!)
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeLastView))
 
@@ -104,6 +108,8 @@ final class ProfileCardView: UIView {
 
         addSubview(achiewmentsView)
         achiewmentsView.addSubview(achButton)
+        achiewmentsView.addSubview(noAchLabel)
+        noAchLabel.isHidden = true
 
         addSubview(distanceStack)
         distanceStack.axis = .vertical
@@ -146,9 +152,12 @@ final class ProfileCardView: UIView {
             achiewmentsView.trailingAnchor.constraint(equalTo: trailingAnchor),
             achiewmentsView.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 12),
             achButton.centerYAnchor.constraint(equalTo: achiewmentsView.centerYAnchor),
-            achButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            achButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
+//            achButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             achButton.widthAnchor.constraint(equalToConstant: 40),
             achButton.heightAnchor.constraint(equalToConstant: 40),
+            noAchLabel.centerYAnchor.constraint(equalTo: achiewmentsView.centerYAnchor),
+            noAchLabel.centerXAnchor.constraint(equalTo: achiewmentsView.centerXAnchor),
 
             distanceStack.topAnchor.constraint(equalTo: achiewmentsView.bottomAnchor, constant: 16),
             distanceStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
@@ -198,11 +207,17 @@ final class ProfileCardView: UIView {
         statusTextField.text = profile.statusText
         birthdayLabel.text = profile.birthday
         bigAvatar.backgroundColor = profile.isAdmin ? .tintColor.withAlphaComponent(0.9) : Res.PRColors.prDark!.withAlphaComponent(0.9)
-        achiewmentsView.fillAchievements(with: Set(profile.achievements))
+        achiewmentsView.fillAchievements(with: Set(profile.achievements ?? []))
         fiveLabel.text = timeFormat(sec: profile.personalBests[0], isMale: profile.isMale)
         tenLabel.text = timeFormat(sec: profile.personalBests[1], isMale: profile.isMale)
         twentyLabel.text = timeFormat(sec: profile.personalBests[2], isMale: profile.isMale)
         fortyLabel.text = timeFormat(sec: profile.personalBests[3], isMale: profile.isMale)
+//        if profile.achievements == nil || profile.achievements == [] {
+        if profile.achievements?.isEmpty ?? true {
+//            achButton.setTitle("  тут скоро будут награды", for: .normal)
+            noAchLabel.isHidden = false
+            achButton.isEnabled = false
+        }
         if profile.isAdmin {
             distanceStack.heightAnchor.constraint(equalToConstant: 0).isActive = true
         }
