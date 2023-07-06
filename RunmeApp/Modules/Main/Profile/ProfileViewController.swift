@@ -16,6 +16,8 @@ final class ProfileViewController: UIViewController {
     private lazy var profileCardView = ProfileCardView(delegate: self, isEditable: self.isEditable)
 
     private var statusTemp: String?
+
+//    private lazy var settingsView = RegistrationView(delegate: self)
     
     //MARK: - Init
     
@@ -65,13 +67,17 @@ final class ProfileViewController: UIViewController {
             switch state {
             case .initial:
                 ()
-            case .error(_):
-                ()
             case .loadedProfile(let profile):
                 self.profileCardView.fillProfile(profile: profile)
                 self.achievements = profile.achievements
             case .loadedImageData(let imgData):
                 self.profileCardView.fillAvatar(avatar: UIImage(data: imgData))
+            case .settings(let user):
+                 let settingsView = RegistrationView(delegate: self)
+                settingsView.settingsScreen(profile: user)
+                self.view = settingsView
+            case .error(_):
+                ()
             }
         }
     }

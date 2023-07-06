@@ -68,6 +68,9 @@ final class ProfileCardView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    deinit {
+        print(#function, " ProfileCardView 📺")
+    }
 
 
     private func setupView() {

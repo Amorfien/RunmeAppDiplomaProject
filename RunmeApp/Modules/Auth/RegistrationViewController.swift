@@ -12,85 +12,7 @@ final class RegistrationViewController: UIViewController {
     // MARK: - Properties
     let viewModel: LoginViewModel
 
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.bounces = false
-        scrollView.delegate = self
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-
-    private lazy var avatarImageView = AvatarCircleImageView(
-        image: UIImage(named: "dafault-avatar"),
-        size: .large, isEditable: true,
-        completion: addButtonDidTap
-    )
-
-    private let vStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 40
-        stack.distribution = .equalSpacing
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-
-    private let nicknameTextField = RegistrationTextField(type: .nickname)
-    private let nameTextField = RegistrationTextField(type: .name)
-    private let surnameTextField = RegistrationTextField(type: .surname)
-    private let emailTextField = RegistrationTextField(type: .email)
-    private let telegramTextField = RegistrationTextField(type: .telegram)
-    private let hStack = UIStackView()
-    private let birthdayTextField = RegistrationTextField(type: .birthday)
-
-    private lazy var sexSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Муж", "Жен"])
-        segmentedControl.selectedSegmentTintColor = .tintColor
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(changeSex), for: .valueChanged)
-        return segmentedControl
-    }()
-
-    private let doneImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "done")
-        image.contentMode = .scaleAspectFit
-        image.alpha = 0
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-
-    private lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(dateChange), for: UIControl.Event.valueChanged)
-        datePicker.frame.size = CGSize(width: .zero, height: 300)
-        datePicker.preferredDatePickerStyle = .wheels
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        let minDate = formatter.date(from: "01.01.1930")
-        let startDate = formatter.date(from: "15.06.1998")
-
-        datePicker.maximumDate = Date()
-        datePicker.minimumDate = minDate
-        datePicker.date = startDate ?? Date()
-        return datePicker
-    }()
-
-    private lazy var constraint = vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48)
-
-
-
-    private lazy var nextButton: LoginButton = {
-        let button = LoginButton()
-        button.setTitle("Готово", for: .normal)
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
-        return button
-    }()
+    private lazy var registrationView = RegistrationView(delegate: self)
 
     //MARK: - Init
 
@@ -107,11 +29,14 @@ final class RegistrationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Регистрация"
+//        setupView()
+//        setupGestures()
+        view.backgroundColor = .systemGray5
+        view.addSubview(registrationView)
+        registrationView.frame = self.view.frame
 
-        setupView()
-        setupGestures()
-
-        bindViewModel()
+//        bindViewModel()
         viewModel.updateState(viewInput: .registerOrSettings) //проверяем начальный стейт чтобы сработал дидсет
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -123,154 +48,6 @@ final class RegistrationViewController: UIViewController {
         print(#function, " RegistrationViewController 📱")
     }
 
-    func bindViewModel() {
-        viewModel.onStateDidChange = { [weak self] state in
-            guard let self = self else {
-                return
-            }
-            switch state {
-            case .identifiedUser(sensorType: _, userPhone: _):
-                ()
-            case .noUser:
-                ()
-            case .fastLogin:
-                  ()
-            case .settings(let user):
-                settingsScreen(profile: user)
-            }
-        }
-    }
-
-    private func setupView() {
-        self.title = "Регистрация"
-        view.backgroundColor = .systemGray5
-        view.addSubview(scrollView)
-        scrollView.addSubview(avatarImageView)
-        scrollView.addSubview(vStack)
-        scrollView.addSubview(doneImageView)
-        let textFields = [nicknameTextField, nameTextField, surnameTextField, emailTextField, telegramTextField, birthdayTextField]
-
-        for (tag, textField) in textFields.enumerated() {
-            if textField != birthdayTextField {
-                vStack.addArrangedSubview(textField)
-            }
-            textField.delegate = self
-            textField.tag = tag
-        }
-        hStack.addArrangedSubview(birthdayTextField)
-        hStack.addArrangedSubview(sexSegment)
-        hStack.spacing = 16
-        hStack.distribution = .fillProportionally
-        vStack.addArrangedSubview(hStack)
-
-        birthdayTextField.inputView = datePicker
-//        birthdayTextField.text = formatDate(date: Date()) // todays Date
-
-
-//        birthdayTextField.keyboardType = .decimalPad
-        emailTextField.keyboardType = .emailAddress
-        telegramTextField.keyboardType = .emailAddress
-
-        view.addSubview(nextButton)
-
-        NSLayoutConstraint.activate([
-
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24),
-            avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-//            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
-//            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
-
-            constraint,
-            vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-//            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
-
-            doneImageView.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 32),
-            doneImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -32),
-            doneImageView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 0),
-            doneImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.65),
-            doneImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.65),
-
-            nextButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -12),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nextButton.widthAnchor.constraint(equalToConstant: 150),
-
-        ])
-    }
-
-
-    private func settingsScreen(profile: Runner) {
-        nextButton.isHidden = true
-        avatarImageView.isHidden = true
-        constraint.isActive = false
-        vStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 48).isActive = true
-
-        nicknameTextField.text = profile.nickname
-        nameTextField.text = profile.name
-        surnameTextField.text = profile.surname
-        emailTextField.text = profile.email
-        telegramTextField.text = profile.telegram
-        birthdayTextField.text = profile.birthday
-        sexSegment.selectedSegmentIndex = profile.isMale ? 0 : 1
-
-
-    }
-    // MARK: - Actions
-
-    @objc private func addButtonDidTap() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        present(imagePicker, animated: true)
-    }
-
-    @objc private func changeSex() {
-
-    }
-    @objc private func dateChange() {
-        birthdayTextField.text = formatDate(date: datePicker.date)
-    }
-
-    @objc private func nextDidTap() {
-
-        let runner = Runner(
-            id: AuthManager.shared.currentUser?.uid ?? "---",
-            phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
-            nickname: nicknameTextField.text ?? "---",
-            name: nameTextField.text,
-            surname: surnameTextField.text,
-            isMale: sexSegment.selectedSegmentIndex == 0 ? true : false,
-            email: emailTextField.text,
-            telegram: telegramTextField.text,
-            avatar: avatarImageView.image,
-            birthday: birthdayTextField.text)
-
-        viewModel.updateState(viewInput: .registerButtonDidTap(runner))
-
-    }
-
-    //  жест чтобы скрывать клавиатуру по тапу
-    private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    @objc private func hideKeyboard() {
-        view.endEditing(true)
-    }
-
-
-
-    private func formatDate(date: Date) -> String
-    {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        return formatter.string(from: date)
-    }
-
 }
 
 //MARK: - Extensions
@@ -279,12 +56,12 @@ extension RegistrationViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField.tag {
-        case 0: nameTextField.becomeFirstResponder()
-        case 1: surnameTextField.becomeFirstResponder()
-        case 2: emailTextField.becomeFirstResponder()
-        case 3: telegramTextField.becomeFirstResponder()
-        case 4: birthdayTextField.becomeFirstResponder()
-        default: hideKeyboard()
+        case 0: registrationView.nameTextField.becomeFirstResponder()
+        case 1: registrationView.surnameTextField.becomeFirstResponder()
+        case 2: registrationView.emailTextField.becomeFirstResponder()
+        case 3: registrationView.telegramTextField.becomeFirstResponder()
+        case 4: registrationView.birthdayTextField.becomeFirstResponder()
+        default: registrationView.hideKeyboard()
         }
         return true
 
@@ -294,10 +71,10 @@ extension RegistrationViewController: UITextFieldDelegate {
         guard let text = textField.text else { return }
         if textField.tag == 0 {
             if text.count > 2 {
-                nextButton.isEnabled = true
-                nextButton.isSelected = false
+                registrationView.nextButton.isEnabled = true
+                registrationView.nextButton.isSelected = false
             } else {
-                nextButton.isEnabled = false
+                registrationView.nextButton.isEnabled = false
             }
         } else if textField.tag == 4, text.isEmpty {
             textField.text = "@"
@@ -313,8 +90,8 @@ extension RegistrationViewController: UITextFieldDelegate {
             }
         }
 
-        let bottom = -scrollView.contentInset.top + scrollView.contentSize.height - scrollView.frame.height
-        scrollView.setContentOffset(CGPoint(x: .zero, y: bottom - (28 * (4 - CGFloat(textField.tag)))), animated: true)
+        let bottom = -registrationView.scrollView.contentInset.top + registrationView.scrollView.contentSize.height - registrationView.scrollView.frame.height
+        registrationView.scrollView.setContentOffset(CGPoint(x: .zero, y: bottom - (28 * (4 - CGFloat(textField.tag)))), animated: true)
 
         return true
     }
@@ -325,7 +102,7 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            avatarImageView.image = pickedImage
+            registrationView.avatarImageView.image = pickedImage
         }
         picker.dismiss(animated: true)
     }
@@ -343,7 +120,7 @@ extension RegistrationViewController: UIScrollViewDelegate {
             let alpha = (diff - hidden) / diff
 
             if hidden > 0 && alpha > 0 {
-                doneImageView.alpha = alpha
+                registrationView.doneImageView.alpha = alpha
 //                print(alpha)
             }
         }

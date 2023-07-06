@@ -38,10 +38,11 @@ final class ProfileCoordinator: Coordinatable {
     }
 
     func showSettings(userSettings: Runner?) {
-        let settingsViewModel = LoginViewModel(userSettings: userSettings)
-        let settingsView = RegistrationViewController(viewModel: settingsViewModel)
-//        navigationController.pushViewController(settingsView, animated: true)
-        navigationController.present(settingsView, animated: true)
+        let settingsViewController = SettingsViewController(viewModel: vm)
+        let view = RegistrationView(delegate: settingsViewController)
+
+//        navigationController.pushViewController(settingsViewController, animated: true)
+        navigationController.present(settingsViewController, animated: true)
     }
 
 }

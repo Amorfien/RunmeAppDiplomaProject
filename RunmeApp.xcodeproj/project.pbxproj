@@ -60,6 +60,8 @@
 		18ACD0BB2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */; };
 		18ACD0BD2A4C9C71008B7FDB /* FriendCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0BC2A4C9C71008B7FDB /* FriendCardCell.swift */; };
 		18B6C0FD2A541AD8000E1975 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6C0FC2A541AD8000E1975 /* ContainerViewController.swift */; };
+		18C5AB6B2A55E843004E83CE /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5AB6A2A55E843004E83CE /* RegistrationView.swift */; };
+		18C5AB6E2A55F985004E83CE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5AB6D2A55F985004E83CE /* SettingsViewController.swift */; };
 		18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEB2A46F9D000438728 /* Runner.swift */; };
 		18DC3BEE2A46FEEA00438728 /* RunnerPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BED2A46FEEA00438728 /* RunnerPost.swift */; };
 		18DC3BF02A4701A100438728 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEF2A4701A100438728 /* Running.swift */; };
@@ -125,6 +127,8 @@
 		18ACD0BA2A4C9BF3008B7FDB /* FriendCardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCardsCollectionView.swift; sourceTree = "<group>"; };
 		18ACD0BC2A4C9C71008B7FDB /* FriendCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCardCell.swift; sourceTree = "<group>"; };
 		18B6C0FC2A541AD8000E1975 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		18C5AB6A2A55E843004E83CE /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		18C5AB6D2A55F985004E83CE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		18DC3BEB2A46F9D000438728 /* Runner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		18DC3BED2A46FEEA00438728 /* RunnerPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerPost.swift; sourceTree = "<group>"; };
 		18DC3BEF2A4701A100438728 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
@@ -167,11 +171,11 @@
 		1849A4382A4F597D00401500 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				18B6C0FC2A541AD8000E1975 /* ContainerViewController.swift */,
 				1880D6AE2A44F23D008DBE6C /* ProfileViewModel.swift */,
+				18B6C0FC2A541AD8000E1975 /* ContainerViewController.swift */,
+				18C5AB6C2A55F965004E83CE /* Menu */,
 				1880D69C2A449857008DBE6C /* ProfileViewController.swift */,
 				1849A4392A4F59BA00401500 /* ProfileCardView.swift */,
-				18FE16E92A53679500145305 /* SlideMenuViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -320,6 +324,15 @@
 			path = Results;
 			sourceTree = "<group>";
 		};
+		18C5AB6C2A55F965004E83CE /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				18FE16E92A53679500145305 /* SlideMenuViewController.swift */,
+				18C5AB6D2A55F985004E83CE /* SettingsViewController.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
 		18DC3BF12A473DD100438728 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +349,7 @@
 				1880D67A2A4490E4008DBE6C /* HelloViewController.swift */,
 				187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */,
 				18DC3BF62A474B7000438728 /* RegistrationViewController.swift */,
+				18C5AB6A2A55E843004E83CE /* RegistrationView.swift */,
 				187525D72A4C554700BBD8E1 /* TermsViewController.swift */,
 			);
 			path = Auth;
@@ -475,6 +489,7 @@
 				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
 				187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */,
 				18FE16E62A52D06200145305 /* RunnerPostTableViewCell.swift in Sources */,
+				18C5AB6E2A55F985004E83CE /* SettingsViewController.swift in Sources */,
 				187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */,
 				18768A8A2A45D56900720EC3 /* TextFieldWithPadding.swift in Sources */,
 				1880D69B2A44984C008DBE6C /* HomeViewController.swift in Sources */,
@@ -503,6 +518,7 @@
 				181277FF2A5597A200E59A3B /* SlideMenu.swift in Sources */,
 				1880D6AD2A44A94B008DBE6C /* ViewModelProtocol.swift in Sources */,
 				18DC3BEE2A46FEEA00438728 /* RunnerPost.swift in Sources */,
+				18C5AB6B2A55E843004E83CE /* RegistrationView.swift in Sources */,
 				1849A43A2A4F59BA00401500 /* ProfileCardView.swift in Sources */,
 				1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */,
 				1880D6A52A449C70008DBE6C /* FavoriteCoordinator.swift in Sources */,

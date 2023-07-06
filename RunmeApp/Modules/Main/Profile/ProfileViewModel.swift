@@ -21,6 +21,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
 //        case loading
         case loadedProfile(Runner)
         case loadedImageData(Data)
+        case settings(Runner?)
         case error(Error)
     }
 
@@ -28,6 +29,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case showUser
         case saveStatus(String)
         case savePhoto(UIImage)
+        case saveUser(Runner)
         case menuSettings
         case logOut
     }
@@ -41,7 +43,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
 
     private let userId: String
-    private var fetchedUser: Runner? = nil
+    var fetchedUser: Runner? = nil
 
     init(userId: String) {
         self.userId = userId
@@ -72,6 +74,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     ()
                 }
             }
+        case .saveUser(let user):
+            DatabaseService.shared.setUser(user: user) { saveResult in
+                switch saveResult {
+                case .success(_):
+                    print("User update")
+                case .failure(_):
+                    print("Save user ERROR")
+                }
+            }
+
         case .saveStatus(let status):
             guard var user = fetchedUser else { return }
             user.statusText = status
@@ -95,6 +107,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         case .menuSettings:
             coordinator?.showSettings(userSettings: fetchedUser)
+//            self.state = .settings(fetchedUser)
+
         case .logOut:
             AuthManager.shared.signOut()
             coordinator?.logOut()
