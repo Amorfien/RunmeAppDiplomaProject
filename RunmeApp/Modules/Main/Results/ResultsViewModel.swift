@@ -44,6 +44,7 @@ final class ResultsViewModel: ResultsViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .needUpdate:
+            self.state = .loading
             DatabaseService.shared.getAllUsers { result in
                 switch result {
                 case .success(var bests):
@@ -51,6 +52,7 @@ final class ResultsViewModel: ResultsViewModelProtocol {
                     bests.sort { lhs, rhs in
                         lhs.personalBests[0] < rhs.personalBests[0]
                     }
+                    sleep(1)
                     self.state = .loadedResults(bests)
                 case .failure(_):
                     print("No results")

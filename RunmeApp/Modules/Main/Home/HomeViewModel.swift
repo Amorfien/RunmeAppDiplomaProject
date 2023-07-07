@@ -73,7 +73,8 @@ final class HomeViewModel: HomeViewModelProtocol {
         newsService.loadNews { [weak self] result in
             switch result {
             case .success(let news):
-                print(news.count)
+//                print(news.count)
+                sleep(1)
                 self?.state = .loadedNews(news)
             case .failure(let newsError):
                 print(newsError.localizedDescription)
@@ -90,6 +91,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         FirebaseStorageService.shared.downloadAllAvatars { [weak self] result in
             switch result {
             case .success(let dict):
+                sleep(1)
                 self?.state = .loadedAvatars(dict)
             case .failure(let avatarsError):
                 print("Download avatars Error, \(avatarsError.localizedDescription)")

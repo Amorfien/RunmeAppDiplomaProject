@@ -21,7 +21,7 @@ final class ResultsViewController: UIViewController {
     }
 
     private lazy var distanceSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.1 км", "МАРАФОН"])
+        let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.1 км", "42.2 км"])
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -50,6 +50,8 @@ final class ResultsViewController: UIViewController {
         return tableView
     }()
 
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+
     //MARK: - Init
 
     init(viewModel: ResultsViewModel) {
@@ -70,9 +72,12 @@ final class ResultsViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
+//        viewModel.updateState(viewInput: .needUpdate)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel.updateState(viewInput: .needUpdate)
-
-
     }
 
     
@@ -86,6 +91,8 @@ final class ResultsViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Res.MyColors.homeBackground
         view.addSubview(resultsTableView)
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
 
@@ -94,6 +101,8 @@ final class ResultsViewController: UIViewController {
             resultsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             resultsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             ])
     }
 
@@ -108,12 +117,25 @@ final class ResultsViewController: UIViewController {
             case .initial:
                 ()
             case .loading:
-                ()
+                updateResultsVisibility(isHidden: true)
+                updateLoadingAnimation(isLoading: true)
+                sexSegment.selectedSegmentIndex = UISegmentedControl.noSegment
             case .loadedResults(let bests):
+                updateResultsVisibility(isHidden: false)
+                updateLoadingAnimation(isLoading: false)
                 self.rrunners = bests
                 self.tableRunners = bests
+                distanceSegment.selectedSegmentIndex = 0 
             }
         }
+    }
+
+    private func updateResultsVisibility(isHidden: Bool) {
+        resultsTableView.isHidden = isHidden
+        activityIndicator.isHidden = !isHidden
+    }
+    private func updateLoadingAnimation(isLoading: Bool) {
+        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
 
 

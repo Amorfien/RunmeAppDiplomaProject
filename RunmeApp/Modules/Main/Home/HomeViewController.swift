@@ -85,13 +85,13 @@ final class HomeViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
-        viewModel.updateState(viewInput: .runnersSegment)
+//        viewModel.updateState(viewInput: .runnersSegment)
     }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        viewModel.updateState(viewInput: .forYouSegment)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.updateState(viewInput: .runnersSegment)
+    }
 
     private func setupNavigation() {
         navigationItem.title = "Главная"

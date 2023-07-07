@@ -13,7 +13,7 @@ final class DistanceLabel: LabelWithPadding {
         case five = "5 км"
         case ten = "10 км"
         case twenty = "21.1 км"
-        case forty = "МАРАФОН"
+        case forty = "42.2 км"
     }
 
     init(type: Distance) {

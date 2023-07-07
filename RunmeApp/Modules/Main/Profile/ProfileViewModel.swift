@@ -18,7 +18,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     enum State {
         case initial
-//        case loading
+        case loading
         case loadedProfile(Runner)
         case loadedImageData(Data)
         case settings(Runner?)
@@ -55,10 +55,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .showUser:
+            self.state = .loading
             DatabaseService.shared.getUser(userId: userId) { [weak self] dbResult in
                 switch dbResult {
                 case .success(let profile):
                     self?.fetchedUser = profile
+                    sleep(1)
                     self?.state = .loadedProfile(profile)
 
                 case .failure(_):

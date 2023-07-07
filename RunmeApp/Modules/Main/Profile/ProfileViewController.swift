@@ -10,6 +10,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
 
     private let viewModel: ProfileViewModel
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var isEditable: Bool = false
     private var achievements: [String] = []
 
@@ -55,12 +56,17 @@ final class ProfileViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Res.PRColors.prRegular
         view.addSubview(profileCardView)
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             profileCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             profileCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             profileCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             profileCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             ])
     }
 
@@ -73,7 +79,12 @@ final class ProfileViewController: UIViewController {
             switch state {
             case .initial:
                 ()
+            case .loading:
+                updateProfileVisibility(isHidden: true)
+                updateLoadingAnimation(isLoading: true)
             case .loadedProfile(let profile):
+                updateProfileVisibility(isHidden: false)
+                updateLoadingAnimation(isLoading: false)
                 self.profileCardView.fillProfile(profile: profile)
                 self.achievements = profile.achievements ?? []
             case .loadedImageData(let imgData):
@@ -86,6 +97,14 @@ final class ProfileViewController: UIViewController {
                 ()
             }
         }
+    }
+
+    private func updateProfileVisibility(isHidden: Bool) {
+        profileCardView.isHidden = isHidden
+        activityIndicator.isHidden = !isHidden
+    }
+    private func updateLoadingAnimation(isLoading: Bool) {
+        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
 
 
