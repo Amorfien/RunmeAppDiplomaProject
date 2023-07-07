@@ -15,9 +15,12 @@ final class ProfileCoordinator: Coordinatable {
     var navigationController: UINavigationController
     private(set) var vm: ProfileViewModel
 
+    private let profileViewController: ProfileViewController
+
     init(vc: UINavigationController, vm: ProfileViewModel) {
         self.navigationController = vc
         self.vm = vm
+        profileViewController = ProfileViewController(viewModel: vm, isEditable: true)
     }
     deinit {
         print("ProfileCoordinator deinit")
@@ -25,7 +28,7 @@ final class ProfileCoordinator: Coordinatable {
 
     func start() {
         vm.coordinator = self
-        let profileViewController = ProfileViewController(viewModel: vm, isEditable: true)
+//        let profileViewController = ProfileViewController(viewModel: vm, isEditable: true)
         let slideMenuViewController = SlideMenuViewController()
         slideMenuViewController.delegate = profileViewController
         let containerVC = ContainerViewController(profileVC: profileViewController, menuVC: slideMenuViewController)
@@ -39,7 +42,8 @@ final class ProfileCoordinator: Coordinatable {
 
     func showSettings(userSettings: Runner?) {
         let settingsViewController = SettingsViewController(viewModel: vm)
-        let view = RegistrationView(delegate: settingsViewController)
+        settingsViewController.delegate = profileViewController
+//        let view = RegistrationView(delegate: settingsViewController)
 
 //        navigationController.pushViewController(settingsViewController, animated: true)
         navigationController.present(settingsViewController, animated: true)

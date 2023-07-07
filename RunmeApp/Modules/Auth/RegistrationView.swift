@@ -59,23 +59,23 @@ final class RegistrationView: UIView {
         return image
     }()
 
-    private lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(dateChange), for: UIControl.Event.valueChanged)
-        datePicker.frame.size = CGSize(width: .zero, height: 300)
-        datePicker.preferredDatePickerStyle = .wheels
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        let minDate = formatter.date(from: "01.01.1930")
-        let startDate = formatter.date(from: "15.06.1998")
-
-        datePicker.maximumDate = Date()
-        datePicker.minimumDate = minDate
-        datePicker.date = startDate ?? Date()
-        return datePicker
-    }()
+//    private lazy var datePicker: UIDatePicker = {
+//        let datePicker = UIDatePicker()
+//        datePicker.datePickerMode = .date
+//        datePicker.addTarget(self, action: #selector(dateChange), for: UIControl.Event.valueChanged)
+//        datePicker.frame.size = CGSize(width: .zero, height: 300)
+//        datePicker.preferredDatePickerStyle = .wheels
+//
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd.MM.yyyy"
+//        let minDate = formatter.date(from: "01.01.1930")
+//        let startDate = formatter.date(from: "15.06.1998")
+//
+//        datePicker.maximumDate = Date()
+//        datePicker.minimumDate = minDate
+//        datePicker.date = startDate ?? Date()
+//        return datePicker
+//    }()
 
     private lazy var vStackConstraint = vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48)
     private lazy var buttonConstraint = nextButton.bottomAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor, constant: -12)
@@ -132,11 +132,8 @@ final class RegistrationView: UIView {
         hStack.distribution = .fillProportionally
         vStack.addArrangedSubview(hStack)
 
-        birthdayTextField.inputView = datePicker
-//        birthdayTextField.text = formatDate(date: Date()) // todays Date
+//        birthdayTextField.inputView = datePicker
 
-
-//        birthdayTextField.keyboardType = .decimalPad
         emailTextField.keyboardType = .emailAddress
         telegramTextField.keyboardType = .emailAddress
 
@@ -206,7 +203,7 @@ final class RegistrationView: UIView {
 
     }
     @objc private func dateChange() {
-        birthdayTextField.text = formatDate(date: datePicker.date)
+//        birthdayTextField.text = formatDate(date: datePicker.date)
     }
 
     @objc private func nextDidTap() {
@@ -227,7 +224,7 @@ final class RegistrationView: UIView {
 
     }
 
-    func updateUser() {
+    func updateUser() -> Runner {
 
         let runner = Runner(
             id: AuthManager.shared.currentUser?.uid ?? "---",
@@ -241,7 +238,7 @@ final class RegistrationView: UIView {
             avatar: avatarImageView.image,
             birthday: birthdayTextField.text)
 
-        (delegate as? SettingsViewController)?.viewModel.updateState(viewInput: .updateUser(runner))
+        return runner
 
     }
 
@@ -256,12 +253,12 @@ final class RegistrationView: UIView {
 
 
 
-    private func formatDate(date: Date) -> String
-    {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        return formatter.string(from: date)
-    }
+//    private func formatDate(date: Date) -> String
+//    {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd.MM.yyyy"
+//        return formatter.string(from: date)
+//    }
 
 }
     

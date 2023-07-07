@@ -17,15 +17,31 @@ enum SlideMenu: String, CaseIterable {
     var ico: String {
         switch self {
         case .files:
-            return ""
+            return "doc.text"
         case .bookmarks:
-            return ""
+            return "bookmark"
         case .favorite:
-            return ""
+            return "star"
         case .settings:
             return "gearshape"
         case .exit:
             return "door.right.hand.open"
         }
     }
+
+    var color: String {
+        switch self {
+        case .files:
+            return "prRegular"
+        case .bookmarks:
+            return "prRegular"
+        case .favorite:
+            return "prRegular"
+        case .settings:
+            return "black"
+        case .exit:
+            return "black"
+        }
+    }
+
 }

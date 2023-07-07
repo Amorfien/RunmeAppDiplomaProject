@@ -38,8 +38,14 @@ final class ProfileViewController: UIViewController {
 
         bindViewModel()
 
-        viewModel.updateState(viewInput: .showUser)
 
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+        viewModel.updateState(viewInput: .showUser)
     }
 
     deinit {
@@ -191,5 +197,13 @@ extension ProfileViewController: UIScrollViewDelegate {
             }
         }
     }
+
+}
+
+extension ProfileViewController: SettingsDelegate {
+    func userUpdate() {
+        viewModel.updateState(viewInput: .showUser)
+    }
+
 
 }

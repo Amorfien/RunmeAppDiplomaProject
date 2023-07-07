@@ -74,11 +74,12 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectedBackgroundView = selectedView
 
         cell.textLabel?.text = SlideMenu.allCases[indexPath.row].rawValue
-        cell.textLabel?.textAlignment = .right
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        cell.textLabel?.textAlignment = .right
 
         let item = SlideMenu.allCases[indexPath.row]
         let cellImgView = UIImageView(image: UIImage(systemName: item.ico))
+        cell.textLabel?.textColor = UIColor(named: item.color)
 
         cellImgView.frame = CGRect(x: 12, y: 12, width: 20, height: 20)
         cell.addSubview(cellImgView)

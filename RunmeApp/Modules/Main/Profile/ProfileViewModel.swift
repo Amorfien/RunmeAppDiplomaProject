@@ -75,11 +75,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 }
             }
         case .updateUser(var user):
-            guard let fetchedUser else { return }
-            //дополняю поля, которых нет на экране настроек, чтобы не обнулить
-//            user.achievements = fetchedUser.achievements
-            user.personalBests = fetchedUser.personalBests
-//            user.statusText = fetchedUser.statusText
+            //тут сравниваются старые результаты с новыми
+            user.personalBests.enumerated().forEach { (i, res) in
+                let fetchRes = fetchedUser?.personalBests[i] ?? 0
+                if res == 0 {
+                    user.personalBests[i] = fetchedUser?.personalBests[i] ?? 0
+                } else if res > fetchRes && fetchRes > 0 {
+                    user.personalBests[i] = fetchedUser?.personalBests[i] ?? 0
+                }
+            }
+
             DatabaseService.shared.updateUser(user: user) { saveResult in
                 switch saveResult {
                 case .success(_):
@@ -92,10 +97,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case .saveStatus(let status):
             guard var user = fetchedUser else { return }
             user.statusText = status
+            //TODO: - заменить на апдейт?
             DatabaseService.shared.setUser(user: user) { uplResult in
                 switch uplResult {
                 case .success(_):
                     print("Status success")
+//                    self.state = .loadedProfile(user)
                 case .failure(_):
                     print("Status failed")
                 }

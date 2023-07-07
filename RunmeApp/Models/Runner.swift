@@ -25,7 +25,7 @@ struct Runner: Identifiable {
     var avatar: UIImage?
 
     let birthday: String?
-    var birthdayShow: Bool?// = true
+    var birthdayShow: Bool = true
     var isAdmin: Bool = false
 
     var personalBests: [Int] = [0, 0, 0, 0]

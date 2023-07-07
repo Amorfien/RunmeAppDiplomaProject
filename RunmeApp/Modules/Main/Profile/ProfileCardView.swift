@@ -39,7 +39,7 @@ final class ProfileCardView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let noAchLabel = UILabel(text: "тут скоро будут награды", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+    private let noAchLabel = UILabel(text: "тут будут мои награды", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
     private lazy var achiewmentsCollection = AchievementsCollectionView(delegate: delegate!)
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeLastView))
 
@@ -206,6 +206,7 @@ final class ProfileCardView: UIView {
         telegramLabel.text = profile.telegram
         statusTextField.text = profile.statusText
         birthdayLabel.text = profile.birthday
+        birthdayLabel.isHidden = !profile.birthdayShow
         bigAvatar.backgroundColor = profile.isAdmin ? .tintColor.withAlphaComponent(0.9) : Res.PRColors.prDark!.withAlphaComponent(0.9)
         achiewmentsView.fillAchievements(with: Set(profile.achievements ?? []))
         fiveLabel.text = timeFormat(sec: profile.personalBests[0], isMale: profile.isMale)
