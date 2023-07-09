@@ -64,7 +64,6 @@
 		18C5AB6E2A55F985004E83CE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5AB6D2A55F985004E83CE /* SettingsViewController.swift */; };
 		18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEB2A46F9D000438728 /* Runner.swift */; };
 		18DC3BEE2A46FEEA00438728 /* RunnerPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BED2A46FEEA00438728 /* RunnerPost.swift */; };
-		18DC3BF02A4701A100438728 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BEF2A4701A100438728 /* Running.swift */; };
 		18DC3BF72A474B7000438728 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BF62A474B7000438728 /* RegistrationViewController.swift */; };
 		18DC3BF92A474C4500438728 /* UILabel + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */; };
 		18DC3BFB2A47512800438728 /* LabelTextFieldHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */; };
@@ -131,7 +130,6 @@
 		18C5AB6D2A55F985004E83CE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		18DC3BEB2A46F9D000438728 /* Runner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runner.swift; sourceTree = "<group>"; };
 		18DC3BED2A46FEEA00438728 /* RunnerPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerPost.swift; sourceTree = "<group>"; };
-		18DC3BEF2A4701A100438728 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		18DC3BF62A474B7000438728 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extensions.swift"; sourceTree = "<group>"; };
 		18DC3BFA2A47512800438728 /* LabelTextFieldHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldHStack.swift; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				18DC3BEB2A46F9D000438728 /* Runner.swift */,
-				18DC3BEF2A4701A100438728 /* Running.swift */,
 				18DC3BED2A46FEEA00438728 /* RunnerPost.swift */,
 				187A3C672A4B4F9800DFC2C2 /* News.swift */,
 				181277FE2A5597A200E59A3B /* SlideMenu.swift */,
@@ -486,7 +483,6 @@
 				188320082A51F31200E08AF0 /* ResultsCoordinator.swift in Sources */,
 				1883200B2A51F58200E08AF0 /* ResultsViewModel.swift in Sources */,
 				1880D6A92A44A48D008DBE6C /* String + Extensions.swift in Sources */,
-				18DC3BF02A4701A100438728 /* Running.swift in Sources */,
 				187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */,
 				18FE16E62A52D06200145305 /* RunnerPostTableViewCell.swift in Sources */,
 				18C5AB6E2A55F985004E83CE /* SettingsViewController.swift in Sources */,

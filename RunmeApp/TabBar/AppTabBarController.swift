@@ -13,7 +13,7 @@ final class AppTabBarController: UITabBarController {
         super.init(nibName: nil, bundle: nil)
         self.viewControllers = viewControllers
 
-        self.tabBar.backgroundColor = .systemBackground
+        self.tabBar.backgroundColor = .secondarySystemBackground
     }
 
     @available(*, unavailable)

@@ -16,6 +16,9 @@ final class DatabaseService {
     private var usersRef: CollectionReference {
         return db.collection("users")
     }
+    private var postsRef: CollectionReference {
+        return db.collection("posts")
+    }
 
     private init() {}
 
@@ -64,9 +67,9 @@ final class DatabaseService {
             let isAdmin = data["isAdmin"] as? Bool
             let personalBests = data["personalBests"] as? [Int]
             let achievements = data["achievements"] as? [String]
-            let posts = data["posts"] as? [String]
+            var postsId = data["postsId"] as? [String]
             // дописать
-            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale ?? true, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], posts: posts ?? [])
+            let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale ?? true, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], postsId: postsId ?? [])
 
             completion(.success(runner))
         }
@@ -130,20 +133,24 @@ final class DatabaseService {
         }
 
 
+    }
 
+//MARK: - POSTS
+
+    ///записать пост в базу
+    func savePost(post: RunnerPost, completion: @escaping (Result<String, Error>) -> Void) {
+
+        let postUID = UUID().uuidString
+
+        postsRef.document(postUID).setData(post.representation) { error in
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(postUID))
+            }
+        }
     }
 
 
 
 }
-
-
-//enum DatabaseServiceError: String, Error {
-//
-//    case emptySnapshot
-//
-//    var localizedDescription: String {
-//        return self.rawValue
-//    }
-//
-//}

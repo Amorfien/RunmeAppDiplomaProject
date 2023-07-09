@@ -13,10 +13,31 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
     // MARK: - Properties
 
-    private let avatarImageView = AvatarCircleImageView(image: nil, size: .small)
+    private let bgView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .secondarySystemBackground
 
-    private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .bold), textColor: .tintColor, lines: 1)
+        view.layer.cornerRadius = 16
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.tintColor.cgColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+//    let author: String
+//    let date: String
+//    let text: String
+//    let distance: Int
+//    let time: Int
+//    var temp: Double {
+//        Double(time / distance)
+//    }
+//    var likes = 0
+    private let avatarImageView = AvatarCircleImageView(image: nil, size: .small)
+    private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 16, weight: .bold), textColor: .tintColor, lines: 1)
     private let distanceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+    private let timeLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+    private let tempLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .thin), textColor: .secondaryLabel, lines: 1)
+    private let likesLabel = UILabel(text: "0 🩶", font: .monospacedDigitSystemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
 
     private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 2)
 
@@ -33,29 +54,44 @@ final class RunnerPostTableViewCell: UITableViewCell {
     private func setupView() {
 
         backgroundColor = Res.PRColors.prLight
+        likesLabel.textAlignment = .right
+        tempLabel.textAlignment = .right
 
         let selectedView = UIView()
         selectedView.backgroundColor = Res.PRColors.prMedium
         selectedBackgroundView = selectedView
 
-        [avatarImageView, nicknameLabel, distanceLabel, descriptionText].forEach(contentView.addSubview)
+        contentView.addSubview(bgView)
+        [avatarImageView, nicknameLabel, distanceLabel, descriptionText, timeLabel, tempLabel, likesLabel].forEach(bgView.addSubview)
 
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 100),
+            contentView.heightAnchor.constraint(equalToConstant: 116),
 
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            bgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            bgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
 
-            nicknameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            avatarImageView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
+            avatarImageView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 8),
+
+            nicknameLabel.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 8),
             nicknameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            nicknameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            nicknameLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -80),
+
+            likesLabel.topAnchor.constraint(equalTo: nicknameLabel.topAnchor),
+            likesLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
 
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
-            distanceLabel.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 2),
+            distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
+            timeLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
+            timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 72),
+            tempLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
+            tempLabel.trailingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: -4),
 
-            descriptionText.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 8),
+            descriptionText.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 4),
             descriptionText.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
-            descriptionText.trailingAnchor.constraint(equalTo: nicknameLabel.trailingAnchor),
+            descriptionText.trailingAnchor.constraint(equalTo: likesLabel.trailingAnchor),
         ])
     }
 
@@ -65,17 +101,8 @@ final class RunnerPostTableViewCell: UITableViewCell {
     func fillData(with post: RunnerPost, indexPath: IndexPath) {
         nicknameLabel.text = post.author
         distanceLabel.text = "\(post.distance / 1000) км"
-//        if let url = URL(string: article.urlToImage ?? "") {
-//            let queue = DispatchQueue.global()
-//            queue.async {
-//                if let data = try? Data(contentsOf: url) {
-//                    DispatchQueue.main.async {
-//                        self.postImageView.image = UIImage(data: data)
-//                    }
-//                }
-//
-//            }
-//        }
+        timeLabel.text = timeFormat(sec: post.time)
+        tempLabel.text = tempFormat(sec: post.temp)//"\(post.temp)"
         descriptionText.text = post.text
     }
 

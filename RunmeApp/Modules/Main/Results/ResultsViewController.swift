@@ -40,6 +40,7 @@ final class ResultsViewController: UIViewController {
 
     private lazy var resultsTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .clear
         tableView.tableHeaderView = sexSegment
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "standartCell")
         tableView.separatorInset = .zero
@@ -89,7 +90,7 @@ final class ResultsViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.MyColors.homeBackground
+        view.backgroundColor = .secondarySystemBackground
         view.addSubview(resultsTableView)
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -175,7 +176,7 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = timeFormat(sec: time, isMale: runner.isMale)
         cell.detailTextLabel?.lineBreakMode = .byTruncatingMiddle
         cell.detailTextLabel?.text = "\(nickname)  - \(indexPath.row + 1)"
-        cell.backgroundColor = runner.isMale ? .systemBlue.withAlphaComponent(0.07) : .systemPink.withAlphaComponent(0.07)
+        cell.backgroundColor = runner.isMale ? .systemBlue.withAlphaComponent(0.15) : .systemPink.withAlphaComponent(0.15)
 
         if time > 0, time < 100000, itsMe == runner.id {
             cell.backgroundColor = .systemYellow.withAlphaComponent(0.4)

@@ -24,7 +24,7 @@ final class ProfileCardView: UIView {
     private let nicknameLabel = UILabel(text: "Никнэйм", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .label, lines: 2)
     private let nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
     private let surnameLabel = UILabel(text: "Фамилия", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
-    private let telegramLabel = UILabel(text: "@телеграм", font: .systemFont(ofSize: 14, weight: .light), textColor: .tertiaryLabel, lines: 1)
+    private let telegramLabel = UILabel(text: "@телеграм", font: .systemFont(ofSize: 16, weight: .light), textColor: .tertiaryLabel, lines: 1)
     private let vStack = UIStackView()
     private let birthdayLabel = UILabel(text: "--.--.----", font: .monospacedDigitSystemFont(ofSize: 14, weight: .semibold), textColor: .secondaryLabel, lines: 1)
 

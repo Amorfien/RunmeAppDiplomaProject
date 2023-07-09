@@ -113,17 +113,17 @@ class PhoneVerificationViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             topImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topImageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -72),
+            topImageView.bottomAnchor.constraint(equalTo: phoneTextField.topAnchor),// constant: -72),
             topImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66),
-            topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66),
+            topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.54),
 
             phoneTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+            phoneTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -12),
             phoneTextField.widthAnchor.constraint(equalToConstant: self.type == .phone ? 280 : 200),
             phoneTextField.heightAnchor.constraint(equalToConstant: 48),
 
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 56),
+            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 40),
             nextButton.heightAnchor.constraint(equalToConstant: 48),
             nextButton.widthAnchor.constraint(equalToConstant: 148),
 
@@ -167,29 +167,12 @@ class PhoneVerificationViewController: UIViewController {
 
         case .phone:
             viewModel.updateState(viewInput: .phoneButtonDidTap(text))
-
-
-
-//                guard success else { return }
-//                DispatchQueue.main.async {
-//                    self?.viewModel.updateState(viewInput: .phoneButtonDidTap)
-//                }
             
         case .sms:
             var code = text
             code.removeFirst()
             viewModel.updateState(viewInput: .smsButtonDidTap(code))
-
-
-
-
-//            AuthManager.shared.verifyCode(smsCode: code) { [weak self] success in
-//                guard success else { return }
-//                self?.viewModel.updateState(viewInput: .smsButtonDidTap)
-//            }
         }
-
-
     }
 
 

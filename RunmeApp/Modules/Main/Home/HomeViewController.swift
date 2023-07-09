@@ -53,9 +53,9 @@ final class HomeViewController: UIViewController {
         tableView.sectionFooterHeight = 0
         tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.PRColors.prLight : Res.MyColors.myBackground//Res.MyColors.homeBackground
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = .zero
-        tableView.separatorColor = .tintColor
+        tableView.separatorStyle = .none
+//        tableView.separatorInset = .zero
+//        tableView.separatorColor = .tintColor
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
@@ -230,7 +230,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? "2001-01-01")
             return sectionHeader
         } else {
-            return nil
+            let header = UIView()
+            header.heightAnchor.constraint(equalToConstant: 4).isActive = true
+            header.backgroundColor = .tintColor
+            return header
         }
     }
 

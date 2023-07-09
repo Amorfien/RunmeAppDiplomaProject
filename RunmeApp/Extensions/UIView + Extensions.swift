@@ -24,6 +24,16 @@ func timeFormat(sec: Int?, isMale: Bool? = true) -> String {
     }
 }
 
+func tempFormat(sec: Int) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.minute, .second]
+    formatter.unitsStyle = .abbreviated
+    formatter.zeroFormattingBehavior = .pad
+//    let seconds = Int(minutes * 60)
+
+    return formatter.string(from: DateComponents(second: sec)) ?? "--//--"
+}
+
 //func timeStringFormat(string: String) -> Int {
 //    let formatter = DateFormatter()
 //    formatter.dateFormat = "HH ч mm мин ss с"

@@ -128,4 +128,23 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             coordinator?.logOut()
         }
     }
+    func savePost(_ post: RunnerPost) {
+        DatabaseService.shared.savePost(post: post) { [weak self] postResult in
+            switch postResult {
+            case .success(let postUID):
+                print("Post success")
+                self?.fetchedUser?.postsId?.append(postUID)
+                DatabaseService.shared.updateUser(user: (self?.fetchedUser!)!) { updRes in
+                    switch updRes {
+                    case .success(_):
+                        print("🟩 Список постов юзера обновлён")
+                    case .failure(_):
+                        print("🟥 Список постов юзера НЕ обновлён")
+                    }
+                }
+            case .failure(_):
+                print("Post failed")
+            }
+        }
+    }
 }

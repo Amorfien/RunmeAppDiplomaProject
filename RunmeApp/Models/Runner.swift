@@ -31,7 +31,9 @@ struct Runner: Identifiable {
     var personalBests: [Int] = [0, 0, 0, 0]
     var achievements: [String]?// = []
 
-    var posts: [String]? = []
+    var postsId: [String]? = []
+    var likesId: [String]? = []
+    
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
         repres["id"] = self.id
@@ -48,6 +50,9 @@ struct Runner: Identifiable {
         repres["isAdmin"] = self.isAdmin
         repres["personalBests"] = self.personalBests
         repres["achievements"] = self.achievements
+
+        repres["postsId"] = self.postsId
+        repres["likesId"] = self.likesId
         return repres
     }
 

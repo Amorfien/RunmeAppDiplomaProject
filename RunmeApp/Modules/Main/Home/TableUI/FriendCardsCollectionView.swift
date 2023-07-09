@@ -45,10 +45,10 @@ final class FriendCardsCollectionView: UICollectionView {
     private func setupView() {
         backgroundColor = Res.PRColors.prLight
         showsHorizontalScrollIndicator = false
-        let separator = UIView(frame: CGRect(x: 0, y: 119, width: UIScreen.main.bounds.width / 3, height: 1))
-        separator.backgroundColor = tintColor
-
-        addSubview(separator)
+//        let separator = UIView(frame: CGRect(x: 0, y: 119, width: UIScreen.main.bounds.width / 3, height: 1))
+//        separator.backgroundColor = tintColor
+//
+//        addSubview(separator)
 
     }
 

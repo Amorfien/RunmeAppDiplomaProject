@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
-    private let viewModel: ProfileViewModel
+    let viewModel: ProfileViewModel
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var isEditable: Bool = false
     private var achievements: [String] = []
@@ -46,7 +46,7 @@ final class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
-        viewModel.updateState(viewInput: .showUser)
+        viewModel.updateState(viewInput: .showUser)//_________________________________________
     }
 
     deinit {
