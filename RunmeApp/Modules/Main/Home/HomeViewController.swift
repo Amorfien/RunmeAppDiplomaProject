@@ -21,7 +21,13 @@ final class HomeViewController: UIViewController {
                 self.newsTableView.reloadData()
         }
     }
-    var runnerPosts: [RunnerPost] = [] {
+    var runnerPosts: [RunnerPost] = []
+    var selectedRunner: [RunnerPost] = [] {
+        didSet {
+                self.newsTableView.reloadData()
+        }
+    }
+    var avatarsDict: [String: UIImage] = [:] {
         didSet {
                 self.newsTableView.reloadData()
         }
@@ -145,12 +151,14 @@ final class HomeViewController: UIViewController {
                 updateLoadingAnimation(isLoading: true)
 
             case .loadedAvatars(let dict):
+
                 var users: [String] = []
                 var images: [UIImage] = []
                 for (user, data) in dict {
                     users.append(user)
                     images.append(UIImage(data: data) ?? UIImage(named: "dafault-avatar")!)
                 }
+                avatarsDict = Dictionary(uniqueKeysWithValues: zip(users, images))
 
                 DispatchQueue.main.async {
 //                    let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
@@ -168,6 +176,7 @@ final class HomeViewController: UIViewController {
             case.loadedPosts(let posts):
                 DispatchQueue.main.async {
                     self.runnerPosts = posts
+                    self.selectedRunner = posts
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
@@ -216,7 +225,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sourceSegment.selectedSegmentIndex == 0 ? self.runnerPosts.count : 1
+        sourceSegment.selectedSegmentIndex == 0 ? self.selectedRunner.count : 1
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -231,8 +240,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return sectionHeader
         } else {
             let header = UIView()
-            header.heightAnchor.constraint(equalToConstant: 4).isActive = true
-            header.backgroundColor = .tintColor
+            header.heightAnchor.constraint(equalToConstant: 12).isActive = true
+            header.backgroundColor = Res.PRColors.prMedium//.tintColor
             return header
         }
     }
@@ -242,8 +251,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RunnerPostTableViewCell.reuseId, for: indexPath) as? RunnerPostTableViewCell
             else { return RunnerPostTableViewCell() }
-
-            cell.fillData(with: runnerPosts[indexPath.row], indexPath: indexPath)
+            let post = selectedRunner[indexPath.row]
+            let avatar = avatarsDict[post.userId] ?? UIImage(named: "dafault-avatar")!
+            cell.fillData(with: post, avatar: avatar)
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
@@ -270,6 +280,12 @@ extension HomeViewController: UsersTableHeaderDelegate {
 //        showAlert(title: "User", message: id) {
 //            self.dismiss(animated: true)
 //        }
-        viewModel.updateState(viewInput: .chooseUser(id))
+        if id != "0" {
+            selectedRunner = runnerPosts.filter{ $0.userId == id }
+        } else {
+            selectedRunner = runnerPosts
+        }
+
+//        viewModel.updateState(viewInput: .chooseUser(id))
     }
 }

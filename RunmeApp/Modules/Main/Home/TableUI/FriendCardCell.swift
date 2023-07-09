@@ -15,8 +15,8 @@ final class FriendCardCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            layer.borderColor = isSelected ? UIColor.systemOrange.cgColor : #colorLiteral(red: 0.1254901961, green: 0.3058823529, blue: 0.7803921569, alpha: 1)
-            layer.borderWidth = isSelected ? 2 : 1
+            layer.borderColor = isSelected ? UIColor.systemOrange.cgColor : #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+            layer.borderWidth = isSelected ? 2 : 0.5
         }
     }
 

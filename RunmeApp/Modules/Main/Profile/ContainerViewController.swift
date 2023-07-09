@@ -93,14 +93,16 @@ final class ContainerViewController: UIViewController {
 //            datePicker.addTarget(self, action: #selector(timeChange), for: UIControl.Event.valueChanged)
 //            datePicker.frame.size = CGSize(width: .zero, height: 400)
 //            datePicker.frame = CGRect(x: -20, y: 20, width: 170, height: 100)
-            datePicker.frame = CGRect(origin: .init(x: -20, y: 0), size: .zero)
+            datePicker.frame = CGRect(origin: .init(x: -32, y: 0), size: .zero)
             datePicker.preferredDatePickerStyle = .wheels
             datePicker.locale = Locale(identifier: "ru_RU")
 
             return datePicker
         }()
+//        "в\nр\nе\nм\nя\n\n"
+//        "\n\n\nч.                                мин.\n\n\n\n"
 
-        let alertController = UIAlertController(title: "\n\n", message: "в\nр\nе\nм\nя\n\n", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "\n\n\nч.                                     \n                                 мин.\n\n\n", message: nil, preferredStyle: .alert)
         alertController.view.addSubview(datePicker)
 
         let okAction = UIAlertAction(title: "Сохранить", style: .default) { [weak self] _ in
@@ -120,7 +122,7 @@ final class ContainerViewController: UIViewController {
             let hours = Int(timeComponentsStr[0]) ?? 0
             let minutes = Int(timeComponentsStr[1]) ?? 0
             let sec = hours * 3600 + minutes * 60
-            let post = RunnerPost(author: author, date: date, text: text, distance: distance, time: sec)
+            let post = RunnerPost(userId: author, userNickname: "", date: date, text: text, distance: distance, time: sec)
 
             (self?.profileVC as? ProfileViewController)?.viewModel.savePost(post)
         }

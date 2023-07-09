@@ -27,7 +27,7 @@ func timeFormat(sec: Int?, isMale: Bool? = true) -> String {
 func tempFormat(sec: Int) -> String {
     let formatter = DateComponentsFormatter()
     formatter.allowedUnits = [.minute, .second]
-    formatter.unitsStyle = .abbreviated
+    formatter.unitsStyle = .positional
     formatter.zeroFormattingBehavior = .pad
 //    let seconds = Int(minutes * 60)
 

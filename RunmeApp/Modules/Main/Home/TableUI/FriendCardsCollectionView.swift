@@ -15,12 +15,18 @@ final class FriendCardsCollectionView: UICollectionView {
 
     weak var headerDelegate: UsersTableHeaderDelegate?
 
-    private var users: [String] = []
+    private var users: [String] = [] {
+        didSet {
+                self.reloadData()
+        }
+    }
     private var images: [UIImage] = [] {
         didSet {
                 self.reloadData()
         }
     }
+
+    private var selectedItem: IndexPath?
 
     private let weatherCardsLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -82,7 +88,13 @@ extension FriendCardsCollectionView: UICollectionViewDelegateFlowLayout {
         CGSize(width: 100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        headerDelegate?.chooseUser(id: users[indexPath.row])
-        print(users[indexPath.row])
+        if indexPath == selectedItem {
+            headerDelegate?.chooseUser(id: "0")
+            collectionView.deselectItem(at: indexPath, animated: false)
+            selectedItem = nil
+        } else {
+            headerDelegate?.chooseUser(id: users[indexPath.row])
+            selectedItem = indexPath
+        }
     }
 }

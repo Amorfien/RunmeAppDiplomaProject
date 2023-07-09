@@ -152,5 +152,34 @@ final class DatabaseService {
     }
 
 
+    ///достать все посты
+    func getAllPosts (completion: @escaping (Result<[RunnerPost], Error>) -> Void) {
+
+        var posts: [RunnerPost] = []
+
+        postsRef.getDocuments { snapshot, error in
+            if let error {
+                completion(.failure(error))
+            } else if (snapshot?.isEmpty)! {
+                completion(.success([]))
+            } else {
+                for document in (snapshot?.documents)! {
+
+                    let userId = document.data()["userId"] as? String ?? "???"
+                    let userNickname = document.data()["userNickname"] as? String ?? "???"
+                    let date = document.data()["date"] as? String ?? "??.??.????"
+                    let text = document.data()["text"] as? String ?? ""
+                    let distance = document.data()["distance"] as? Int ?? 0
+                    let time = document.data()["time"] as? Int ?? 0
+
+                    let post = RunnerPost(userId: userId, userNickname: userNickname, date: date, text: text, distance: distance, time: time)
+                    posts.append(post)
+                }
+                completion(.success(posts))
+            }
+        }
+
+    }
+
 
 }

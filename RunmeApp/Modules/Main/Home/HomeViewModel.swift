@@ -54,10 +54,7 @@ final class HomeViewModel: HomeViewModelProtocol {
 
             getAllAvatars()
 
-            ///заглушка чтобы не расходывать трафик/запросы
-//            let news: [Article] = [testNews1, testNews2, testNews2, testNews2, testNews1, testNews2]
-            let posts: [RunnerPost] = [testRunnerPost1, testRunnerPost2, testRunnerPost3, testRunnerPost4]
-            self.state = .loadedPosts(posts)
+            getAllPosts()
 
         case .newsSegment:
             self.state = .loading
@@ -74,7 +71,7 @@ final class HomeViewModel: HomeViewModelProtocol {
             switch result {
             case .success(let news):
 //                print(news.count)
-                sleep(1)
+//                sleep(1)
                 self?.state = .loadedNews(news)
             case .failure(let newsError):
                 print(newsError.localizedDescription)
@@ -103,14 +100,27 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     private func chooseUser(id: String) {
-        DatabaseService.shared.getUser(userId: id) { [weak self] result in
-            switch result {
-            case .success(let user):
-//                self?.coordinator?.presentSheetPresentationController(user: user)
-                self?.coordinator?.flowCompletionHandler!(user)
-            case .failure(let userError):
-                print("Choose User Error, \(userError.localizedDescription)")
-                self?.coordinator?.showErrorAlert(userError, handler: { })
+//        DatabaseService.shared.getUser(userId: id) { [weak self] result in
+//            switch result {
+//            case .success(let user):
+////                self?.coordinator?.presentSheetPresentationController(user: user)
+//                self?.coordinator?.flowCompletionHandler!(user)
+//            case .failure(let userError):
+//                print("Choose User Error, \(userError.localizedDescription)")
+//                self?.coordinator?.showErrorAlert(userError, handler: { })
+//            }
+//        }
+    }
+
+    private func getAllPosts() {
+        DatabaseService.shared.getAllPosts { [weak self] postsResult in
+            switch postsResult {
+
+            case .success(let posts):
+                sleep(1)
+                self?.state = .loadedPosts(posts)
+            case .failure(let postsError):
+                print(postsError.localizedDescription)
             }
         }
     }
