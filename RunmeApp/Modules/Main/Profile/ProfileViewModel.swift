@@ -129,8 +129,10 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
     func savePost(_ post: RunnerPost) {
+        let postUID = UUID().uuidString
         var nicknamePost = post
         nicknamePost.userNickname = fetchedUser?.nickname ?? "???"
+        nicknamePost.postId = postUID
         DatabaseService.shared.savePost(post: nicknamePost) { [weak self] postResult in
             switch postResult {
             case .success(let postUID):

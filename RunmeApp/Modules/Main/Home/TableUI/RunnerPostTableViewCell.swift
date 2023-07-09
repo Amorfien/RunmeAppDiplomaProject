@@ -75,11 +75,11 @@ final class RunnerPostTableViewCell: UITableViewCell {
             bgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
 
 //            avatarImageView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
-            avatarImageView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 8),
-            avatarImageView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 8),
+            avatarImageView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 10),
+            avatarImageView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 10),
 
             nicknameLabel.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 8),
-            nicknameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            nicknameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 14),
             nicknameLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -80),
 
             likesLabel.topAnchor.constraint(equalTo: nicknameLabel.topAnchor),
@@ -88,10 +88,10 @@ final class RunnerPostTableViewCell: UITableViewCell {
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
             timeLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
-            timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 72),
+            timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 76),
             tempLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
             tempLabel.trailingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: -4),
-            dateLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+            dateLabel.centerXAnchor.constraint(equalTo: avatarImageView.centerXAnchor),
             dateLabel.topAnchor.constraint(equalTo: distanceLabel.topAnchor),
 
             descriptionText.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 4),
@@ -107,11 +107,14 @@ final class RunnerPostTableViewCell: UITableViewCell {
     func fillData(with post: RunnerPost, avatar: UIImage) {
         avatarImageView.image = avatar
         nicknameLabel.text = post.userNickname
-        distanceLabel.text = "\(post.distance / 1000) км"
-        timeLabel.text = timeFormat(sec: post.time)
-        tempLabel.text = tempFormat(sec: post.temp) + " мин/км"//"\(post.temp)"
+        let meters = post.distance / 1000
+        let kmeters = round(meters * 100) / 100
+        distanceLabel.text = "\(kmeters) км"
+        timeLabel.text = timeFormat(sec: Int(post.time), seconds: false)
+        tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"//"\(post.temp)"
         dateLabel.text = post.date
         descriptionText.text = post.text
+        likesLabel.text = String(post.likes.count) + " 🩶"
     }
 
 

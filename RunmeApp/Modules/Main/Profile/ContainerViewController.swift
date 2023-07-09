@@ -115,14 +115,14 @@ final class ContainerViewController: UIViewController {
 
             let author = AuthManager.shared.currentUser?.uid ?? ""
             let date = dateFormatter.string(from: Date())
-            let distance = Int(alertController.textFields?.first?.text ?? "") ?? 0
+            let distance = Double(alertController.textFields?.first?.text ?? "") ?? 0
             let text = alertController.textFields?.last?.text ?? ""
             let timeStr = timeFormatter.string(from: datePicker.date)
             let timeComponentsStr = timeStr.components(separatedBy: ":")
             let hours = Int(timeComponentsStr[0]) ?? 0
             let minutes = Int(timeComponentsStr[1]) ?? 0
             let sec = hours * 3600 + minutes * 60
-            let post = RunnerPost(userId: author, userNickname: "", date: date, text: text, distance: distance, time: sec)
+            let post = RunnerPost(postId: "", userId: author, userNickname: "", date: date, text: text, distance: distance, time: Double(sec))
 
             (self?.profileVC as? ProfileViewController)?.viewModel.savePost(post)
         }

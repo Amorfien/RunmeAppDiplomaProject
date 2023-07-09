@@ -7,12 +7,12 @@
 
 import UIKit
 
-func timeFormat(sec: Int?, isMale: Bool? = true) -> String {
+func timeFormat(sec: Int?, seconds: Bool = true, isMale: Bool? = true) -> String {
 
     guard let sec else { return isMale ?? true ? "____🏃‍♂️~~~~" : "____🏃‍♀️~~~~" }
     if sec > 0, sec < 100000 {
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.allowedUnits = seconds ? [.hour, .minute, .second] : [.hour, .minute]
         formatter.unitsStyle = .abbreviated
         formatter.zeroFormattingBehavior = .pad
 

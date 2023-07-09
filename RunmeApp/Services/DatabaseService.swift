@@ -67,7 +67,7 @@ final class DatabaseService {
             let isAdmin = data["isAdmin"] as? Bool
             let personalBests = data["personalBests"] as? [Int]
             let achievements = data["achievements"] as? [String]
-            var postsId = data["postsId"] as? [String]
+            let postsId = data["postsId"] as? [String]
             // дописать
             let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale ?? true, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], postsId: postsId ?? [])
 
@@ -140,13 +140,13 @@ final class DatabaseService {
     ///записать пост в базу
     func savePost(post: RunnerPost, completion: @escaping (Result<String, Error>) -> Void) {
 
-        let postUID = UUID().uuidString
+//        let postUID = UUID().uuidString
 
-        postsRef.document(postUID).setData(post.representation) { error in
+        postsRef.document(post.postId).setData(post.representation) { error in
             if let error {
                 completion(.failure(error))
             } else {
-                completion(.success(postUID))
+                completion(.success(post.postId))
             }
         }
     }
@@ -156,7 +156,6 @@ final class DatabaseService {
     func getAllPosts (completion: @escaping (Result<[RunnerPost], Error>) -> Void) {
 
         var posts: [RunnerPost] = []
-
         postsRef.getDocuments { snapshot, error in
             if let error {
                 completion(.failure(error))
@@ -164,21 +163,32 @@ final class DatabaseService {
                 completion(.success([]))
             } else {
                 for document in (snapshot?.documents)! {
-
+                    let postId = document.data()["postId"] as? String ?? "???"
                     let userId = document.data()["userId"] as? String ?? "???"
                     let userNickname = document.data()["userNickname"] as? String ?? "???"
                     let date = document.data()["date"] as? String ?? "??.??.????"
                     let text = document.data()["text"] as? String ?? ""
-                    let distance = document.data()["distance"] as? Int ?? 0
-                    let time = document.data()["time"] as? Int ?? 0
+                    let distance = document.data()["distance"] as? Double ?? 0
+                    let time = document.data()["time"] as? Double ?? 0
+                    let likes = document.data()["likes"] as? [String] ?? []
 
-                    let post = RunnerPost(userId: userId, userNickname: userNickname, date: date, text: text, distance: distance, time: time)
+                    let post = RunnerPost(postId: postId, userId: userId, userNickname: userNickname, date: date, text: text, distance: distance, time: time, likes: likes)
                     posts.append(post)
                 }
                 completion(.success(posts))
             }
         }
+    }
 
+    ///обновить пост  в базе (изменить список лайкнувших)
+    func updatePost(post: RunnerPost, completion: @escaping (Result<RunnerPost, Error>) -> Void) {
+        postsRef.document(post.postId).setData(post.representation, merge: true) { error in
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(post))
+            }
+        }
     }
 
 

@@ -10,20 +10,22 @@ import Foundation
 struct RunnerPost {
 
 //    let uid: String
+    var postId: String
     let userId: String
     var userNickname: String
     let date: String
     let text: String
-    let distance: Int
-    let time: Int
-    var temp: Int {
+    let distance: Double
+    let time: Double
+    var temp: Double {
         time / (distance / 1000)
     }
-    var likes = 0
+    var likes: [String] = []
 
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
 //        repres["uid"] = self.uid
+        repres["postId"] = self.postId
         repres["userId"] = self.userId
         repres["userNickname"] = self.userNickname
         repres["date"] = self.date
