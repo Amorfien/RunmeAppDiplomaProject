@@ -23,24 +23,28 @@ final class RunnerPostTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-//    let author: String
-//    let date: String
-//    let text: String
-//    let distance: Int
-//    let time: Int
-//    var temp: Double {
-//        Double(time / distance)
-//    }
-//    var likes = 0
+
     private let avatarImageView = AvatarCircleImageView(image: nil, size: .small)
     private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 16, weight: .bold), textColor: .tintColor, lines: 1)
-    private let distanceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
-    private let timeLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
-    private let tempLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .thin), textColor: .secondaryLabel, lines: 1)
+    private let distanceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .label, lines: 1)
+    private let timeLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .light), textColor: .label, lines: 1)
+    private let tempLabel = UILabel(text: "", font: .monospacedDigitSystemFont(ofSize: 14, weight: .thin), textColor: .label, lines: 1)
     private let dateLabel = UILabel(text: "", font: .systemFont(ofSize: 11, weight: .light), textColor: .secondaryLabel, lines: 1)
-    private let likesLabel = UILabel(text: "0 🩶", font: .monospacedDigitSystemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
 
-    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 2)
+    private lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("0 🩶", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .light)
+        button.contentHorizontalAlignment = .right
+        button.setTitleColor(.label, for: .normal)
+        button.addTarget(self, action: #selector(likeTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private var itsme: Bool = false
+
+    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .secondaryLabel, lines: 2)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,16 +59,14 @@ final class RunnerPostTableViewCell: UITableViewCell {
     private func setupView() {
 
         backgroundColor = Res.PRColors.prLight
-        likesLabel.textAlignment = .right
         tempLabel.textAlignment = .right
-//        descriptionText.s
 
         let selectedView = UIView()
         selectedView.backgroundColor = Res.PRColors.prMedium
         selectedBackgroundView = selectedView
 
         contentView.addSubview(bgView)
-        [avatarImageView, nicknameLabel, distanceLabel, descriptionText, timeLabel, tempLabel, likesLabel, dateLabel].forEach(bgView.addSubview)
+        [avatarImageView, nicknameLabel, distanceLabel, descriptionText, timeLabel, tempLabel, dateLabel, likeButton].forEach(bgView.addSubview)
 
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalToConstant: 116),
@@ -82,40 +84,45 @@ final class RunnerPostTableViewCell: UITableViewCell {
             nicknameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 14),
             nicknameLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -80),
 
-            likesLabel.topAnchor.constraint(equalTo: nicknameLabel.topAnchor),
-            likesLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
+            likeButton.topAnchor.constraint(equalTo: bgView.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
+            likeButton.widthAnchor.constraint(equalToConstant: 80),
+            likeButton.heightAnchor.constraint(equalToConstant: 30),
 
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
             timeLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
             timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 76),
             tempLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
-            tempLabel.trailingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: -4),
+            tempLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
             dateLabel.centerXAnchor.constraint(equalTo: avatarImageView.centerXAnchor),
             dateLabel.topAnchor.constraint(equalTo: distanceLabel.topAnchor),
 
             descriptionText.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 4),
             descriptionText.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
-            descriptionText.trailingAnchor.constraint(equalTo: likesLabel.trailingAnchor),
+            descriptionText.trailingAnchor.constraint(equalTo: tempLabel.trailingAnchor),
             descriptionText.bottomAnchor.constraint(equalTo: distanceLabel.topAnchor, constant: -4)
         ])
     }
 
-
     // MARK: - Public method
 
-    func fillData(with post: RunnerPost, avatar: UIImage) {
+    func fillData(with post: RunnerPost, avatar: UIImage, itsme: Bool = false) {
         avatarImageView.image = avatar
         nicknameLabel.text = post.userNickname
         let meters = post.distance / 1000
         let kmeters = round(meters * 100) / 100
         distanceLabel.text = "\(kmeters) км"
         timeLabel.text = timeFormat(sec: Int(post.time), seconds: false)
-        tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"//"\(post.temp)"
+        tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"
         dateLabel.text = post.date
         descriptionText.text = post.text
-        likesLabel.text = String(post.likes.count) + " 🩶"
+        let buttonText = String(post.likes.count) + (itsme ? " ❌" : " 🩶")
+        likeButton.setTitle(buttonText, for: .normal)
+        self.itsme = itsme
     }
+
+    @objc private func likeTap() {}
 
 
 }

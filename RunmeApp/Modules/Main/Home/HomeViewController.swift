@@ -102,10 +102,7 @@ final class HomeViewController: UIViewController {
     private func setupNavigation() {
         navigationItem.title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
-//        lazy var notifyButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(notifyButtonTap))
-        lazy var searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTap))
-//        navigationItem.rightBarButtonItems = [notifyButton, searchButton]
-        navigationItem.rightBarButtonItem = searchButton
+
 
 //        navigationController?.navigationBar.addSubview(sourceSegment)
         navigationItem.titleView = sourceSegment
@@ -194,12 +191,6 @@ final class HomeViewController: UIViewController {
     }
 
     //MARK: - Actions
-    @objc private func searchButtonTap() {
-
-    }
-    @objc private func notifyButtonTap() {
-
-    }
     @objc private func changeSource() {
 //        cell.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground
         switch sourceSegment.selectedSegmentIndex {
@@ -253,7 +244,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             else { return RunnerPostTableViewCell() }
             let post = selectedRunner[indexPath.row]
             let avatar = avatarsDict[post.userId] ?? UIImage(named: "dafault-avatar")!
-            cell.fillData(with: post, avatar: avatar)
+            let itsme = AuthManager.shared.currentUser?.uid == post.userId
+            cell.fillData(with: post, avatar: avatar, itsme: itsme)
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell

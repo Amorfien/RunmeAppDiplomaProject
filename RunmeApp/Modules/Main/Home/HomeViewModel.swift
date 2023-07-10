@@ -118,7 +118,7 @@ final class HomeViewModel: HomeViewModelProtocol {
 
             case .success(let posts):
                 sleep(1)
-                self?.state = .loadedPosts(posts)
+                self?.state = .loadedPosts(posts.sorted())
             case .failure(let postsError):
                 print(postsError.localizedDescription)
             }

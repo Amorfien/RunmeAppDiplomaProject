@@ -11,6 +11,15 @@ final class FavoriteViewController: UIViewController {
 
     private let viewModel: FavoriteViewModel
 
+    private let runnersImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "two")
+        image.contentMode = .scaleAspectFit
+//        image.conte
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
     init(viewModel: FavoriteViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -38,10 +47,22 @@ final class FavoriteViewController: UIViewController {
 //        navigationController?.navigationBar.prefersLargeTitles = true
 //        navigationController?.navigationBar.backgroundColor = .systemMint
         self.navigationItem.title = "Избранное"
+        //        lazy var notifyButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(notifyButtonTap))
+        lazy var searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTap))
+        //        navigationItem.rightBarButtonItems = [notifyButton, searchButton]
+        navigationItem.rightBarButtonItem = searchButton
     }
 
     private func setupView() {
         view.backgroundColor = Res.PRColors.prLight
+        view.addSubview(runnersImageView)
+
+        NSLayoutConstraint.activate([
+            runnersImageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 16),
+            runnersImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            runnersImageView.widthAnchor.constraint(equalToConstant: 250),
+            runnersImageView.heightAnchor.constraint(equalToConstant: 250),
+        ])
     }
 
 
@@ -64,4 +85,13 @@ final class FavoriteViewController: UIViewController {
 
 
 
+
+
+    //MARK: - Actions
+    @objc private func searchButtonTap() {
+
+    }
+    @objc private func notifyButtonTap() {
+
+    }
 }
