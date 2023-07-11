@@ -20,6 +20,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case loadedAvatars([String: Data])
         case loadedNews([Article])
         case loadedPosts([RunnerPost])
+        case likePost(RunnerPost)
 //        case error(Error)
     }
 
@@ -27,6 +28,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case runnersSegment
         case newsSegment
         case chooseUser(String)
+        case likeDidTap(String)
     }
 
     private let newsService: NewsService
@@ -62,6 +64,26 @@ final class HomeViewModel: HomeViewModelProtocol {
             getAllNews()
         case .chooseUser(let id):
             chooseUser(id: id)
+        case .likeDidTap(let id):
+            DatabaseService.shared.fetchPost(postIdd: id) { fetchPostResult in
+                switch fetchPostResult {
+
+                case .success(var post):
+                    guard let itsme = AuthManager.shared.currentUser?.uid else { return }
+                    guard !post.likes.contains(itsme), post.userId != itsme else { return }
+                    post.likes.append(itsme)
+                    DatabaseService.shared.updatePost(post: post) { updPostResult in
+                        switch updPostResult {
+                        case .success(let updPost):
+                            self.state = .likePost(updPost)
+                        case .failure(_):
+                            print("Fail update post")
+                        }
+                    }
+                case .failure(_):
+                    print("Fail fetch post")
+                }
+            }
         }
     }
 

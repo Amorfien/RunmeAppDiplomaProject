@@ -32,6 +32,7 @@ final class HomeViewController: UIViewController {
                 self.newsTableView.reloadData()
         }
     }
+    private var choosenUserId = "0" //храним выбранного юзера для правильного обновления в случае лайка
 
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
@@ -177,6 +178,14 @@ final class HomeViewController: UIViewController {
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
                 }
+            case .likePost(let likePost):
+                for (ind, post) in runnerPosts.enumerated() {
+                    if post.postId == likePost.postId {
+                        runnerPosts.remove(at: ind)
+                        runnerPosts.insert(likePost, at: ind)
+                        chooseUser(id: choosenUserId)
+                    }
+                }
             }
         }
     }
@@ -246,6 +255,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let avatar = avatarsDict[post.userId] ?? UIImage(named: "dafault-avatar")!
             let itsme = AuthManager.shared.currentUser?.uid == post.userId
             cell.fillData(with: post, avatar: avatar, itsme: itsme)
+            cell.cellDelegate = self
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
@@ -269,15 +279,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: UsersTableHeaderDelegate {
     func chooseUser(id: String) {
-//        showAlert(title: "User", message: id) {
-//            self.dismiss(animated: true)
-//        }
+
         if id != "0" {
             selectedRunner = runnerPosts.filter{ $0.userId == id }
         } else {
             selectedRunner = runnerPosts
         }
-
-//        viewModel.updateState(viewInput: .chooseUser(id))
+        self.choosenUserId = id
     }
+}
+
+extension HomeViewController: PostTableCellDelegate {
+    func likeDidTap(postId: String) {
+        viewModel.updateState(viewInput: .likeDidTap(postId))
+    }
+
+    func deleteDidTap() {
+        
+    }
+
+
 }

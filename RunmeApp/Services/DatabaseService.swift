@@ -191,5 +191,27 @@ final class DatabaseService {
         }
     }
 
+    ///достать один пост из базы по ID (чтобы получить пост непосредственно перед изменениями)
+    func fetchPost(postIdd: String, completion: @escaping (Result<RunnerPost, Error>) -> Void) {
+
+        postsRef.document(postIdd).getDocument { docSnapshot, error in
+            guard error == nil else { completion(.failure(error!)); return }
+            guard let docSnapshot else { return }
+            guard let data = docSnapshot.data() else { return }
+
+            let postId = data["postId"] as? String ?? "???"
+            let userId = data["userId"] as? String ?? "???"
+            let userNickname = data["userNickname"] as? String ?? "???"
+            let date = data["date"] as? String ?? "??.??.????"
+            let text = data["text"] as? String ?? ""
+            let distance = data["distance"] as? Double ?? 0
+            let time = data["time"] as? Double ?? 0
+            let likes = data["likes"] as? [String] ?? []
+
+            let post = RunnerPost(postId: postId, userId: userId, userNickname: userNickname, date: date, text: text, distance: distance, time: time, likes: likes)
+            completion(.success(post))
+        }
+    }
+
 
 }

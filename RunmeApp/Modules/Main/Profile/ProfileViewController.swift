@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.PRColors.prRegular
+        view.backgroundColor = Res.PRColors.prMedium
         view.addSubview(profileCardView)
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

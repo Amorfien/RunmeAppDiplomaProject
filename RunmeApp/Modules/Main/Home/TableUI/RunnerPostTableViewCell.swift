@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol PostTableCellDelegate: AnyObject {
+    func likeDidTap(postId: String)
+    func deleteDidTap()
+}
+
 final class RunnerPostTableViewCell: UITableViewCell {
 
     static let reuseId = "RunnerPostTableViewCell"
 
     // MARK: - Properties
+
+    weak var cellDelegate: PostTableCellDelegate?
 
     private let bgView: UIView = {
         let view = UIView()
@@ -43,6 +50,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
     }()
 
     private var itsme: Bool = false
+    private var postId: String = ""
 
     private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .secondaryLabel, lines: 2)
 
@@ -117,12 +125,15 @@ final class RunnerPostTableViewCell: UITableViewCell {
         tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"
         dateLabel.text = post.date
         descriptionText.text = post.text
-        let buttonText = String(post.likes.count) + (itsme ? " ❌" : " 🩶")
+        let buttonText = String(post.likes.count) + (itsme ? " 🩶" : " ♥️")
         likeButton.setTitle(buttonText, for: .normal)
         self.itsme = itsme
+        self.postId = post.postId //для поиска лайкнутого/удаленного поста
     }
 
-    @objc private func likeTap() {}
+    @objc private func likeTap() {
+        cellDelegate?.likeDidTap(postId: postId)
+    }
 
 
 }
