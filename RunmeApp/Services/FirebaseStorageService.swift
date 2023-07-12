@@ -69,7 +69,6 @@ final class FirebaseStorageService {
                 let megaByte = Int64(3 * 1024 * 1024)
 
                 for item in storageList.items {
-//                    print(item.name)
                     item.getData(maxSize: megaByte) { dataRes in
                         switch dataRes {
                         case .success(let data):

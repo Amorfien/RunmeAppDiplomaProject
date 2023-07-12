@@ -9,7 +9,7 @@ import UIKit
 
 protocol PostTableCellDelegate: AnyObject {
     func likeDidTap(postId: String)
-    func deleteDidTap()
+    func deleteDidTap(postId: String)
 }
 
 final class RunnerPostTableViewCell: UITableViewCell {
@@ -48,6 +48,17 @@ final class RunnerPostTableViewCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    private lazy var delButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        button.addTarget(self, action: #selector(delTap), for: .touchUpInside)
+        button.isHidden = true
+        button.layer.cornerRadius = 14
+        button.layer.borderWidth = 1
+        button.backgroundColor = Res.PRColors.prLight
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     private var itsme: Bool = false
     private var postId: String = ""
@@ -75,14 +86,15 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
         contentView.addSubview(bgView)
         [avatarImageView, nicknameLabel, distanceLabel, descriptionText, timeLabel, tempLabel, dateLabel, likeButton].forEach(bgView.addSubview)
+        contentView.addSubview(delButton)
 
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalToConstant: 116),
 
-            bgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            bgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            bgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            bgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            bgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            bgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            bgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            bgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
 
 //            avatarImageView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
             avatarImageView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 10),
@@ -96,6 +108,10 @@ final class RunnerPostTableViewCell: UITableViewCell {
             likeButton.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
             likeButton.widthAnchor.constraint(equalToConstant: 80),
             likeButton.heightAnchor.constraint(equalToConstant: 30),
+            delButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+            delButton.centerYAnchor.constraint(equalTo: bgView.topAnchor, constant: 6),
+            delButton.widthAnchor.constraint(equalToConstant: 28),
+            delButton.heightAnchor.constraint(equalToConstant: 28),
 
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
@@ -115,7 +131,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
     // MARK: - Public method
 
-    func fillData(with post: RunnerPost, avatar: UIImage, itsme: Bool = false) {
+    func fillData(with post: RunnerPost, avatar: UIImage, iLikeIt: Bool = false, itsme: Bool = false) {
         avatarImageView.image = avatar
         nicknameLabel.text = post.userNickname
         let meters = post.distance / 1000
@@ -125,8 +141,9 @@ final class RunnerPostTableViewCell: UITableViewCell {
         tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"
         dateLabel.text = post.date
         descriptionText.text = post.text
-        let buttonText = String(post.likes.count) + (itsme ? " 🩶" : " ♥️")
+        let buttonText = String(post.likes.count) + (iLikeIt ? " ♥️" : " 🩶")
         likeButton.setTitle(buttonText, for: .normal)
+        delButton.isHidden = !itsme
         self.itsme = itsme
         self.postId = post.postId //для поиска лайкнутого/удаленного поста
     }
@@ -134,6 +151,9 @@ final class RunnerPostTableViewCell: UITableViewCell {
     @objc private func likeTap() {
         cellDelegate?.likeDidTap(postId: postId)
     }
-
+    @objc private func delTap() {
+        delButton.backgroundColor = Res.PRColors.prMedium
+        cellDelegate?.deleteDidTap(postId: postId)
+    }
 
 }

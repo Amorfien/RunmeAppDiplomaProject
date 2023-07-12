@@ -11,25 +11,20 @@ final class HomeViewController: UIViewController {
 
     private let viewModel: HomeViewModel
 
-    //    var avatars: [UIImage] = [] {
-    //        didSet {
-    //                self.newsTableView.reloadData()
-    //        }
-    //    }
     var articles: [Article] = [] {
         didSet {
-                self.newsTableView.reloadData()
+            self.newsTableView.reloadData()
         }
     }
     var runnerPosts: [RunnerPost] = []
     var selectedRunner: [RunnerPost] = [] {
         didSet {
-                self.newsTableView.reloadData()
+            self.newsTableView.reloadData()
         }
     }
     var avatarsDict: [String: UIImage] = [:] {
         didSet {
-                self.newsTableView.reloadData()
+            self.newsTableView.reloadData()
         }
     }
     private var choosenUserId = "0" //храним выбранного юзера для правильного обновления в случае лайка
@@ -92,7 +87,6 @@ final class HomeViewController: UIViewController {
         setupNavigation()
         setupView()
         bindViewModel()
-//        viewModel.updateState(viewInput: .runnersSegment)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +95,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        navigationItem.title = "Главная"
+        navigationItem.title = "Участники"
         navigationController?.navigationBar.prefersLargeTitles = true
 
 
@@ -158,26 +152,18 @@ final class HomeViewController: UIViewController {
                 }
                 avatarsDict = Dictionary(uniqueKeysWithValues: zip(users, images))
 
-                DispatchQueue.main.async {
-//                    let header = self.newsTableView.tableHeaderView as! FriendCardsCollectionView
-//                    header.fillCardsCollection(users: users, images: images)
                     self.tableHeaderView.fillCardsCollection(users: users, images: images)
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
-                }
             case .loadedNews(let news):
-                DispatchQueue.main.async {
                     self.articles = news
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
-                }
             case.loadedPosts(let posts):
-                DispatchQueue.main.async {
                     self.runnerPosts = posts
                     self.selectedRunner = posts
                     self.updateLoadingAnimation(isLoading: false)
                     self.updateTableViewVisibility(isHidden: false)
-                }
             case .likePost(let likePost):
                 for (ind, post) in runnerPosts.enumerated() {
                     if post.postId == likePost.postId {
@@ -186,6 +172,14 @@ final class HomeViewController: UIViewController {
                         chooseUser(id: choosenUserId)
                     }
                 }
+            case .deletePost(let delPostId):
+                for (ind, post) in runnerPosts.enumerated() {
+                    if post.postId == delPostId {
+                        runnerPosts.remove(at: ind)
+                        chooseUser(id: choosenUserId)
+                    }
+                }
+
             }
         }
     }
@@ -201,7 +195,6 @@ final class HomeViewController: UIViewController {
 
     //MARK: - Actions
     @objc private func changeSource() {
-//        cell.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.MyColors.homeBackground : Res.MyColors.myBackground
         switch sourceSegment.selectedSegmentIndex {
         case 0:
             newsTableView.tableHeaderView  = tableHeaderView
@@ -253,19 +246,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             else { return RunnerPostTableViewCell() }
             let post = selectedRunner[indexPath.row]
             let avatar = avatarsDict[post.userId] ?? UIImage(named: "dafault-avatar")!
+            let iLikeIt = post.likes.contains(AuthManager.shared.currentUser?.uid ?? "")
             let itsme = AuthManager.shared.currentUser?.uid == post.userId
-            cell.fillData(with: post, avatar: avatar, itsme: itsme)
+            cell.fillData(with: post, avatar: avatar, iLikeIt: iLikeIt, itsme: itsme)
             cell.cellDelegate = self
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
             else { return NewsPostTableViewCell() }
-
             cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
             return cell
         }
-
-
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -294,8 +285,8 @@ extension HomeViewController: PostTableCellDelegate {
         viewModel.updateState(viewInput: .likeDidTap(postId))
     }
 
-    func deleteDidTap() {
-        
+    func deleteDidTap(postId: String) {
+        viewModel.updateState(viewInput: .delDidTap(postId))
     }
 
 

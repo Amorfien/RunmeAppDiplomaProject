@@ -21,7 +21,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case loadedNews([Article])
         case loadedPosts([RunnerPost])
         case likePost(RunnerPost)
-//        case error(Error)
+        case deletePost(String)
     }
 
     enum ViewInput {
@@ -29,6 +29,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case newsSegment
         case chooseUser(String)
         case likeDidTap(String)
+        case delDidTap(String)
     }
 
     private let newsService: NewsService
@@ -70,12 +71,15 @@ final class HomeViewModel: HomeViewModelProtocol {
 
                 case .success(var post):
                     guard let itsme = AuthManager.shared.currentUser?.uid else { return }
+                    //пост не должен быть уже лайкнутым и не должен быть своим
                     guard !post.likes.contains(itsme), post.userId != itsme else { return }
                     post.likes.append(itsme)
                     DatabaseService.shared.updatePost(post: post) { updPostResult in
                         switch updPostResult {
                         case .success(let updPost):
-                            self.state = .likePost(updPost)
+                            DispatchQueue.main.async {
+                                self.state = .likePost(updPost)
+                            }
                         case .failure(_):
                             print("Fail update post")
                         }
@@ -84,7 +88,18 @@ final class HomeViewModel: HomeViewModelProtocol {
                     print("Fail fetch post")
                 }
             }
+        case .delDidTap(let id):
+            DatabaseService.shared.deletePost(postIdd: id) { success in
+                if success {
+                    DispatchQueue.main.async {
+                        self.state = .deletePost(id)
+                    }
+                } else {
+                    print("Delete post error")
+                }
+            }
         }
+        
     }
 
     ///достать новости
@@ -92,15 +107,16 @@ final class HomeViewModel: HomeViewModelProtocol {
         newsService.loadNews { [weak self] result in
             switch result {
             case .success(let news):
-//                print(news.count)
-//                sleep(1)
-                self?.state = .loadedNews(news)
+                DispatchQueue.main.async {
+                    self?.state = .loadedNews(news)
+                }
             case .failure(let newsError):
-                print(newsError.localizedDescription)
-                self?.coordinator?.showErrorAlert(newsError, handler: {
-                    self?.state = .initial
-                })
-//                self?.state = .error(error)
+                print("🤬", newsError.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.coordinator?.showErrorAlert(newsError, handler: {
+                        self?.state = .initial
+                    })
+                }
             }
         }
     }
@@ -110,13 +126,17 @@ final class HomeViewModel: HomeViewModelProtocol {
         FirebaseStorageService.shared.downloadAllAvatars { [weak self] result in
             switch result {
             case .success(let dict):
-                sleep(1)
-                self?.state = .loadedAvatars(dict)
+//                sleep(1)
+                DispatchQueue.main.async {
+                    self?.state = .loadedAvatars(dict)
+                }
             case .failure(let avatarsError):
                 print("Download avatars Error, \(avatarsError.localizedDescription)")
-                self?.coordinator?.showErrorAlert(avatarsError, handler: {
-                    self?.state = .initial
-                })
+                DispatchQueue.main.async {
+                    self?.coordinator?.showErrorAlert(avatarsError, handler: {
+                        self?.state = .initial
+                    })
+                }
             }
         }
     }
@@ -139,8 +159,10 @@ final class HomeViewModel: HomeViewModelProtocol {
             switch postsResult {
 
             case .success(let posts):
-                sleep(1)
-                self?.state = .loadedPosts(posts.sorted())
+//                sleep(1)
+                DispatchQueue.main.async {
+                    self?.state = .loadedPosts(posts.sorted())
+                }
             case .failure(let postsError):
                 print(postsError.localizedDescription)
             }

@@ -168,7 +168,7 @@ final class DatabaseService {
                     let userNickname = document.data()["userNickname"] as? String ?? "???"
                     let date = document.data()["date"] as? String ?? "??.??.????"
                     let text = document.data()["text"] as? String ?? ""
-                    let distance = document.data()["distance"] as? Double ?? 0
+                    let distance = document.data()["distance"] as? Double ?? 1
                     let time = document.data()["time"] as? Double ?? 0
                     let likes = document.data()["likes"] as? [String] ?? []
 
@@ -213,5 +213,17 @@ final class DatabaseService {
         }
     }
 
+    ///удалить пост
+    func deletePost(postIdd: String, completion: @escaping (Bool) -> Void) {
+
+        postsRef.document(postIdd).delete { error in
+            if let error {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+
+    }
 
 }

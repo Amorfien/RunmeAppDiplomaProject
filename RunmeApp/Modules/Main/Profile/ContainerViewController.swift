@@ -89,10 +89,7 @@ final class ContainerViewController: UIViewController {
         lazy var datePicker: UIDatePicker = {
             let datePicker = UIDatePicker()
             datePicker.datePickerMode = .time
-            datePicker.date = DateFormatter().date(from: "") ?? Date()
-//            datePicker.addTarget(self, action: #selector(timeChange), for: UIControl.Event.valueChanged)
-//            datePicker.frame.size = CGSize(width: .zero, height: 400)
-//            datePicker.frame = CGRect(x: -20, y: 20, width: 170, height: 100)
+            datePicker.date = Date()//DateFormatter().date(from: "") ?? Date()
             datePicker.frame = CGRect(origin: .init(x: -32, y: 0), size: .zero)
             datePicker.preferredDatePickerStyle = .wheels
             datePicker.locale = Locale(identifier: "ru_RU")
@@ -102,7 +99,7 @@ final class ContainerViewController: UIViewController {
 //        "в\nр\nе\nм\nя\n\n"
 //        "\n\n\nч.                                мин.\n\n\n\n"
 
-        let alertController = UIAlertController(title: "\n\n\nч.                                     \n                                 мин.\n\n\n", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "\n\n\n\nч.                              мин.\n\n\n", message: nil, preferredStyle: .alert)
         alertController.view.addSubview(datePicker)
 
         let okAction = UIAlertAction(title: "Сохранить", style: .default) { [weak self] _ in
@@ -115,30 +112,32 @@ final class ContainerViewController: UIViewController {
 
             let author = AuthManager.shared.currentUser?.uid ?? ""
             let date = dateFormatter.string(from: Date())
-            let distance = Double(alertController.textFields?.first?.text ?? "") ?? 0
+            var distance = Double(alertController.textFields?.first?.text ?? "") ?? 1
+            if distance == 0 {
+                distance = 1
+            }
             let text = alertController.textFields?.last?.text ?? ""
             let timeStr = timeFormatter.string(from: datePicker.date)
             let timeComponentsStr = timeStr.components(separatedBy: ":")
             let hours = Int(timeComponentsStr[0]) ?? 0
             let minutes = Int(timeComponentsStr[1]) ?? 0
             let sec = hours * 3600 + minutes * 60
-            let post = RunnerPost(postId: "", userId: author, userNickname: "", date: date, text: text, distance: distance, time: Double(sec))
+            let post = RunnerPost(postId: "", userId: author, userNickname: "", date: date, text: text, distance: distance * 1000, time: Double(sec))
 
             (self?.profileVC as? ProfileViewController)?.viewModel.savePost(post)
         }
 
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         alertController.addTextField { textField in
-            textField.tag = 0
-            textField.placeholder = "Дистанция в метрах"
+            textField.placeholder = "Дистанция в километрах"
+            textField.textAlignment = .center
             textField.keyboardType = .numberPad
-            textField.font = .monospacedDigitSystemFont(ofSize: 14, weight: .regular)
             textField.delegate = self
         }
 
         alertController.addTextField { textField in
-            textField.tag = 2
             textField.placeholder = "Описание"
+            textField.textAlignment = .center
         }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
@@ -150,7 +149,7 @@ final class ContainerViewController: UIViewController {
 extension ContainerViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        if text.count > 5 {
+        if text.count > 2 {
             textField.deleteBackward()
         }
     }

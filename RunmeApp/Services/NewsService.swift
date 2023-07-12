@@ -20,10 +20,10 @@ final class NewsService: NewsProtocol {
         case requestError
     }
 
-    let keywords = ["ironman", "зож", "спорт+бег"]
+    let keywords = ["ironman"]//, "зож"]//, "спорт+бег"]
 
     // MARK: - URL session
-    func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
+    private func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
 
         let urlComponents: URLComponents = {
             let codedApiKey: [UInt8] = [0x38, 0x38, 0x33, 0x34, 0x37, 0x34, 0x33, 0x35, 0x30, 0x30, 0x64, 0x38, 0x34, 0x35, 0x35, 0x30, 0x39, 0x65, 0x33, 0x34, 0x38, 0x63, 0x33, 0x36, 0x32, 0x66, 0x66, 0x38, 0x63, 0x66, 0x63, 0x31]
@@ -77,9 +77,11 @@ final class NewsService: NewsProtocol {
                         group.leave()
                     } catch {
                         print("❗️ Decode Error")
+                        group.leave()//
                         completion(.failure(.decodeError))
                     }
                 case .failure(let error): print("‼️ Request Error ", error)
+                    group.leave()//
                     completion(.failure(error))
                 }
             }
@@ -88,7 +90,7 @@ final class NewsService: NewsProtocol {
 
 
         group.notify(queue: .global(), work: DispatchWorkItem(block: {
-            sleep(1)
+//            sleep(1)
             completion(.success(articles.sorted(by: >)))
         }))
 
