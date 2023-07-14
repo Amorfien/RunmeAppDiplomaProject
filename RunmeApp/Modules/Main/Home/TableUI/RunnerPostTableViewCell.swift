@@ -63,7 +63,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
     private var itsme: Bool = false
     private var postId: String = ""
 
-    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .secondaryLabel, lines: 2)
+    private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .secondaryLabel, lines: 0)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,7 +89,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
         contentView.addSubview(delButton)
 
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: 116),
+//            contentView.heightAnchor.constraint(equalToConstant: 116),
 
             bgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             bgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
@@ -103,6 +103,7 @@ final class RunnerPostTableViewCell: UITableViewCell {
             nicknameLabel.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 8),
             nicknameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 14),
             nicknameLabel.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -80),
+            nicknameLabel.heightAnchor.constraint(equalToConstant: 20),
 
             likeButton.topAnchor.constraint(equalTo: bgView.topAnchor),
             likeButton.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
@@ -115,6 +116,8 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
+            distanceLabel.heightAnchor.constraint(equalToConstant: 16),
+//            distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             timeLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
             timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 76),
             tempLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),

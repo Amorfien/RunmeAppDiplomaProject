@@ -95,6 +95,7 @@ extension FriendCardsCollectionView: UICollectionViewDelegateFlowLayout {
         } else {
             headerDelegate?.chooseUser(id: users[indexPath.row])
             selectedItem = indexPath
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
 }

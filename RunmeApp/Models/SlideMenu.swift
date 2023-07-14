@@ -32,11 +32,11 @@ enum SlideMenu: String, CaseIterable {
     var color: String {
         switch self {
         case .files:
-            return "prRegular"
+            return "prLight"
         case .bookmarks:
-            return "prRegular"
+            return "prLight"
         case .favorite:
-            return "prRegular"
+            return "prLight"
         case .settings:
             return "black"
         case .exit:

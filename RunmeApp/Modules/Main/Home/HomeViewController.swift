@@ -28,6 +28,7 @@ final class HomeViewController: UIViewController {
         }
     }
     private var choosenUserId = "0" //храним выбранного юзера для правильного обновления в случае лайка
+    private var selectedPostRow: IndexPath? = nil
 
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
@@ -202,6 +203,7 @@ final class HomeViewController: UIViewController {
             view.backgroundColor = Res.PRColors.prLight
             newsTableView.backgroundColor = Res.PRColors.prLight
         case 1:
+            newsTableView.reloadData()
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)
             view.backgroundColor = Res.MyColors.myBackground
@@ -261,6 +263,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if sourceSegment.selectedSegmentIndex == 0, indexPath != selectedPostRow {
+            self.selectedPostRow = indexPath
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        } else if sourceSegment.selectedSegmentIndex == 0 {
+            selectedPostRow = nil
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if sourceSegment.selectedSegmentIndex == 0, indexPath == selectedPostRow {
+            return 250
+        } else if sourceSegment.selectedSegmentIndex == 1 {
+            return 460
+        } else {
+            return 116
+        }
     }
 
 
@@ -270,7 +290,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: UsersTableHeaderDelegate {
     func chooseUser(id: String) {
-
+        self.selectedPostRow = nil
         if id != "0" {
             selectedRunner = runnerPosts.filter{ $0.userId == id }
         } else {

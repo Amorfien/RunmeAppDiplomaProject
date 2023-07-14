@@ -31,7 +31,7 @@ final class SlideMenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Res.PRColors.prMedium
+        view.backgroundColor = Res.PRColors.prRegular
 
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: -8, height: 0)
