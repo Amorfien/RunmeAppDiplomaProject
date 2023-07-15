@@ -8,20 +8,20 @@
 import Foundation
 
 enum SlideMenu: String, CaseIterable {
-    case files = "Файлы"
-    case bookmarks = "Закладки"
-    case favorite = "Избранное"
+    case statistic = "Статистика"
+    case notification = "Уведомления"
+    case favorite = "Очистить"
     case settings = "Настройки"
     case exit = "Выход"
 
     var ico: String {
         switch self {
-        case .files:
-            return "doc.text"
-        case .bookmarks:
-            return "bookmark"
+        case .statistic:
+            return "chart.xyaxis.line"
+        case .notification:
+            return "bell"
         case .favorite:
-            return "star"
+            return "star.slash"
         case .settings:
             return "gearshape"
         case .exit:
@@ -31,12 +31,12 @@ enum SlideMenu: String, CaseIterable {
 
     var color: String {
         switch self {
-        case .files:
+        case .statistic:
             return "prLight"
-        case .bookmarks:
+        case .notification:
             return "prLight"
         case .favorite:
-            return "prLight"
+            return "black"
         case .settings:
             return "black"
         case .exit:

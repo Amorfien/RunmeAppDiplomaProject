@@ -100,9 +100,16 @@ final class HomeViewModel: HomeViewModelProtocol {
                 }
             }
         case .addToFavorite(let post):
-            let coreDataService = CoreDataService()
-            coreDataService.savePost(post) { success in
-                print(success, " 📑")
+            let coreDataService = CoreDataService.shared
+            ///проверка на одинаковые посты
+            let fetchedNews = coreDataService.fetching(predicate: NSPredicate(format: "url == %@", post.url ?? ""))
+            if fetchedNews.isEmpty {
+                coreDataService.savePost(post) { [weak self] success in
+                    print(success, " 📑")
+                    self?.coordinator?.navigationController.showAlert(title: "Успешно", message: "Новость сохранена в избранное", completion: {})
+                }
+            } else {
+                coordinator?.navigationController.showAlert(title: "Ошибка", message: "Новость уже сохранена", completion: {})
             }
         }
         

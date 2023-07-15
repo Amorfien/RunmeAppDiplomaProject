@@ -163,12 +163,12 @@ extension ProfileViewController: SlideMenuDelegate {
     func menuItemTap(_ item: SlideMenu) {
 //        print(item.rawValue, " 🗓️")
         switch item {
-        case .files:
+        case .statistic:
             ()
-        case .bookmarks:
+        case .notification:
             ()
         case .favorite:
-            ()
+            viewModel.updateState(viewInput: .clearFavorites)
         case .settings:
             viewModel.updateState(viewInput: .menuSettings)
         case .exit:

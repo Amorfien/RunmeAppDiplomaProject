@@ -13,8 +13,8 @@ final class FavoriteViewController: UIViewController {
 
     var savedNews: [Article] = [] {
         didSet {
-            print(savedNews.count)
-//            self.newsTableView.reloadData()
+            runnersImageView.isHidden = !savedNews.isEmpty
+            infoLabel.isHidden = !savedNews.isEmpty
         }
     }
 
@@ -26,13 +26,13 @@ final class FavoriteViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-//        tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
+
+    private let infoLabel = UILabel(text: "Здесь будут храниться ваши избранные новости", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .tintColor, lines: 2)
 
     private let runnersImageView: UIImageView = {
         let image = UIImageView()
@@ -66,7 +66,6 @@ final class FavoriteViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.updateState(viewInput: .fetchFavorites(predicate: nil))
-        runnersImageView.isHidden = !savedNews.isEmpty
     }
 
     deinit {
@@ -84,9 +83,15 @@ final class FavoriteViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Res.PRColors.prLight
         view.addSubview(runnersImageView)
+        view.addSubview(infoLabel)
         view.addSubview(newsTableView)
+        infoLabel.textAlignment = .center
 
         NSLayoutConstraint.activate([
+            infoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+
             runnersImageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 16),
             runnersImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             runnersImageView.widthAnchor.constraint(equalToConstant: 250),
@@ -113,7 +118,7 @@ final class FavoriteViewController: UIViewController {
                 ()
             case .favorite(let news):
                 self.savedNews = news
-                newsTableView.isHidden = false
+                newsTableView.reloadData()
             }
         }
 
@@ -125,13 +130,12 @@ final class FavoriteViewController: UIViewController {
 
     //MARK: - Actions
     @objc private func searchButtonTap() {
-        let alertController = UIAlertController(title: "Поиск", message: "Введите автора статьи", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) {_ in
-            self.searchButton.isEnabled = false
-            self.clearButton.isEnabled = true
+        let alertController = UIAlertController(title: "Поиск статьи", message: "Введите искомое слово из заголовка новости", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.searchButton.isEnabled = false
+            self?.clearButton.isEnabled = true
             let filterId = alertController.textFields?.first?.text ?? ""
-
-            self.viewModel.updateState(viewInput: .fetchFavorites(predicate: NSPredicate(format: "title == %@", filterId)))
+            self?.viewModel.updateState(viewInput: .fetchFavorites(predicate: NSPredicate(format: "title CONTAINS[cd] %@", filterId)))
 
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) {_ in
@@ -159,9 +163,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         savedNews.count
     }
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        savedNews.isEmpty ? "Здесь будут отображаться сохранённые новости" : nil
-    }
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
             let sectionHeader = HeaderInSectionView()
@@ -185,16 +187,11 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         let deleteAction = UIContextualAction(
             style: .destructive,
             title: "Удалить"
-        ) { _, _, _ in
+        ) { [weak self] _, _, _ in
             //delete from DB
-            let article = self.savedNews[indexPath.section]
-//            self.coreDataServiceLite.deletePost(predicate: NSPredicate(format: "id == %ld", post.id))
-
-            self.savedNews.remove(at: indexPath.section)
-//            self.newsTableView.deleteRows(at: [indexPath], with: .right)
-            self.newsTableView.deleteSections(IndexSet(integer: indexPath.section), with: .right)
-            if article.url != nil {
-                self.viewModel.updateState(viewInput: .delete(url: article.url!))
+            let article = self?.savedNews[indexPath.section]
+            if let url = article?.url {
+                self?.viewModel.updateState(viewInput: .delete(url))
             }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])

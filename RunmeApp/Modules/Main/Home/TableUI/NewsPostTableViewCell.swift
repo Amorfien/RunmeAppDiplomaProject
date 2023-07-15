@@ -17,7 +17,11 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     // MARK: - Properties
 
-    weak var cellDelegate: NewsCellDelegate?
+    weak var cellDelegate: NewsCellDelegate? {
+        didSet {
+            favoriteButton.isHidden = false
+        }
+    }
     private var article: Article?
 
     private let authorLabel = UILabel(text: "", font: .systemFont(ofSize: 18, weight: .bold), textColor: .tintColor, lines: 2)
@@ -53,6 +57,17 @@ final class NewsPostTableViewCell: UITableViewCell {
         return button
     }()
 
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.addTarget(self, action: #selector(favoriteDoubleTap), for: .touchUpInside)
+        button.isHidden = true
+        button.layer.borderWidth = 0.5
+//        button.backgroundColor = Res.PRColors.prLight
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -69,19 +84,24 @@ final class NewsPostTableViewCell: UITableViewCell {
         backgroundColor = .clear//Res.MyColors.myBackground
         titleLabel.textAlignment = .center
         
-        [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage].forEach(contentView.addSubview)
+        [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage, favoriteButton].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60),
+
+            favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 30),
 
             sourceLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             sourceLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 2),
 
             titleLabel.topAnchor.constraint(equalTo: sourceLabel.bottomAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
             postImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -111,22 +131,7 @@ final class NewsPostTableViewCell: UITableViewCell {
             self.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    private func animation() {
-        self.saveToFavoriteImage.isHidden = false
-
-        UIView.animate(withDuration: 1.0, delay: 0) {
-            self.saveToFavoriteImage.transform = CGAffineTransform(scaleX: 3.9, y: 3.9)
-        } completion: { _ in
-            self.saveToFavoriteImage.transform = .identity
-            self.saveToFavoriteImage.isHidden = true
-        }
-    }
-
     @objc private func favoriteDoubleTap() {
-        if cellDelegate != nil {
-            animation()
-            print("DoubleTap")
-        }
         cellDelegate?.favoriteDidTap(post: article!)
     }
 

@@ -30,6 +30,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case saveStatus(String)
         case savePhoto(UIImage)
         case updateUser(Runner)
+        case clearFavorites
         case menuSettings
         case logOut
     }
@@ -119,6 +120,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                     print("Uploading FAIL")
                 }
             }
+        case .clearFavorites:
+            CoreDataService.shared.deletePost(predicate: nil)
         case .menuSettings:
             coordinator?.showSettings(userSettings: fetchedUser)
 //            self.state = .settings(fetchedUser)

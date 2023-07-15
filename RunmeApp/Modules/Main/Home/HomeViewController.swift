@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
 
     var articles: [Article] = [] {
         didSet {
-            print(articles)
+//            print(articles)
             self.newsTableView.reloadData()
         }
     }

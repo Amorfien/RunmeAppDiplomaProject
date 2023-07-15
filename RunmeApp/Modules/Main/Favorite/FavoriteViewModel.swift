@@ -24,13 +24,13 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
 
     enum ViewInput {
         case fetchFavorites(predicate: NSPredicate? = nil)
-        case delete(url: String)
+        case delete(String)
     }
 
     weak var coordinator: FavoriteCoordinator?
     var onStateDidChange: ((State) -> Void)?
 
-    let coreDataService = CoreDataService()
+    let coreDataService = CoreDataService.shared
 
     private(set) var state: State = .initial {
         didSet {
@@ -45,16 +45,12 @@ final class FavoriteViewModel: FavoriteViewModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .fetchFavorites(let predicate):
-
-
             let news = coreDataService.fetching(predicate: predicate)
-//            self.favoritesPosts = posts.map { Post(postCoreDataModel: $0) }
             self.state = .favorite(news.map {Article(newsCoreDataModel: $0)})
-
-        case .delete(url: let url):
-            coreDataService.deletePost(predicate: NSPredicate(format: "url == %ld", url))
-
-
+        case .delete(let url):
+            coreDataService.deletePost(predicate: NSPredicate(format: "url == %@", url))
+            let news = coreDataService.fetching(predicate: nil)
+            self.state = .favorite(news.map {Article(newsCoreDataModel: $0)})
         }
     }
 }

@@ -10,16 +10,16 @@ import CoreData
 
 final class CoreDataService {
 
+    static let shared = CoreDataService()
+
     let appDelegate: AppDelegate
     let mainContext: NSManagedObjectContext
-    let backgroundContext: NSManagedObjectContext
+//    let backgroundContext: NSManagedObjectContext
 
-    init() {
+    private init() {
         self.appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.mainContext = appDelegate.persistentContainer.viewContext
         self.mainContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        self.backgroundContext = appDelegate.persistentContainer.newBackgroundContext()
-        self.backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 
 
@@ -28,11 +28,9 @@ final class CoreDataService {
 /// Сохраняет пост в БД (в бэкграунд контексте)
     func savePost(_ news: Article, completion: @escaping (Bool) -> Void) {
 
-//        guard let entity = NSEntityDescription.entity(forEntityName: "PostCoreDataModel", in: mainContext) else { return }
+        self.mainContext.perform {
 
-        self.backgroundContext.perform {
-
-            let newsCoreDataModel = NewsCoreDataModel(context: self.backgroundContext)
+            let newsCoreDataModel = NewsCoreDataModel(context: self.mainContext)
 
             newsCoreDataModel.author = news.author
             newsCoreDataModel.source = news.source
@@ -41,25 +39,19 @@ final class CoreDataService {
             newsCoreDataModel.url = news.url
             newsCoreDataModel.urlToImage = news.urlToImage
             newsCoreDataModel.publishedAt = news.publishedAt
-//            newsCoreDataModel.image =
+            //            newsCoreDataModel.image =
 
-            if self.backgroundContext.hasChanges {
+            if self.mainContext.hasChanges {
                 do {
-                    try self.backgroundContext.save()
-                    self.mainContext.perform {
-                        completion(true)
-                    }
+                    try self.mainContext.save()
+                    completion(true)
                 } catch {
                     let nserror = error as NSError
                     print("✈️ Error \(nserror.localizedDescription)")
-                    self.mainContext.perform {
-                        completion(false)
-                    }
-                }
-            } else {
-                self.mainContext.perform {
                     completion(false)
                 }
+            } else {
+                completion(false)
             }
 
         }
@@ -84,7 +76,7 @@ final class CoreDataService {
     func deletePost(predicate: NSPredicate?) {
 
         let posts = self.fetching(predicate: predicate)
-
+        print("news count", posts.count)
         posts.forEach {
             self.mainContext.delete($0)
         }
@@ -95,7 +87,6 @@ final class CoreDataService {
 
         do {
             try mainContext.save()
-            print("Save main context")
         } catch let error {
             print("AaAaaaaAAaAaAaa ", error)
         }

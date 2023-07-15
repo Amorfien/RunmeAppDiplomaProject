@@ -105,12 +105,7 @@ final class SettingsViewController: UIViewController {
         fillRuntime()
 
     }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        var user = settingsView.updateUser()
-//        user.birthdayShow = birthdaySwitch.isOn
-//        viewModel.updateState(viewInput: .updateUser(user))
-//    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         updateUser()
