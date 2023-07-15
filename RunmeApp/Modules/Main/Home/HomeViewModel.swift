@@ -30,6 +30,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         case chooseUser(String)
         case likeDidTap(String)
         case delDidTap(String)
+        case addToFavorite(Article)
     }
 
     private let newsService: NewsService
@@ -97,6 +98,11 @@ final class HomeViewModel: HomeViewModelProtocol {
                 } else {
                     print("Delete post error")
                 }
+            }
+        case .addToFavorite(let post):
+            let coreDataService = CoreDataService()
+            coreDataService.savePost(post) { success in
+                print(success, " 📑")
             }
         }
         

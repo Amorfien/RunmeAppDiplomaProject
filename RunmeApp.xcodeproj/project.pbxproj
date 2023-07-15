@@ -54,6 +54,8 @@
 		188320082A51F31200E08AF0 /* ResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188320072A51F31200E08AF0 /* ResultsCoordinator.swift */; };
 		1883200B2A51F58200E08AF0 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883200A2A51F58200E08AF0 /* ResultsViewModel.swift */; };
 		1883200D2A51F7FD00E08AF0 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883200C2A51F7FD00E08AF0 /* ResultsViewController.swift */; };
+		1885DB242A615BC500F62765 /* RunmeAppCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1885DB222A615BC500F62765 /* RunmeAppCoreData.xcdatamodeld */; };
+		1885DB262A61659700F62765 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885DB252A61659700F62765 /* CoreDataService.swift */; };
 		189EBF0F2A4DEC8E00716711 /* AvatarCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */; };
 		18ACD0B52A4C8503008B7FDB /* HeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */; };
 		18ACD0B72A4C9061008B7FDB /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */; };
@@ -120,6 +122,8 @@
 		188320072A51F31200E08AF0 /* ResultsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCoordinator.swift; sourceTree = "<group>"; };
 		1883200A2A51F58200E08AF0 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
 		1883200C2A51F7FD00E08AF0 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		1885DB232A615BC500F62765 /* RunmeAppCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RunmeAppCoreData.xcdatamodel; sourceTree = "<group>"; };
+		1885DB252A61659700F62765 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		189EBF0E2A4DEC8E00716711 /* AvatarCircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleImageView.swift; sourceTree = "<group>"; };
 		18ACD0B42A4C8503008B7FDB /* HeaderInSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInSectionView.swift; sourceTree = "<group>"; };
 		18ACD0B62A4C9061008B7FDB /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				180AC2FC2A47856D000FD11F /* DatabaseService.swift */,
 				186AD0B52A48689F00001093 /* FirebaseStorageService.swift */,
 				187A3C692A4B4FB900DFC2C2 /* NewsService.swift */,
+				1885DB252A61659700F62765 /* CoreDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 			children = (
 				1880D6762A4490E4008DBE6C /* AppDelegate.swift */,
 				1880D6782A4490E4008DBE6C /* SceneDelegate.swift */,
+				1885DB222A615BC500F62765 /* RunmeAppCoreData.xcdatamodeld */,
 				1880D6842A4490E5008DBE6C /* Info.plist */,
 				18020EF62A461F1F00D615D7 /* GoogleService-Info.plist */,
 				1880D6812A4490E5008DBE6C /* LaunchScreen.storyboard */,
@@ -465,6 +471,7 @@
 			files = (
 				18DC3BEC2A46F9D000438728 /* Runner.swift in Sources */,
 				186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */,
+				1885DB262A61659700F62765 /* CoreDataService.swift in Sources */,
 				1880D6B12A44F897008DBE6C /* HomeViewModel.swift in Sources */,
 				1883200D2A51F7FD00E08AF0 /* ResultsViewController.swift in Sources */,
 				18020F032A462D1E00D615D7 /* AuthManager.swift in Sources */,
@@ -509,6 +516,7 @@
 				18ACD0BD2A4C9C71008B7FDB /* FriendCardCell.swift in Sources */,
 				186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */,
 				1880D6992A4496B1008DBE6C /* AppCoordinator.swift in Sources */,
+				1885DB242A615BC500F62765 /* RunmeAppCoreData.xcdatamodeld in Sources */,
 				18768A882A45D54600720EC3 /* LoginButton.swift in Sources */,
 				1880D6A12A449C58008DBE6C /* HomeCoordinator.swift in Sources */,
 				181277FF2A5597A200E59A3B /* SlideMenu.swift in Sources */,
@@ -768,6 +776,19 @@
 			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		1885DB222A615BC500F62765 /* RunmeAppCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1885DB232A615BC500F62765 /* RunmeAppCoreData.xcdatamodel */,
+			);
+			currentVersion = 1885DB232A615BC500F62765 /* RunmeAppCoreData.xcdatamodel */;
+			path = RunmeAppCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1880D66B2A4490E4008DBE6C /* Project object */;
 }

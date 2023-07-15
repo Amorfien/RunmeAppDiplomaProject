@@ -7,14 +7,22 @@
 
 import UIKit
 
+protocol NewsCellDelegate: AnyObject {
+    func favoriteDidTap(post: Article)
+}
+
 final class NewsPostTableViewCell: UITableViewCell {
 
     static let reuseId = "NewsPostTableViewCell"
 
     // MARK: - Properties
 
-    private let authorLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .bold), textColor: .tintColor, lines: 2)
+    weak var cellDelegate: NewsCellDelegate?
+    private var article: Article?
+
+    private let authorLabel = UILabel(text: "", font: .systemFont(ofSize: 18, weight: .bold), textColor: .tintColor, lines: 2)
     private let sourceLabel = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+    private let titleLabel = UILabel(text: "", font: .systemFont(ofSize: 20, weight: .medium), textColor: .tintColor, lines: 2)
 
     private var postImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,9 +66,10 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     private func setupView() {
 
-        backgroundColor = Res.MyColors.myBackground
+        backgroundColor = .clear//Res.MyColors.myBackground
+        titleLabel.textAlignment = .center
         
-        [authorLabel, sourceLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage].forEach(contentView.addSubview)
+        [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -70,7 +79,11 @@ final class NewsPostTableViewCell: UITableViewCell {
             sourceLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             sourceLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 2),
 
-            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 24),
+            titleLabel.topAnchor.constraint(equalTo: sourceLabel.bottomAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
+
+            postImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 0.7),
@@ -110,15 +123,11 @@ final class NewsPostTableViewCell: UITableViewCell {
     }
 
     @objc private func favoriteDoubleTap() {
-        animation()
-        print("DoubleTap")
-//        let newDBService = CDserviceVer3()
-//
-//        // сравниммаю хранимые посты по названию фотографии
-//        newDBService.fetchPosts(predicate: NSPredicate(format: "id == %ld", post!.id)) {
-//            newDBService.addToDb(post: post!)
-//            self.animation()
-//        }
+        if cellDelegate != nil {
+            animation()
+            print("DoubleTap")
+        }
+        cellDelegate?.favoriteDidTap(post: article!)
     }
 
     @objc private func linkTap(_ sender: UIButton) {
@@ -129,8 +138,10 @@ final class NewsPostTableViewCell: UITableViewCell {
     // MARK: - Public method
 
     func fillData(with article: Article, indexPath: IndexPath) {
+        self.article = article
         authorLabel.text = article.author
         sourceLabel.text = article.source
+        titleLabel.text = article.title
         if let url = URL(string: article.urlToImage ?? "") {
             let queue = DispatchQueue.global()
             queue.async {
@@ -142,7 +153,7 @@ final class NewsPostTableViewCell: UITableViewCell {
 
             }
         }
-        descriptionText.text = article.description
+        descriptionText.text = article.text
         linkButton.setTitle(article.url, for: .normal)
     }
 

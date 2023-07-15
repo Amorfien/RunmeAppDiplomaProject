@@ -13,6 +13,7 @@ final class HomeViewController: UIViewController {
 
     var articles: [Article] = [] {
         didSet {
+            print(articles)
             self.newsTableView.reloadData()
         }
     }
@@ -257,6 +258,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsPostTableViewCell.reuseId, for: indexPath) as? NewsPostTableViewCell
             else { return NewsPostTableViewCell() }
             cell.fillData(with: articles[indexPath.section], indexPath: indexPath)
+            cell.cellDelegate = self
             return cell
         }
     }
@@ -307,6 +309,12 @@ extension HomeViewController: PostTableCellDelegate {
 
     func deleteDidTap(postId: String) {
         viewModel.updateState(viewInput: .delDidTap(postId))
+    }
+}
+
+extension HomeViewController: NewsCellDelegate {
+    func favoriteDidTap(post: Article) {
+        viewModel.updateState(viewInput: .addToFavorite(post))
     }
 
 
