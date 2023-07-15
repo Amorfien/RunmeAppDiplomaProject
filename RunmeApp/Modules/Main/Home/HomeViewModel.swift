@@ -27,7 +27,6 @@ final class HomeViewModel: HomeViewModelProtocol {
     enum ViewInput {
         case runnersSegment
         case newsSegment
-        case chooseUser(String)
         case likeDidTap(String)
         case delDidTap(String)
         case addToFavorite(Article)
@@ -64,8 +63,7 @@ final class HomeViewModel: HomeViewModelProtocol {
             self.state = .loading
 
             getAllNews()
-        case .chooseUser(let id):
-            chooseUser(id: id)
+
         case .likeDidTap(let id):
             DatabaseService.shared.fetchPost(postIdd: id) { fetchPostResult in
                 switch fetchPostResult {
@@ -105,7 +103,6 @@ final class HomeViewModel: HomeViewModelProtocol {
             let fetchedNews = coreDataService.fetching(predicate: NSPredicate(format: "url == %@", post.url ?? ""))
             if fetchedNews.isEmpty {
                 coreDataService.savePost(post) { [weak self] success in
-                    print(success, " 📑")
                     self?.coordinator?.navigationController.showAlert(title: "Успешно", message: "Новость сохранена в избранное", completion: {})
                 }
             } else {
@@ -152,19 +149,6 @@ final class HomeViewModel: HomeViewModelProtocol {
                 }
             }
         }
-    }
-
-    private func chooseUser(id: String) {
-//        DatabaseService.shared.getUser(userId: id) { [weak self] result in
-//            switch result {
-//            case .success(let user):
-////                self?.coordinator?.presentSheetPresentationController(user: user)
-//                self?.coordinator?.flowCompletionHandler!(user)
-//            case .failure(let userError):
-//                print("Choose User Error, \(userError.localizedDescription)")
-//                self?.coordinator?.showErrorAlert(userError, handler: { })
-//            }
-//        }
     }
 
     private func getAllPosts() {

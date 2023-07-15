@@ -147,19 +147,30 @@ final class NewsPostTableViewCell: UITableViewCell {
         authorLabel.text = article.author
         sourceLabel.text = article.source
         titleLabel.text = article.title
-        if let url = URL(string: article.urlToImage ?? "") {
-            let queue = DispatchQueue.global()
-            queue.async {
-                if let data = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self.postImageView.image = UIImage(data: data)
-                    }
-                }
-
-            }
-        }
         descriptionText.text = article.text
         linkButton.setTitle(article.url, for: .normal)
+
+        //вариант загрузки из интернета или из базы данных
+        if let imageData = article.image {
+            postImageView.image = UIImage(data: imageData)
+        } else {
+            if let url = URL(string: article.urlToImage ?? "") {
+                let queue = DispatchQueue.global()
+                queue.async {
+                    if let data = try? Data(contentsOf: url) {
+                        DispatchQueue.main.async {
+                            self.postImageView.image = UIImage(data: data)
+                        }
+                        self.article?.image = data
+                    }
+
+                }
+            }
+        }
+
+
+
+
     }
 
 

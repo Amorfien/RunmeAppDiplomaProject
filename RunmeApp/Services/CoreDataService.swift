@@ -39,7 +39,7 @@ final class CoreDataService {
             newsCoreDataModel.url = news.url
             newsCoreDataModel.urlToImage = news.urlToImage
             newsCoreDataModel.publishedAt = news.publishedAt
-            //            newsCoreDataModel.image =
+            newsCoreDataModel.image = news.image
 
             if self.mainContext.hasChanges {
                 do {

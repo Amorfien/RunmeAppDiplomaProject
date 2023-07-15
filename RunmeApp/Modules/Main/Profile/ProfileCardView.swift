@@ -24,7 +24,16 @@ final class ProfileCardView: UIView {
     private let nicknameLabel = UILabel(text: "Никнэйм", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .label, lines: 2)
     private let nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
     private let surnameLabel = UILabel(text: "Фамилия", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
-    private let telegramLabel = UILabel(text: "@телеграм", font: .systemFont(ofSize: 16, weight: .light), textColor: .tertiaryLabel, lines: 1)
+    private lazy var telegramLinkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("@телеграм", for: .normal)
+        button.setTitleColor(.link, for: .normal)
+        button.titleLabel?.font = .italicSystemFont(ofSize: 16)
+        button.contentHorizontalAlignment = .trailing
+        button.addTarget(self, action: #selector(linkTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     private let vStack = UIStackView()
     private let birthdayLabel = UILabel(text: "--.--.----", font: .monospacedDigitSystemFont(ofSize: 14, weight: .semibold), textColor: .secondaryLabel, lines: 1)
 
@@ -32,9 +41,6 @@ final class ProfileCardView: UIView {
     lazy var achButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "trophy.circle"), for: .normal)
-//        button.contentHorizontalAlignment = .left
-//        button.setTitleColor(.secondaryLabel, for: .normal)
-//        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .light)
         button.addTarget(self, action: #selector(achBtnTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -101,7 +107,7 @@ final class ProfileCardView: UIView {
         vStack.axis = .vertical
         vStack.alignment = .trailing
         vStack.distribution = .fillEqually
-        let mainViews = [nicknameLabel, nameLabel, surnameLabel, telegramLabel]
+        let mainViews = [nicknameLabel, nameLabel, surnameLabel, telegramLinkButton]
         mainViews.forEach { label in
             vStack.addArrangedSubview(label)
         }
@@ -113,15 +119,13 @@ final class ProfileCardView: UIView {
 
         addSubview(distanceStack)
         distanceStack.axis = .vertical
-//        distanceStack.alignment = .trailing
         distanceStack.distribution = .equalSpacing
         let distanceViews = [fiveLabel, tenLabel, twentyLabel, fortyLabel]
         distanceViews.forEach { label in
             distanceStack.addArrangedSubview(label)
         }
 
-        addSubview(bigAvatar) //last
-
+        addSubview(bigAvatar)
     }
 
     private func constraints() {
@@ -130,9 +134,6 @@ final class ProfileCardView: UIView {
         distanceStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-//            self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9),
-//            self.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1.3),
-
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
 
@@ -198,12 +199,20 @@ final class ProfileCardView: UIView {
         achiewmentsCollection.removeGestureRecognizer(tapGesture)
         achiewmentsCollection.removeFromSuperview()
     }
+    @objc private func linkTap(_ sender: UIButton) {
+        var link = sender.titleLabel?.text ?? ""
+        if link.first == "@" {
+            link.removeFirst()
+        }
+        guard let url = URL(string: "https://t.me/" + link) else { return }
+        UIApplication.shared.open(url)
+    }
 
     func fillProfile(profile: Runner) {
         nicknameLabel.text = profile.nickname
         nameLabel.text = profile.name
         surnameLabel.text = profile.surname
-        telegramLabel.text = profile.telegram
+        telegramLinkButton.setTitle(profile.telegram, for: .normal)
         statusTextField.text = profile.statusText
         birthdayLabel.text = profile.birthday
         birthdayLabel.isHidden = !profile.birthdayShow
@@ -213,9 +222,7 @@ final class ProfileCardView: UIView {
         tenLabel.text = timeFormat(sec: profile.personalBests[1], isMale: profile.isMale)
         twentyLabel.text = timeFormat(sec: profile.personalBests[2], isMale: profile.isMale)
         fortyLabel.text = timeFormat(sec: profile.personalBests[3], isMale: profile.isMale)
-//        if profile.achievements == nil || profile.achievements == [] {
         if profile.achievements?.isEmpty ?? true {
-//            achButton.setTitle("  тут скоро будут награды", for: .normal)
             noAchLabel.isHidden = false
             achButton.isEnabled = false
         }
