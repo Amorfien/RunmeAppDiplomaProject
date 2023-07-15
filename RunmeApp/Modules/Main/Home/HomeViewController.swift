@@ -203,12 +203,16 @@ final class HomeViewController: UIViewController {
             viewModel.updateState(viewInput: .runnersSegment)
             view.backgroundColor = Res.PRColors.prLight
             newsTableView.backgroundColor = Res.PRColors.prLight
+            navigationItem.title = "Участники"
+            navigationController?.navigationBar.prefersLargeTitles = true
         case 1:
             newsTableView.reloadData()
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)
             view.backgroundColor = Res.MyColors.myBackground
             newsTableView.backgroundColor = Res.MyColors.myBackground
+            navigationItem.title = nil
+            navigationController?.navigationBar.prefersLargeTitles = false
         default:
             ()
         }
@@ -279,7 +283,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         if sourceSegment.selectedSegmentIndex == 0, indexPath == selectedPostRow {
             return 250
         } else if sourceSegment.selectedSegmentIndex == 1 {
-            return 460
+            return 480
         } else {
             return 116
         }

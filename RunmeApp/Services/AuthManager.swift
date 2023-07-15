@@ -26,7 +26,7 @@ final class AuthManager {
     func startAuth(phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> Void) {
 
         //TODO: - TestSMS
-        Auth.auth().settings?.isAppVerificationDisabledForTesting = true ///true - тестовый режим, отключение капчи, только забитые юзеры
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = false ///true - тестовый режим, отключение капчи, только забитые юзеры
 
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
             if let verificationID, error == nil {

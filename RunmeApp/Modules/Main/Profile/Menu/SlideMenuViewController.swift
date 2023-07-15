@@ -47,7 +47,7 @@ final class SlideMenuViewController: UIViewController {
 //            menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             menuTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            menuTableView.widthAnchor.constraint(equalToConstant: 160)
+            menuTableView.widthAnchor.constraint(equalToConstant: 180)
         ])
     }
 

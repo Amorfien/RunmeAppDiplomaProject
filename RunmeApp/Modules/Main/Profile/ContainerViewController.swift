@@ -71,7 +71,7 @@ final class ContainerViewController: UIViewController {
     @objc private func showMenu() {
 
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.menuVC.view.frame.origin.x += self.menuIsVisible ? 180 : -180
+            self.menuVC.view.frame.origin.x += self.menuIsVisible ? 200 : -200
             self.profileVC.view.frame.origin.x += self.menuIsVisible ? 16 : -16
             self.profileVC.view.alpha = self.menuIsVisible ? 1 : 0.8
         }

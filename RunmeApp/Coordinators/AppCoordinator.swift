@@ -70,7 +70,8 @@ final class AppCoordinator: Coordinatable {
             favoriteCoordinator.navigationController,
             resultsCoordinator.navigationController
         ])
-        appTabBarController.selectedIndex = 2//______________________________
+        //начальный экран. 0 - новости, 1 - профиль, 2 - избранное, 3 - результаты
+        appTabBarController.selectedIndex = 1
 
         homeCoordinator.start()
         profileCoordinator.start()

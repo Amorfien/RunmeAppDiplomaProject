@@ -38,14 +38,6 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .systemGray, lines: 0)
 
-    private let saveToFavoriteImage: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "heart"))
-        image.tintColor = .darkGray
-        image.isHidden = true
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-
     private lazy var linkButton: UIButton = {
         let button = UIButton()
         button.setTitle("https://", for: .normal)
@@ -84,7 +76,7 @@ final class NewsPostTableViewCell: UITableViewCell {
         backgroundColor = .clear//Res.MyColors.myBackground
         titleLabel.textAlignment = .center
         
-        [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, saveToFavoriteImage, favoriteButton].forEach(contentView.addSubview)
+        [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, favoriteButton].forEach(contentView.addSubview)
 
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -110,17 +102,12 @@ final class NewsPostTableViewCell: UITableViewCell {
 
             descriptionText.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
             descriptionText.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
-            descriptionText.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
+            descriptionText.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
             linkButton.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
-            linkButton.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
-            linkButton.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 4),
+            linkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            linkButton.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 8),
             linkButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-
-            saveToFavoriteImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            saveToFavoriteImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 50),
-            saveToFavoriteImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
-            saveToFavoriteImage.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.25)
         ])
     }
 

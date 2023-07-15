@@ -20,7 +20,8 @@ final class NewsService: NewsProtocol {
         case requestError
     }
 
-    let keywords = ["ironman"]//, "зож"]//, "спорт+бег"]
+    //Набор ключевых слов для поиска нвостей. Чем больше ключевых слов тем быстрее расходуется количество бесплатных запросов (50шт/12ч)
+    let keywords = ["ironman", "зож", "спорт+бег"]
 
     // MARK: - URL session
     private func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
