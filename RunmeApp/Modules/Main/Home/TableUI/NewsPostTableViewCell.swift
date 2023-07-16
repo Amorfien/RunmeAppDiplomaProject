@@ -51,29 +51,29 @@ final class NewsPostTableViewCell: UITableViewCell {
 
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
         button.addTarget(self, action: #selector(favoriteDoubleTap), for: .touchUpInside)
         button.isHidden = true
-        button.layer.borderWidth = 0.5
-//        button.backgroundColor = Res.PRColors.prLight
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         setupGestures()
     }
-
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup view
+
     private func setupView() {
 
-        backgroundColor = .clear//Res.MyColors.myBackground
+        backgroundColor = .clear
         titleLabel.textAlignment = .center
         
         [authorLabel, sourceLabel, titleLabel, postImageView, descriptionText, linkButton, favoriteButton].forEach(contentView.addSubview)
@@ -83,9 +83,9 @@ final class NewsPostTableViewCell: UITableViewCell {
             authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -60),
 
-            favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 24),
             favoriteButton.heightAnchor.constraint(equalToConstant: 30),
 
             sourceLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
@@ -111,6 +111,7 @@ final class NewsPostTableViewCell: UITableViewCell {
         ])
     }
 
+    // MARK: - Actions
 
     private func setupGestures() {
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteDoubleTap))
@@ -154,11 +155,6 @@ final class NewsPostTableViewCell: UITableViewCell {
                 }
             }
         }
-
-
-
-
     }
-
 
 }

@@ -59,24 +59,8 @@ final class RegistrationTextField: TextFieldWithPadding {
         datePicker.minimumDate = minDate
         return datePicker
     }()
-//    lazy var timePicker: UIDatePicker = {
-//        let timePicker = UIDatePicker()
-//        timePicker.datePickerMode = .time
-//        timePicker.preferredDatePickerStyle = .wheels
-//        timePicker.addTarget(self, action: #selector(timeChange), for: UIControl.Event.valueChanged)
-////        timePicker.frame.size = CGSize(width: .zero, height: 300)
-////        timePicker.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-////        timePicker.locale = .current
-//
-//        let formatter = DateFormatter()
-//        formatter.timeStyle = .medium
-//        formatter.dateStyle = .none
-//        formatter.dateFormat = "HH:mm:ss"
-//
-//        timePicker.date = Date()
-//
-//        return timePicker
-//    }()
+
+    // MARK: - Init
 
     init(type: RegisterLabel) {
         super.init(frame: .zero)
@@ -124,17 +108,6 @@ final class RegistrationTextField: TextFieldWithPadding {
             font = .monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         }
 
-//        if type == .birthday {
-//            inputView = datePicker
-//            font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
-//            widthAnchor.constraint(equalToConstant: 120).isActive = true
-//        }
-
-//        if type == .five {//}, type == .ten, type == .twenty, type == .forty {
-//            inputView = timePicker
-//        }
-//        if type == .forty {}
-
         let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel, lines: 1)
         topLabel.translatesAutoresizingMaskIntoConstraints = true
         topLabel.frame = CGRect(x: 10, y: -20, width: 150, height: 20)
@@ -151,9 +124,6 @@ final class RegistrationTextField: TextFieldWithPadding {
     @objc private func dateChange() {
             text = birthdayDateToString(date: datePicker.date)
     }
-//    @objc private func timeChange() {
-//            text = timeDateToString(date: timePicker.date)
-//    }
 
     
 }

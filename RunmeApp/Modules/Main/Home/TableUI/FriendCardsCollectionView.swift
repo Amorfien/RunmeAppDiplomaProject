@@ -13,6 +13,8 @@ protocol UsersTableHeaderDelegate: AnyObject {
 
 final class FriendCardsCollectionView: UICollectionView {
 
+    // MARK: - Properties
+
     weak var headerDelegate: UsersTableHeaderDelegate?
 
     private var users: [String] = [] {
@@ -36,6 +38,7 @@ final class FriendCardsCollectionView: UICollectionView {
     }()
 
     // MARK: - Init
+
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: weatherCardsLayout)
         register(FriendCardCell.self, forCellWithReuseIdentifier: FriendCardCell.id)
@@ -51,14 +54,10 @@ final class FriendCardsCollectionView: UICollectionView {
     private func setupView() {
         backgroundColor = Res.PRColors.prLight
         showsHorizontalScrollIndicator = false
-//        let separator = UIView(frame: CGRect(x: 0, y: 119, width: UIScreen.main.bounds.width / 3, height: 1))
-//        separator.backgroundColor = tintColor
-//
-//        addSubview(separator)
-
     }
 
-    // MARK: - public method
+    // MARK: - Public method
+
     func fillCardsCollection(users: [String], images: [UIImage]) {
             self.users = users
             self.images = images
@@ -66,7 +65,8 @@ final class FriendCardsCollectionView: UICollectionView {
 
 }
 
-// MARK: - setup collectionview
+// MARK: - Setup collectionview
+
 extension FriendCardsCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         images.count

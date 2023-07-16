@@ -86,7 +86,6 @@ class PhoneVerificationViewController: UIViewController {
         self.type = type
         super.init(nibName: nil, bundle: nil)
     }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -113,7 +112,7 @@ class PhoneVerificationViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             topImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topImageView.bottomAnchor.constraint(equalTo: phoneTextField.topAnchor),// constant: -72),
+            topImageView.bottomAnchor.constraint(equalTo: phoneTextField.topAnchor),
             topImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66),
             topImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.54),
 
@@ -138,7 +137,6 @@ class PhoneVerificationViewController: UIViewController {
                 termsLabel.widthAnchor.constraint(equalTo: phoneTextField.widthAnchor),
                 termsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 termsButton.topAnchor.constraint(equalTo: termsLabel.bottomAnchor),
-//                termsLabel.widthAnchor.constraint(equalTo: phoneTextField.widthAnchor),
                 ])
         }
     }
@@ -164,10 +162,8 @@ class PhoneVerificationViewController: UIViewController {
 
     func returnKeyButton(text: String) {
         switch type {
-
         case .phone:
             viewModel.updateState(viewInput: .phoneButtonDidTap(text))
-            
         case .sms:
             var code = text
             code.removeFirst()

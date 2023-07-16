@@ -9,6 +9,8 @@ import UIKit
 
 final class FavoriteViewController: UIViewController {
 
+    // MARK: - Properties
+
     private let viewModel: FavoriteViewModel
 
     var savedNews: [Article] = [] {
@@ -32,19 +34,24 @@ final class FavoriteViewController: UIViewController {
         return tableView
     }()
 
-    private let infoLabel = UILabel(text: "Здесь будут храниться ваши избранные новости", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .tintColor, lines: 2)
+    private let infoLabel = UILabel(text: "Здесь будут храниться ваши избранные новости",
+                                    font: .systemFont(ofSize: 18, weight: .semibold),
+                                    textColor: .tintColor, lines: 2)
 
     private let runnersImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "two")
         image.contentMode = .scaleAspectFit
-//        image.conte
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
 
-    private lazy var clearButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(clearButtonTap))
-    private lazy var searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTap))
+    private lazy var clearButton = UIBarButtonItem(barButtonSystemItem: .stop,
+                                                   target: self, action: #selector(clearButtonTap))
+    private lazy var searchButton = UIBarButtonItem(barButtonSystemItem: .search,
+                                                    target: self, action: #selector(searchButtonTap))
+
+    // MARK: - Init
 
     init(viewModel: FavoriteViewModel) {
         self.viewModel = viewModel
@@ -72,6 +79,7 @@ final class FavoriteViewController: UIViewController {
         print(#function, " FavoriteViewController 📱")
     }
 
+    // MARK: - Setup view
 
     private func setupNavigation() {
         self.navigationItem.title = "Избранное"
@@ -81,7 +89,7 @@ final class FavoriteViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.PRColors.prLight
+        view.backgroundColor = Res.MyColors.myBackground//Res.PRColors.prLight
         view.addSubview(runnersImageView)
         view.addSubview(infoLabel)
         view.addSubview(newsTableView)
@@ -121,14 +129,10 @@ final class FavoriteViewController: UIViewController {
                 newsTableView.reloadData()
             }
         }
-
     }
 
-
-
-
-
     //MARK: - Actions
+
     @objc private func searchButtonTap() {
         let alertController = UIAlertController(title: "Поиск статьи", message: "Введите искомое слово из заголовка новости", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
@@ -146,6 +150,7 @@ final class FavoriteViewController: UIViewController {
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
     }
+    
     @objc private func clearButtonTap() {
         self.searchButton.isEnabled = true
         self.clearButton.isEnabled = false

@@ -9,6 +9,8 @@ import UIKit
 
 final class RegistrationView: UIView {
 
+    // MARK: - Properties
+
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -59,27 +61,8 @@ final class RegistrationView: UIView {
         return image
     }()
 
-//    private lazy var datePicker: UIDatePicker = {
-//        let datePicker = UIDatePicker()
-//        datePicker.datePickerMode = .date
-//        datePicker.addTarget(self, action: #selector(dateChange), for: UIControl.Event.valueChanged)
-//        datePicker.frame.size = CGSize(width: .zero, height: 300)
-//        datePicker.preferredDatePickerStyle = .wheels
-//
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd.MM.yyyy"
-//        let minDate = formatter.date(from: "01.01.1930")
-//        let startDate = formatter.date(from: "15.06.1998")
-//
-//        datePicker.maximumDate = Date()
-//        datePicker.minimumDate = minDate
-//        datePicker.date = startDate ?? Date()
-//        return datePicker
-//    }()
-
     private lazy var vStackConstraint = vStack.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 48)
     private lazy var buttonConstraint = nextButton.bottomAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor, constant: -12)
-
 
     lazy var nextButton: LoginButton = {
         let button = LoginButton()
@@ -92,7 +75,7 @@ final class RegistrationView: UIView {
     weak var delegate: UIViewController?
     private var isSettings: Bool = false
 
-    //MARK: - Init
+    // MARK: - Init
 
     init(delegate: UIViewController, isSettings: Bool = false) {
         super.init(frame: .zero)
@@ -101,7 +84,6 @@ final class RegistrationView: UIView {
         setupView()
         setupGestures()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,9 +91,9 @@ final class RegistrationView: UIView {
         print(#function, " RegistrationView 📺")
     }
 
+    // MARK: - Setup view
 
     private func setupView() {
-//        self.title = "Регистрация"
         backgroundColor = .systemGray5
         addSubview(scrollView)
         scrollView.addSubview(avatarImageView)
@@ -131,16 +113,11 @@ final class RegistrationView: UIView {
         hStack.spacing = 16
         hStack.distribution = .fillProportionally
         vStack.addArrangedSubview(hStack)
-
-//        birthdayTextField.inputView = datePicker
-
         emailTextField.keyboardType = .emailAddress
         telegramTextField.keyboardType = .emailAddress
-
         addSubview(nextButton)
 
         NSLayoutConstraint.activate([
-
             scrollView.topAnchor.constraint(equalTo: topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -148,13 +125,10 @@ final class RegistrationView: UIView {
 
             avatarImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24),
             avatarImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-//            avatarImageView.heightAnchor.constraint(equalToConstant: 160),
-//            avatarImageView.widthAnchor.constraint(equalToConstant: 160),
 
             vStackConstraint,
             vStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             vStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-//            vStack.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -220),
 
             doneImageView.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 32),
             doneImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -32),
@@ -165,10 +139,10 @@ final class RegistrationView: UIView {
             buttonConstraint,
             nextButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             nextButton.widthAnchor.constraint(equalToConstant: 150),
-
         ])
     }
 
+    // MARK: - Public methods
 
     func settingsScreen(profile: Runner?) {
         nextButton.isHidden = true
@@ -190,6 +164,21 @@ final class RegistrationView: UIView {
         sexSegment.isEnabled = false
     }
 
+    func updateUser() -> Runner {
+        let runner = Runner(
+            id: AuthManager.shared.currentUser?.uid ?? "---",
+            phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
+            nickname: nicknameTextField.text ?? "---",
+            name: nameTextField.text,
+            surname: surnameTextField.text,
+            isMale: sexSegment.selectedSegmentIndex == 0 ? true : false,
+            email: emailTextField.text,
+            telegram: telegramTextField.text,
+            avatar: avatarImageView.image,
+            birthday: birthdayTextField.text)
+        return runner
+    }
+
 
     // MARK: - Actions
 
@@ -199,15 +188,10 @@ final class RegistrationView: UIView {
         delegate?.present(imagePicker, animated: true)
     }
 
-    @objc private func changeSex() {
-
-    }
-    @objc private func dateChange() {
-//        birthdayTextField.text = formatDate(date: datePicker.date)
-    }
+    @objc private func changeSex() {}
+    @objc private func dateChange() {}
 
     @objc private func nextDidTap() {
-
         let runner = Runner(
             id: AuthManager.shared.currentUser?.uid ?? "---",
             phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
@@ -221,25 +205,6 @@ final class RegistrationView: UIView {
             birthday: birthdayTextField.text)
 
         (delegate as? RegistrationViewController)?.viewModel.updateState(viewInput: .registerButtonDidTap(runner))
-
-    }
-
-    func updateUser() -> Runner {
-
-        let runner = Runner(
-            id: AuthManager.shared.currentUser?.uid ?? "---",
-            phoneNumber: AuthManager.shared.currentUser?.phoneNumber ?? "---",
-            nickname: nicknameTextField.text ?? "---",
-            name: nameTextField.text,
-            surname: surnameTextField.text,
-            isMale: sexSegment.selectedSegmentIndex == 0 ? true : false,
-            email: emailTextField.text,
-            telegram: telegramTextField.text,
-            avatar: avatarImageView.image,
-            birthday: birthdayTextField.text)
-
-        return runner
-
     }
 
     //  жест чтобы скрывать клавиатуру по тапу
@@ -250,15 +215,6 @@ final class RegistrationView: UIView {
     @objc func hideKeyboard() {
         endEditing(true)
     }
-
-
-
-//    private func formatDate(date: Date) -> String
-//    {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd.MM.yyyy"
-//        return formatter.string(from: date)
-//    }
 
 }
     

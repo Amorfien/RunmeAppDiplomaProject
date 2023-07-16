@@ -18,8 +18,6 @@ struct Res {
         case large = 40
     }
 
-
-
     enum MyColors {
         static let myBackground = UIColor(named: "myBackground")
         static let homeBackground = UIColor(named: "homeBackground")
@@ -32,7 +30,6 @@ struct Res {
         static let prRegular = UIColor(named: "prRegular")
         static let prMedium = UIColor(named: "prMedium")
         static let prDark = UIColor(named: "prDark")
-
     }
 
 }

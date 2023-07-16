@@ -9,7 +9,6 @@ import Foundation
 
 struct RunnerPost {
 
-//    let uid: String
     var postId: String
     let userId: String
     var userNickname: String
@@ -24,7 +23,6 @@ struct RunnerPost {
 
     var representation: [String: Any] {
         var repres: [String: Any] = [:]
-//        repres["uid"] = self.uid
         repres["postId"] = self.postId
         repres["userId"] = self.userId
         repres["userNickname"] = self.userNickname

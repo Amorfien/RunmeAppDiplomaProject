@@ -9,6 +9,8 @@ import UIKit
 
 final class ResultsViewController: UIViewController {
 
+    // MARK: - Properties
+
     private let viewModel: ResultsViewModel
 
     private lazy var itsMe = AuthManager.shared.currentUser?.uid
@@ -81,6 +83,7 @@ final class ResultsViewController: UIViewController {
         viewModel.updateState(viewInput: .needUpdate)
     }
 
+    // MARK: - Setup view
     
     private func setupNavigation() {
         navigationItem.title = "Результаты"
@@ -131,6 +134,8 @@ final class ResultsViewController: UIViewController {
         }
     }
 
+    // MARK: - Private methods
+
     private func updateResultsVisibility(isHidden: Bool) {
         resultsTableView.isHidden = isHidden
         activityIndicator.isHidden = !isHidden
@@ -139,7 +144,7 @@ final class ResultsViewController: UIViewController {
         isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
 
-
+    // MARK: - Actions
 
     @objc private func changeDistance(_ sender: UISegmentedControl) {
         rrunners.sort { lhs, rhs in
@@ -150,11 +155,10 @@ final class ResultsViewController: UIViewController {
     }
 
     @objc private func changeSex(_ sender: UISegmentedControl) {
-        sender.selectedSegmentTintColor = sender.selectedSegmentIndex == 0 ? .blue : .systemPink
+//        sender.selectedSegmentTintColor = sender.selectedSegmentIndex == 0 ? .blue : .systemPink
+        sender.selectedSegmentTintColor = .white
         tableRunners = rrunners.filter{ sender.selectedSegmentIndex == 0 ? $0.isMale : !$0.isMale }
     }
-
-
 
 }
 
@@ -173,7 +177,7 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         let nickname = runner.nickname
 
         cell.textLabel?.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
-        cell.textLabel?.text = timeFormat(sec: time, isMale: runner.isMale)
+        cell.textLabel?.text = view.timeFormat(sec: time, isMale: runner.isMale)
         cell.detailTextLabel?.lineBreakMode = .byTruncatingMiddle
         cell.detailTextLabel?.text = "\(nickname)  - \(indexPath.row + 1)"
         cell.backgroundColor = runner.isMale ? .systemBlue.withAlphaComponent(0.15) : .systemPink.withAlphaComponent(0.15)

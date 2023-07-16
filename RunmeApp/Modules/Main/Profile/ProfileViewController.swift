@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
 
 //    private lazy var settingsView = RegistrationView(delegate: self)
     
-    //MARK: - Init
+    // MARK: - Init
     
     init(viewModel: ProfileViewModel, isEditable: Bool = false) {
         self.viewModel = viewModel
@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = Res.PRColors.prMedium
+        view.backgroundColor = Res.PRColors.prRegular//Res.PRColors.prMedium
         view.addSubview(profileCardView)
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

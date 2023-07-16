@@ -11,7 +11,6 @@ import FirebaseStorage
 final class FirebaseStorageService {
 
     static let shared = FirebaseStorageService()
-//    let megaByte = Int64(1 * 1024 * 1024)
 
     private init() {}
 
@@ -50,7 +49,6 @@ final class FirebaseStorageService {
                 completion(.failure(error!))
                 return
             }
-//            let image = UIImage(data: data)
             completion(.success(data))
         }
     }
@@ -65,7 +63,6 @@ final class FirebaseStorageService {
         ref.listAll { result in
             switch result {
             case .success(let storageList):
-
                 let megaByte = Int64(3 * 1024 * 1024)
 
                 for item in storageList.items {

@@ -10,6 +10,7 @@ import UIKit
 final class HelloViewController: UIViewController {
 
     // MARK: - Properties
+    
     private let viewModel: LoginViewModel
 
     private let helloImageView: UIImageView = {
@@ -23,18 +24,15 @@ final class HelloViewController: UIViewController {
     private lazy var loginButton: LoginButton = {
         let button = LoginButton()
         button.setTitle("Enter by Phone", for: .normal)
-//        button.isEnabled = false
         button.addTarget(self, action: #selector(loginDidTap), for: .touchUpInside)
         return button
     }()
 
     private lazy var bioLoginButton: UIButton = {
         let button = UIButton()
-
         button.tintColor = .systemGray
         button.setTitleColor(.label, for: .normal)
         button.backgroundColor = Res.PRColors.prDark?.withAlphaComponent(0.1)
-
         button.titleLabel?.font = .monospacedDigitSystemFont(ofSize: 22, weight: .medium)
         button.addTarget(self, action: #selector(bioLoginDidTap), for: .touchUpInside)
         button.layer.borderWidth = 0.5
@@ -61,12 +59,6 @@ final class HelloViewController: UIViewController {
         setupView()
         bindViewModel()
         viewModel.updateState(viewInput: .initial)
-
-//        viewModel.initialState { sensorType, userPhone in
-//            bioLoginButton.setImage(UIImage(systemName: sensorType ?? ""), for: .normal)
-//            bioLoginButton.setTitle("    " + userPhone, for: .normal)
-//        }
-        
     }
 
     deinit {
@@ -99,7 +91,7 @@ final class HelloViewController: UIViewController {
         }
     }
 
-    // MARK: - Private methods
+    // MARK: - Setup view
 
     private func setupView() {
         view.backgroundColor = Res.PRColors.prLight
@@ -122,8 +114,6 @@ final class HelloViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: helloImageView.bottomAnchor, constant: 120),
             loginButton.widthAnchor.constraint(equalToConstant: 288),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
-
-
         ])
     }
 

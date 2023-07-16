@@ -9,6 +9,8 @@ import UIKit
 
 final class ProfileCardView: UIView {
 
+    // MARK: - Properties
+
     var avatar: UIImage? = nil {
         didSet {
             self.avatarImageView.image = avatar
@@ -55,10 +57,9 @@ final class ProfileCardView: UIView {
     private let twentyLabel = DistanceLabel(type: .twenty)
     private let fortyLabel = DistanceLabel(type: .forty)
 
-
     private lazy var bigAvatar: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = Res.PRColors.prDark!.withAlphaComponent(0.9)
+        view.backgroundColor = Res.PRColors.prDark//!.withAlphaComponent(0.9)
         view.contentMode = .scaleAspectFit
         view.image = avatarImageView.image
         view.isHidden = true
@@ -66,6 +67,8 @@ final class ProfileCardView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
+    // MARK: - Init
 
     init(delegate: UIViewController, isEditable: Bool = false) {
         super.init(frame: .zero)
@@ -82,25 +85,22 @@ final class ProfileCardView: UIView {
         print(#function, " ProfileCardView 📺")
     }
 
+    // MARK: - Setup view
 
     private func setupView() {
-        backgroundColor = .white.withAlphaComponent(0.8)
-
+        backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
         layer.borderWidth = 1
-
-        layer.shadowColor = UIColor.black.cgColor
+        layer.borderColor = UIColor.tintColor.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
-        
         addSubview(avatarImageView)
         addSubview(statusTextField)
         statusTextField.isEnabled = self.isEditable
         statusTextField.returnKeyType = .done
         statusTextField.delegate = delegate as? UITextFieldDelegate
         statusTextField.backgroundColor = .white.withAlphaComponent(0.1)
-
         addSubview(birthdayLabel)
         birthdayLabel.textAlignment = .right
         addSubview(vStack)
@@ -111,12 +111,10 @@ final class ProfileCardView: UIView {
         mainViews.forEach { label in
             vStack.addArrangedSubview(label)
         }
-
         addSubview(achiewmentsView)
         achiewmentsView.addSubview(achButton)
         achiewmentsView.addSubview(noAchLabel)
         noAchLabel.isHidden = true
-
         addSubview(distanceStack)
         distanceStack.axis = .vertical
         distanceStack.distribution = .equalSpacing
@@ -124,7 +122,6 @@ final class ProfileCardView: UIView {
         distanceViews.forEach { label in
             distanceStack.addArrangedSubview(label)
         }
-
         addSubview(bigAvatar)
     }
 
@@ -140,21 +137,20 @@ final class ProfileCardView: UIView {
             vStack.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             vStack.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
             vStack.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
-            vStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            vStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28),
 
             statusTextField.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 24),
             statusTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             statusTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.62),
             birthdayLabel.centerYAnchor.constraint(equalTo: statusTextField.centerYAnchor),
             birthdayLabel.leadingAnchor.constraint(equalTo: statusTextField.trailingAnchor),
-            birthdayLabel.trailingAnchor.constraint(equalTo: vStack.trailingAnchor),
+            birthdayLabel.trailingAnchor.constraint(equalTo: vStack.trailingAnchor, constant: 4),
 
             achiewmentsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             achiewmentsView.trailingAnchor.constraint(equalTo: trailingAnchor),
             achiewmentsView.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 12),
             achButton.centerYAnchor.constraint(equalTo: achiewmentsView.centerYAnchor),
             achButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
-//            achButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             achButton.widthAnchor.constraint(equalToConstant: 40),
             achButton.heightAnchor.constraint(equalToConstant: 40),
             noAchLabel.centerYAnchor.constraint(equalTo: achiewmentsView.centerYAnchor),
@@ -171,8 +167,9 @@ final class ProfileCardView: UIView {
             bigAvatar.topAnchor.constraint(equalTo: topAnchor),
             bigAvatar.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-
     }
+
+    // MARK: - Actions
 
     private func gestureToAvatar() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(avatarTap))
@@ -208,6 +205,14 @@ final class ProfileCardView: UIView {
         UIApplication.shared.open(url)
     }
 
+    private func changeAvatar() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = delegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        delegate?.present(imagePicker, animated: true)
+    }
+
+    // MARK: - Public method
+
     func fillProfile(profile: Runner) {
         nicknameLabel.text = profile.nickname
         nameLabel.text = profile.name
@@ -230,15 +235,9 @@ final class ProfileCardView: UIView {
             distanceStack.heightAnchor.constraint(equalToConstant: 0).isActive = true
         }
     }
+    
     func fillAvatar(avatar: UIImage?) {
         self.avatar = avatar
-    }
-
-    private func changeAvatar() {
-        print("ImagePicker")
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = delegate as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        delegate?.present(imagePicker, animated: true)
     }
 
 }

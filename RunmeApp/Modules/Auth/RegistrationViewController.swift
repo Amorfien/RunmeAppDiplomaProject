@@ -21,7 +21,6 @@ final class RegistrationViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         print(#function, " RegistrationViewController 📱")
     }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,20 +29,12 @@ final class RegistrationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Регистрация"
-//        setupView()
-//        setupGestures()
         view.backgroundColor = .systemGray5
         view.addSubview(registrationView)
         registrationView.frame = self.view.frame
-
-//        bindViewModel()
         viewModel.updateState(viewInput: .registerOrSettings) //проверяем начальный стейт чтобы сработал дидсет
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        avatarImageView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-//        vStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 48).isActive = true
-    }
+
     deinit {
         print(#function, " RegistrationViewController 📱")
     }
@@ -64,7 +55,6 @@ extension RegistrationViewController: UITextFieldDelegate {
         default: registrationView.hideKeyboard()
         }
         return true
-
     }
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -111,7 +101,6 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
 
 extension RegistrationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         let screen = UIScreen.main.bounds.height
         let content = scrollView.contentSize.height
         if content > screen {
@@ -121,10 +110,7 @@ extension RegistrationViewController: UIScrollViewDelegate {
 
             if hidden > 0 && alpha > 0 {
                 registrationView.doneImageView.alpha = alpha
-//                print(alpha)
             }
         }
-
-
     }
 }

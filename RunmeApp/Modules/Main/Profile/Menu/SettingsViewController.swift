@@ -83,7 +83,7 @@ final class SettingsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         let strDate = viewModel.fetchedUser?.birthday ?? ""
 
-        settingsView.birthdayTextField.datePicker.date = birthdayStringToDate(string: strDate) ?? Date()
+        settingsView.birthdayTextField.datePicker.date = view.birthdayStringToDate(string: strDate) ?? Date()
         print(#function, " RegistrationViewController 📱")
 
         fiveTextField.delegate = self
@@ -179,7 +179,7 @@ final class SettingsViewController: UIViewController {
 
     private func fillRuntime() {
         runtimeViews.enumerated().forEach { (i, tf) in
-            tf.text = timeFormat(sec: viewModel.fetchedUser?.personalBests[i],
+            tf.text = view.timeFormat(sec: viewModel.fetchedUser?.personalBests[i],
                                  isMale: viewModel.fetchedUser?.isMale)
         }
     }

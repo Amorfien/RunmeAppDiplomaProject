@@ -19,7 +19,6 @@ final class LoginViewModel: LoginViewModelProtocol {
         case noUser
         case fastLogin
         case settings(Runner)
-//        case error(Error)
     }
 
     enum ViewInput {
@@ -44,30 +43,15 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
+    // MARK: - Init
     init(localAuthorizationService: LocalAuthorizationService? = nil, userSettings: Runner? = nil) {
         self.localAuthorizationService = localAuthorizationService
         self.userSettings = userSettings
-//        print(localAuthorizationService.sensorType)
     }
 
     deinit {
         print(#function, " LoginViewModel ⚙️")
     }
-
-//    /// дополнительный метод для того чтобы сработал didSet после инициализатора
-//    func initialState(completion: (_ sensorType: String?, _ userPhone: String) -> Void) {
-//        ///только локальная проверка, в базе может не быть полной модели юзера
-//        if AuthManager.shared.currentUser != nil {
-//            self.state = .identifiedUser
-//        } else {
-//            self.state = .noUser
-//        }
-//        let sensorType = localAuthorizationService?.sensorType
-//        let userPhone = AuthManager.shared.currentUser?.phoneNumber
-//
-//        completion(sensorType, phoneFormatter(number: userPhone))
-//
-//    }
 
     func updateState(viewInput: ViewInput) {
         switch viewInput {
@@ -81,11 +65,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 self.state = .noUser
             }
         case .helloButtonDidTap:
-            coordinator?.pushPhoneViewController()            //true
-
-//            coordinator?.pushRegistrationViewController()     //test
-//            coordinator?.pushToMain()                         //test
-
+            coordinator?.pushPhoneViewController()
         case .loginWithBio:
             localAuthorizationService?.authorizeIfPossible { [weak self] bioResult in
                 if bioResult {
@@ -96,7 +76,6 @@ final class LoginViewModel: LoginViewModelProtocol {
                     print("⛔️")
                 }
             }
-            
         case .phoneButtonDidTap(let text):
             AuthManager.shared.startAuth(phoneNumber: text) { [weak self] result in
                 switch result {
@@ -106,12 +85,8 @@ final class LoginViewModel: LoginViewModelProtocol {
                     self?.coordinator?.showErrorAlert(phoneError, handler: { })
                 }
             }
-
-
-
         case .termsButtonDidTap:
             coordinator?.pushTermsViewController()
-
         case .smsButtonDidTap(let code):
             AuthManager.shared.verifyCode(smsCode: code) { [weak self] result in
                 switch result {
@@ -121,43 +96,30 @@ final class LoginViewModel: LoginViewModelProtocol {
                     self?.coordinator?.showErrorAlert(smsError, handler: { })
                 }
             }
-
         case .registerOrSettings:
-
             if let userSettings {
                 self.state = .settings(userSettings)
             }
-            
-
-            
         case .registerButtonDidTap(let runner):
 
-//            let semaphore = DispatchSemaphore(value: 1)
-            //не получилось реализовать семафор. Оставил вложенность.
-
-            FirebaseStorageService.shared.upload(currentUserId: runner.id, photo: runner.avatar!) { result in
+            FirebaseStorageService.shared.upload(currentUserId: runner.id, photo: runner.avatar!) { [weak self] result in
                 switch result {
 
                 case .success(let url):
                     print("Avatar upload ", url) //Прямая ссылка на аватар
-
-                    DatabaseService.shared.setUser(user: runner) { [weak self] result in
-                        switch result {
-
+                    DatabaseService.shared.setUser(user: runner) { [weak self] dbresult in
+                        switch dbresult {
                         case .success(_):
                             print("Success Register user \(runner.name ?? "")!!")
                             self?.coordinator?.pushToMain()
                         case .failure(let error):
                             print("Set User Error \(error.localizedDescription)")
-//                            self?.state = .error(error)
                             self?.coordinator?.showErrorAlert(error, handler: { })
                         }
                     }
-
                 case .failure(let error):
                     print("Upload Error \(error.localizedDescription)")
-//                    self.state = .error(error)
-                    self.coordinator?.showErrorAlert(error, handler: { })
+                    self?.coordinator?.showErrorAlert(error, handler: { })
                 }
             }
         }
@@ -171,6 +133,5 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
-    
 }
 

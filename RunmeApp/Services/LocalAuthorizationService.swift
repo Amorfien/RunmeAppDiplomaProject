@@ -26,14 +26,14 @@ final class LocalAuthorizationService {
         let canEvaluate = context.canEvaluatePolicy(policy, error: nil)
 
         if canEvaluate {
-
             context.evaluatePolicy(policy, localizedReason: "Чтобы войти в свою учётную запись") { success, error in
                 if success {
                     authorizationFinished(true)
                 } else { return }
             }
-        } else { authorizationFinished(false) }
-
+        } else {
+            authorizationFinished(false)
+        }
     }
 
 }

@@ -54,16 +54,11 @@ final class HomeViewModel: HomeViewModelProtocol {
         switch viewInput {
         case .runnersSegment:
             self.state = .loading
-
             getAllAvatars()
-
             getAllPosts()
-
         case .newsSegment:
             self.state = .loading
-
             getAllNews()
-
         case .likeDidTap(let id):
             DatabaseService.shared.fetchPost(postIdd: id) { fetchPostResult in
                 switch fetchPostResult {
@@ -73,11 +68,11 @@ final class HomeViewModel: HomeViewModelProtocol {
                     //пост не должен быть уже лайкнутым и не должен быть своим
                     guard !post.likes.contains(itsme), post.userId != itsme else { return }
                     post.likes.append(itsme)
-                    DatabaseService.shared.updatePost(post: post) { updPostResult in
+                    DatabaseService.shared.updatePost(post: post) { [weak self] updPostResult in
                         switch updPostResult {
                         case .success(let updPost):
                             DispatchQueue.main.async {
-                                self.state = .likePost(updPost)
+                                self?.state = .likePost(updPost)
                             }
                         case .failure(_):
                             print("Fail update post")
@@ -88,10 +83,10 @@ final class HomeViewModel: HomeViewModelProtocol {
                 }
             }
         case .delDidTap(let id):
-            DatabaseService.shared.deletePost(postIdd: id) { success in
+            DatabaseService.shared.deletePost(postIdd: id) { [weak self] success in
                 if success {
                     DispatchQueue.main.async {
-                        self.state = .deletePost(id)
+                        self?.state = .deletePost(id)
                     }
                 } else {
                     print("Delete post error")
@@ -136,7 +131,6 @@ final class HomeViewModel: HomeViewModelProtocol {
         FirebaseStorageService.shared.downloadAllAvatars { [weak self] result in
             switch result {
             case .success(let dict):
-//                sleep(1)
                 DispatchQueue.main.async {
                     self?.state = .loadedAvatars(dict)
                 }
@@ -154,9 +148,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     private func getAllPosts() {
         DatabaseService.shared.getAllPosts { [weak self] postsResult in
             switch postsResult {
-
             case .success(let posts):
-//                sleep(1)
                 DispatchQueue.main.async {
                     self?.state = .loadedPosts(posts.sorted())
                 }
@@ -165,8 +157,5 @@ final class HomeViewModel: HomeViewModelProtocol {
             }
         }
     }
-
-
-
 
 }

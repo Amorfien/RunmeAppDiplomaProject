@@ -9,6 +9,8 @@ import UIKit
 
 final class HeaderInSectionView: UITableViewHeaderFooterView {
 
+    // MARK: - Properties
+
     static let reuseId = "HeaderInSectionView"
 
     private let leftLineView = UIView()
@@ -23,6 +25,7 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
         return label
     }()
 
+    // MARK: - Init
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -33,6 +36,8 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup view
+
     private func setupView() {
         self.addSubview(titleLabel)
         let lines = [leftLineView, rightLineView]
@@ -42,7 +47,6 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
             line.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(line)
         }
-
 
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: 40),
@@ -62,8 +66,10 @@ final class HeaderInSectionView: UITableViewHeaderFooterView {
         ])
     }
 
+    // MARK: - Public method
+
     func fillHeader(date: String) {
-        titleLabel.text = date//String(date.dropLast(10))
+        titleLabel.text = date
     }
     
 }

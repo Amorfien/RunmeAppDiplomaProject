@@ -14,16 +14,12 @@ final class CoreDataService {
 
     let appDelegate: AppDelegate
     let mainContext: NSManagedObjectContext
-//    let backgroundContext: NSManagedObjectContext
 
     private init() {
         self.appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.mainContext = appDelegate.persistentContainer.viewContext
         self.mainContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
-
-
-    // MARK: - Core Data Saving support
 
 /// Сохраняет пост в БД (в бэкграунд контексте)
     func savePost(_ news: Article, completion: @escaping (Bool) -> Void) {
@@ -62,10 +58,8 @@ final class CoreDataService {
 
         let fetchRequest = NewsCoreDataModel.fetchRequest()
         fetchRequest.predicate = predicate
-
         do {
             let storedPosts = try mainContext.fetch(fetchRequest)
-
             return storedPosts
         } catch {
             return []
@@ -74,23 +68,16 @@ final class CoreDataService {
 
 /// Удаляет посты из БД согласно предикату (predicate = nil - удалить всё)
     func deletePost(predicate: NSPredicate?) {
-
         let posts = self.fetching(predicate: predicate)
-        print("news count", posts.count)
         posts.forEach {
             self.mainContext.delete($0)
         }
-
-        guard mainContext.hasChanges else {
-            return
-        }
-
+        guard mainContext.hasChanges else { return }
         do {
             try mainContext.save()
         } catch let error {
-            print("AaAaaaaAAaAaAaa ", error)
+            print(error.localizedDescription)
         }
-
     }
 
 }

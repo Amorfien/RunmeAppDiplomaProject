@@ -27,9 +27,7 @@ final class AvatarCircleImageView: UIImageView {
 
         self.handler = completion
         backgroundColor = .tintColor
-
         contentMode = .scaleAspectFill
-
         isUserInteractionEnabled = true
         if isEditable {
             let button = UIButton(frame: CGRect(x: 0, y: size.rawValue - size.rawValue / 4
@@ -40,14 +38,10 @@ final class AvatarCircleImageView: UIImageView {
             addSubview(button)
         }
 
-
         layer.cornerRadius = size.rawValue / 2
-
         layer.borderWidth = size.rawValue / 80
         layer.borderColor = UIColor.tintColor.cgColor
-
         clipsToBounds = true
-
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
         widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
@@ -62,21 +56,5 @@ final class AvatarCircleImageView: UIImageView {
         handler!()
     }
 
-
 }
-//private lazy var avatarImageView: UIImageView = {
-//    let imageView = UIImageView()
-//    imageView.image = UIImage(named: "dafault-avatar")
-//    imageView.contentMode = .scaleAspectFill
-//    imageView.layer.cornerRadius = 80
-//    imageView.layer.borderWidth = 1
-//    imageView.clipsToBounds = true
-//    imageView.isUserInteractionEnabled = true
-//    imageView.translatesAutoresizingMaskIntoConstraints = false
-//    let button = UIButton(frame: CGRect(x: 0, y: 120, width: 160, height: 40))
-//    button.backgroundColor = .white.withAlphaComponent(0.8)
-//    button.setTitle("➕", for: .normal)
-//    button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
-//    imageView.addSubview(button)
-//    return imageView
-//}()
+

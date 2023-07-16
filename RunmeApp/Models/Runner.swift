@@ -58,25 +58,7 @@ struct Runner: Identifiable {
 
 }
 
-//typealias RunTimeSec = UInt16 //0...65535 sec (18 hrs)
-//
-//enum PersonalBest {
-//    case five(RunTimeSec)
-//    case ten(RunTimeSec)
-//    case half(RunTimeSec)
-//    case marathon(RunTimeSec)
-//}
-//
-//
-//enum Achievement {
-//    case gold
-//    case silver
-//    case bronze
-//}
-
-
 struct RunnersBests: Identifiable {
-
     var id: String
     var nickname: String
     var isMale: Bool

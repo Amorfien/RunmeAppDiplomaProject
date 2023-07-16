@@ -51,7 +51,7 @@ final class ContainerViewController: UIViewController {
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(showMenu))
         navigationItem.rightBarButtonItem = menuButton
 //        let newPost = UIBarButtonItem(image: UIImage(systemName: "plus.square"), style: .done, target: self, action: #selector(newPost))
-        let newPost = UIBarButtonItem(title: "➕ Добавить тренировку", style: .done, target: self, action: #selector(newPost))
+        let newPost = UIBarButtonItem(title: "✚ Добавить тренировку", style: .done, target: self, action: #selector(newPost))
 
         navigationItem.leftBarButtonItem = newPost
     }

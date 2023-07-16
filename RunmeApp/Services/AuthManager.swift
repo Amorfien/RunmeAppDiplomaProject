@@ -25,7 +25,6 @@ final class AuthManager {
 
     func startAuth(phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> Void) {
 
-        //TODO: - TestSMS
         Auth.auth().settings?.isAppVerificationDisabledForTesting = false ///true - тестовый режим, отключение капчи, только забитые юзеры
 
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
@@ -42,7 +41,6 @@ final class AuthManager {
     }
 
     func verifyCode(smsCode: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-
         guard let verificationID else {
             completion(.success(false))
             return
@@ -60,7 +58,6 @@ final class AuthManager {
                 completion(.success(false))
             }
         }
-
     }
 
     func signOut() {

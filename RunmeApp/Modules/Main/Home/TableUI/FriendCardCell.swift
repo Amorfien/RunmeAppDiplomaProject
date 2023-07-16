@@ -20,41 +20,26 @@ final class FriendCardCell: UICollectionViewCell {
         }
     }
 
-
-
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
-
         setupView()
-//        setupConstraints()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - UI
+    // MARK: - Setup view
+
     private func setupView() {
-//        let circle = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
         addSubview(circle)
-//        self = AvatarCircleView(image: UIImage(named: "dafault-avatar"), size: .small)
-//        backgroundColor = .white//Res.MyColors.homeBackground
-//
         layer.borderWidth = 1
-//        layer.borderColor = UIColor.red.cgColor
         layer.cornerRadius = circle.layer.cornerRadius
     }
 
-    private func setupConstraints() {
+    // MARK: - Public method
 
-        NSLayoutConstraint.activate([
-
-
-        ])
-    }
-
-    // MARK: - public method
     func fillCardCell(avatar: UIImage) {
         circle.image = avatar
     }

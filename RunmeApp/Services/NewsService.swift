@@ -21,7 +21,8 @@ final class NewsService: NewsProtocol {
     }
 
     //Набор ключевых слов для поиска нвостей. Чем больше ключевых слов тем быстрее расходуется количество бесплатных запросов (50шт/12ч)
-    let keywords = ["ironman", "зож", "спорт+бег"]
+//    let keywords = ["ironman", "зож", "спорт+бег"]
+    let keywords = ["ironman"]
 
     // MARK: - URL session
     private func newsSession(keyword: String, completion: @escaping (Result<Data, NewsError>) -> Void) {
@@ -40,7 +41,6 @@ final class NewsService: NewsProtocol {
             ]
             return url
         }()
-
 
         guard let apiURL = urlComponents.url else {
             completion(.failure(.badURL))
@@ -88,15 +88,10 @@ final class NewsService: NewsProtocol {
             }
         }
 
-
-
         group.notify(queue: .global(), work: DispatchWorkItem(block: {
-//            sleep(1)
             completion(.success(articles.sorted(by: >)))
         }))
 
     }
-
-
 
 }

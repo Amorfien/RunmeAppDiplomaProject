@@ -65,15 +65,17 @@ final class RunnerPostTableViewCell: UITableViewCell {
 
     private var descriptionText = UILabel(text: "", font: .systemFont(ofSize: 14, weight: .regular), textColor: .secondaryLabel, lines: 0)
 
+    // MARK: - Init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
-
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Setup view
 
     private func setupView() {
 
@@ -89,14 +91,11 @@ final class RunnerPostTableViewCell: UITableViewCell {
         contentView.addSubview(delButton)
 
         NSLayoutConstraint.activate([
-//            contentView.heightAnchor.constraint(equalToConstant: 116),
-
             bgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             bgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             bgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             bgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
 
-//            avatarImageView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
             avatarImageView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 10),
             avatarImageView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 10),
 
@@ -117,7 +116,6 @@ final class RunnerPostTableViewCell: UITableViewCell {
             distanceLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
             distanceLabel.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -6),
             distanceLabel.heightAnchor.constraint(equalToConstant: 16),
-//            distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             timeLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
             timeLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 76),
             tempLabel.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor),
@@ -150,6 +148,8 @@ final class RunnerPostTableViewCell: UITableViewCell {
         self.itsme = itsme
         self.postId = post.postId //для поиска лайкнутого/удаленного поста
     }
+
+    // MARK: - Actions
 
     @objc private func likeTap() {
         cellDelegate?.likeDidTap(postId: postId)

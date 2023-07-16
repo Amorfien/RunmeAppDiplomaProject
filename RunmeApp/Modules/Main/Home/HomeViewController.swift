@@ -9,6 +9,8 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
+    // MARK: - Properties
+
     private let viewModel: HomeViewModel
 
     var articles: [Article] = [] {
@@ -33,7 +35,6 @@ final class HomeViewController: UIViewController {
 
     private lazy var sourceSegment: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
-//        segmentedControl.backgroundColor = .secondarySystemBackground
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -53,17 +54,13 @@ final class HomeViewController: UIViewController {
         tableView.register(RunnerPostTableViewCell.self, forCellReuseIdentifier: RunnerPostTableViewCell.reuseId)
         tableView.register(NewsPostTableViewCell.self, forCellReuseIdentifier: NewsPostTableViewCell.reuseId)
         tableView.register(HeaderInSectionView.self, forHeaderFooterViewReuseIdentifier: HeaderInSectionView.reuseId)
-//        tableView.estimatedSectionHeaderHeight = 20
         tableView.sectionFooterHeight = 0
         tableView.sectionHeaderTopPadding = 0
-        tableView.backgroundColor = sourceSegment.selectedSegmentIndex == 0 ? Res.PRColors.prLight : Res.MyColors.myBackground//Res.MyColors.homeBackground
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-//        tableView.separatorInset = .zero
-//        tableView.separatorColor = .tintColor
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
-//        tableView.sectionHeaderHeight = 50
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -75,11 +72,11 @@ final class HomeViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     deinit {
         print(#function, " HomeViewController 📱")
     }
@@ -96,37 +93,31 @@ final class HomeViewController: UIViewController {
         viewModel.updateState(viewInput: .runnersSegment)
     }
 
+    // MARK: - Setup view
+
     private func setupNavigation() {
         navigationItem.title = "Участники"
         navigationController?.navigationBar.prefersLargeTitles = true
-
-
-//        navigationController?.navigationBar.addSubview(sourceSegment)
         navigationItem.titleView = sourceSegment
         sourceSegment.widthAnchor.constraint(equalToConstant: 240).isActive = true
     }
+
     private func setupView() {
         tableHeaderView.headerDelegate = self
-//        view.backgroundColor = .secondarySystemBackground
         view.backgroundColor = Res.PRColors.prLight
-
         view.addSubview(newsTableView)
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-
             newsTableView.topAnchor.constraint(equalTo: view.topAnchor),
             newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             newsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             newsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-
-
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)
         ])
-
     }
 
     // MARK: - ViewModel Binding
@@ -143,9 +134,7 @@ final class HomeViewController: UIViewController {
             case .loading:
                 updateTableViewVisibility(isHidden: true)
                 updateLoadingAnimation(isLoading: true)
-
             case .loadedAvatars(let dict):
-
                 var users: [String] = []
                 var images: [UIImage] = []
                 for (user, data) in dict {
@@ -196,28 +185,26 @@ final class HomeViewController: UIViewController {
     }
 
     //MARK: - Actions
+
     @objc private func changeSource() {
         switch sourceSegment.selectedSegmentIndex {
         case 0:
             newsTableView.tableHeaderView  = tableHeaderView
             viewModel.updateState(viewInput: .runnersSegment)
             view.backgroundColor = Res.PRColors.prLight
-            newsTableView.backgroundColor = Res.PRColors.prLight
             navigationItem.title = "Участники"
             navigationController?.navigationBar.prefersLargeTitles = true
         case 1:
             newsTableView.reloadData()
             newsTableView.tableHeaderView = nil
             viewModel.updateState(viewInput: .newsSegment)
-            view.backgroundColor = Res.MyColors.myBackground
-            newsTableView.backgroundColor = Res.MyColors.myBackground
+            view.backgroundColor = Res.MyColors.favoriteBackground
             navigationItem.title = nil
             navigationController?.navigationBar.prefersLargeTitles = false
         default:
             ()
         }
     }
-
 
 }
 
@@ -233,15 +220,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
         if sourceSegment.selectedSegmentIndex == 1 {
             let sectionHeader = HeaderInSectionView()
             sectionHeader.fillHeader(date: self.articles[section].publishedAt ?? "2001-01-01")
             return sectionHeader
         } else {
             let header = UIView()
-            header.heightAnchor.constraint(equalToConstant: 12).isActive = true
-            header.backgroundColor = Res.PRColors.prMedium//.tintColor
+            header.heightAnchor.constraint(equalToConstant: 2).isActive = true
+            header.backgroundColor = .tintColor
             return header
         }
     }
@@ -289,10 +275,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-
 }
-
-
 
 extension HomeViewController: UsersTableHeaderDelegate {
     func chooseUser(id: String) {
@@ -320,6 +303,5 @@ extension HomeViewController: NewsCellDelegate {
     func favoriteDidTap(post: Article) {
         viewModel.updateState(viewInput: .addToFavorite(post))
     }
-
 
 }

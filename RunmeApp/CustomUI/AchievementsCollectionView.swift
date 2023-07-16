@@ -20,7 +20,6 @@ final class AchievementsCollectionView: UICollectionView {
 
     init(delegate: UIViewController) {
         super.init(frame: .zero, collectionViewLayout: self.layout)
-//        translatesAutoresizingMaskIntoConstraints = false
         self.delegate = delegate as? UICollectionViewDelegate
         self.dataSource = delegate as? UICollectionViewDataSource
         setupCollection()

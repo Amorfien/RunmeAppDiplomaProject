@@ -29,9 +29,7 @@ final class LoginCoordinator: Coordinatable {
     }
 
     func pushToMain() {
-
-        self.flowCompletionHandler?(nil) ///maybe here
-
+        self.flowCompletionHandler?(nil)
     }
 
     func pushPhoneViewController() {
@@ -52,11 +50,5 @@ final class LoginCoordinator: Coordinatable {
         let registrationViewController = RegistrationViewController(viewModel: vm)
         navigationController.pushViewController(registrationViewController, animated: true)
     }
-
-//    func showErrorAlert(_ error: Error) {
-//        DispatchQueue.main.async {
-//            self.navigationController.showAlert(title: "Ошибка!", message: error.localizedDescription) {}
-//        }
-//    }
 
 }

@@ -33,7 +33,7 @@ final class AppCoordinator: Coordinatable {
         let loginCoordinator = LoginCoordinator(vc: navigationController, vm: loginViewModel)
         addChildCoordinator(loginCoordinator)
 
-        loginCoordinator.flowCompletionHandler = { [weak self] _ in ///maybe
+        loginCoordinator.flowCompletionHandler = { [weak self] _ in
             self?.goToMain()
         }
         loginCoordinator.start()
@@ -91,18 +91,16 @@ final class AppCoordinator: Coordinatable {
     private func presentSheetPresentationController(user: Runner) {
         let pvm = ProfileViewModel(userId: user.id)
         let profileVC = ProfileViewController(viewModel: pvm)
-        profileVC.view.alpha = 0.97
-        
+        profileVC.view.backgroundColor = .clear
+
         if let sheet = profileVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersGrabberVisible = true
+            sheet.prefersGrabberVisible = false
         }
         
         navigationController.present(profileVC, animated: true)
     }
-
-
 
 
     func addChildCoordinator(_ coordinator: Coordinatable) {

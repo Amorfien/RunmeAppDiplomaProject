@@ -18,9 +18,8 @@ final class DistanceLabel: LabelWithPadding {
 
     init(type: Distance) {
         super.init(frame: .zero)
-        backgroundColor = .systemBackground.withAlphaComponent(0.25)
+        backgroundColor = .systemBackground.withAlphaComponent(0.6)
         font = .monospacedDigitSystemFont(ofSize: 16, weight: .medium)
-//        layer.masksToBounds = true
         clipsToBounds = true
         layer.cornerRadius = 18
         layer.borderWidth = 0.1
@@ -33,7 +32,6 @@ final class DistanceLabel: LabelWithPadding {
         rightLabel.frame = CGRect(x: 132, y: 10, width: 100, height: 20)
 
         addSubview(rightLabel)
-
     }
 
     required init?(coder: NSCoder) {

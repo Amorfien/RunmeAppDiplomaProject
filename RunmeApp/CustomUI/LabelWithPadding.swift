@@ -11,8 +11,8 @@ class LabelWithPadding: UILabel {
 
     let UIEI = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 16)
 
-    override var intrinsicContentSize:CGSize {
-        numberOfLines = 0       // don't forget!
+    override var intrinsicContentSize: CGSize {
+        numberOfLines = 0
         var s = super.intrinsicContentSize
         s.height = s.height + UIEI.top + UIEI.bottom
         s.width = s.width + UIEI.left + UIEI.right
@@ -29,7 +29,6 @@ class LabelWithPadding: UILabel {
         let b = bounds
         let tr = b.inset(by: UIEI)
         let ctr = super.textRect(forBounds: tr, limitedToNumberOfLines: 0)
-        // that line of code MUST be LAST in this function, NOT first
         return ctr
     }
 

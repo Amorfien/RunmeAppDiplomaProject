@@ -68,7 +68,7 @@ final class DatabaseService {
             let personalBests = data["personalBests"] as? [Int]
             let achievements = data["achievements"] as? [String]
             let postsId = data["postsId"] as? [String]
-            // дописать
+
             let runner = Runner(id: id, phoneNumber: phoneNumber, nickname: nickname, name: name, surname: surname, statusText: statusText, isMale: isMale ?? true, email: email, telegram: telegram, birthday: birthday, birthdayShow: birthdayShow ?? true, isAdmin: isAdmin ?? false, personalBests: personalBests ?? [0, 0, 0, 0], achievements: achievements ?? [], postsId: postsId ?? [])
 
             completion(.success(runner))
@@ -94,12 +94,10 @@ final class DatabaseService {
 
     }
 
-
     ///достать всех юзеров
     func getAllUsers (completion: @escaping (Result<[RunnersBests], Error>) -> Void) {
 
         var runnersBests: [RunnersBests] = []
-//        usersRef.whereField("personalBests", isGreaterThan: [0, 0, 0, 0]).getDocuments
         usersRef.getDocuments { snapshot, error in
             if let error {
                 completion(.failure(error))
@@ -125,13 +123,12 @@ final class DatabaseService {
                     let bests = RunnersBests(id: id, nickname: nickname, isMale: isMale, personalBests: updBests)
                     runnersBests.append(bests)
 
-                    if runnersBests.count == snapshot?.count {//storageList.items.count {
+                    if runnersBests.count == snapshot?.count {
                         completion(.success(runnersBests))
                     }
                 }
             }
         }
-
 
     }
 
@@ -139,9 +136,6 @@ final class DatabaseService {
 
     ///записать пост в базу
     func savePost(post: RunnerPost, completion: @escaping (Result<String, Error>) -> Void) {
-
-//        let postUID = UUID().uuidString
-
         postsRef.document(post.postId).setData(post.representation) { error in
             if let error {
                 completion(.failure(error))
@@ -151,10 +145,8 @@ final class DatabaseService {
         }
     }
 
-
     ///достать все посты
     func getAllPosts (completion: @escaping (Result<[RunnerPost], Error>) -> Void) {
-
         var posts: [RunnerPost] = []
         postsRef.getDocuments { snapshot, error in
             if let error {
@@ -215,7 +207,6 @@ final class DatabaseService {
 
     ///удалить пост
     func deletePost(postIdd: String, completion: @escaping (Bool) -> Void) {
-
         postsRef.document(postIdd).delete { error in
             if let error {
                 completion(false)
@@ -223,7 +214,6 @@ final class DatabaseService {
                 completion(true)
             }
         }
-
     }
 
 }
