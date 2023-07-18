@@ -92,7 +92,7 @@ final class TermsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Пользовательское соглашение"
+        self.title = "Пользовательское соглашение".localized
     }
 
 

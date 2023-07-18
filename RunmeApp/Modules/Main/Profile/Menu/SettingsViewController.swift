@@ -24,7 +24,7 @@ final class SettingsViewController: UIViewController {
         bdSwitch.translatesAutoresizingMaskIntoConstraints = false
         return bdSwitch
     }()
-    private let birthdayLabel = UILabel(text: "показывать дату моего рождения", font: .systemFont(ofSize: 14), textColor: .secondaryLabel, lines: 1)
+    private let birthdayLabel = UILabel(text: "показывать дату моего рождения".localized, font: .systemFont(ofSize: 14), textColor: .secondaryLabel, lines: 1)
 
     let fiveTextField = RegistrationTextField(type: .five)
     let tenTextField = RegistrationTextField(type: .ten)
@@ -239,11 +239,11 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0:
-            return "\(row) ч"
+            return String(row) + " ч".localized
         case 1:
-            return "\(row) мин"
+            return String(row) + " мин".localized
         case 2:
-            return "\(row) с"
+            return String(row) + " с".localized
         default:
             return ""
         }

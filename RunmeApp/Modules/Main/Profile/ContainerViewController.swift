@@ -51,7 +51,7 @@ final class ContainerViewController: UIViewController {
         let menuButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(showMenu))
         navigationItem.rightBarButtonItem = menuButton
 //        let newPost = UIBarButtonItem(image: UIImage(systemName: "plus.square"), style: .done, target: self, action: #selector(newPost))
-        let newPost = UIBarButtonItem(title: "✚ Добавить тренировку", style: .done, target: self, action: #selector(newPost))
+        let newPost = UIBarButtonItem(title: "✚ Добавить тренировку".localized, style: .done, target: self, action: #selector(newPost))
 
         navigationItem.leftBarButtonItem = newPost
     }
@@ -102,7 +102,7 @@ final class ContainerViewController: UIViewController {
         let alertController = UIAlertController(title: "\n\n\n\nч.                              мин.\n\n\n", message: nil, preferredStyle: .alert)
         alertController.view.addSubview(datePicker)
 
-        let okAction = UIAlertAction(title: "Сохранить", style: .default) { [weak self] _ in
+        let okAction = UIAlertAction(title: "Сохранить".localized, style: .default) { [weak self] _ in
             let timeFormatter = DateFormatter()
             timeFormatter.dateFormat = "HH:mm"
             let dateFormatter = DateFormatter()
@@ -127,16 +127,16 @@ final class ContainerViewController: UIViewController {
             (self?.profileVC as? ProfileViewController)?.viewModel.savePost(post)
         }
 
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Отмена".localized, style: .cancel)
         alertController.addTextField { textField in
-            textField.placeholder = "Дистанция в километрах"
+            textField.placeholder = "Дистанция в километрах".localized
             textField.textAlignment = .center
             textField.keyboardType = .numberPad
             textField.delegate = self
         }
 
         alertController.addTextField { textField in
-            textField.placeholder = "Описание"
+            textField.placeholder = "Описание".localized
             textField.textAlignment = .center
         }
         alertController.addAction(okAction)

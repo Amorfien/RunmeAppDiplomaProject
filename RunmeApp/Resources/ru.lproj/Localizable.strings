@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  RunmeApp
+
+  Created by Pavel Grigorev on 18.07.2023.
+  
+*/
+
+"NextWarning" = "Нажимая кнопку \"Далее\" Вы принимаете пользовательское Соглашение и политику конфиденциальности";

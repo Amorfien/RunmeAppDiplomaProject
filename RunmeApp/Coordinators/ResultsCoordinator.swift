@@ -26,7 +26,7 @@ final class ResultsCoordinator: Coordinatable {
     func start() {
         vm.coordinator = self
         let resultsViewController = ResultsViewController(viewModel: vm)
-        resultsViewController.tabBarItem = UITabBarItem(title: "Результаты", image: UIImage(systemName: "list.bullet.rectangle"), tag: 3)
+        resultsViewController.tabBarItem = UITabBarItem(title: "Результаты".localized, image: UIImage(systemName: "list.bullet.rectangle"), tag: 3)
         navigationController.setViewControllers([resultsViewController], animated: true)
     }
 

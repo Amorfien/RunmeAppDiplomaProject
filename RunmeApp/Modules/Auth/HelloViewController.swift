@@ -74,12 +74,12 @@ final class HelloViewController: UIViewController {
             }
             switch state {
             case .identifiedUser(sensorType: let sensorType, userPhone: let userPhone):
-                self.loginButton.setTitle("Другой пользователь  📲", for: .normal)
+                self.loginButton.setTitle("Другой пользователь  📲".localized, for: .normal)
                 self.bioLoginButton.isHidden = false
                 self.bioLoginButton.setImage(UIImage(systemName: sensorType ?? ""), for: .normal)
                 self.bioLoginButton.setTitle("    " + userPhone, for: .normal)
             case .noUser:
-                self.loginButton.setTitle("Войти по номеру телефона  📲", for: .normal)
+                self.loginButton.setTitle("Войти по номеру телефона  📲".localized, for: .normal)
                 self.bioLoginButton.isHidden = true
             case .fastLogin:
                   DispatchQueue.main.async {

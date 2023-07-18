@@ -23,9 +23,9 @@ final class ProfileCardView: UIView {
     private lazy var avatarImageView = AvatarCircleImageView(image: nil, size: .large, isEditable: self.isEditable, completion: changeAvatar)
 
     private let statusTextField = RegistrationTextField(type: .status)
-    private let nicknameLabel = UILabel(text: "Никнэйм", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .label, lines: 2)
-    private let nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
-    private let surnameLabel = UILabel(text: "Фамилия", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
+    private let nicknameLabel = UILabel(text: "", font: .systemFont(ofSize: 18, weight: .semibold), textColor: .label, lines: 2)
+    private let nameLabel = UILabel(text: "", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
+    private let surnameLabel = UILabel(text: "", font: .systemFont(ofSize: 16, weight: .regular), textColor: .secondaryLabel, lines: 2)
     private lazy var telegramLinkButton: UIButton = {
         let button = UIButton()
         button.setTitle("@телеграм", for: .normal)
@@ -47,7 +47,7 @@ final class ProfileCardView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let noAchLabel = UILabel(text: "тут будут мои награды", font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
+    private let noAchLabel = UILabel(text: "тут будут мои награды".localized, font: .systemFont(ofSize: 14, weight: .light), textColor: .secondaryLabel, lines: 1)
     private lazy var achiewmentsCollection = AchievementsCollectionView(delegate: delegate!)
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeLastView))
 

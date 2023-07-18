@@ -28,7 +28,7 @@ final class RegistrationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Регистрация"
+        self.title = "Регистрация".localized
         view.backgroundColor = .systemGray5
         view.addSubview(registrationView)
         registrationView.frame = self.view.frame

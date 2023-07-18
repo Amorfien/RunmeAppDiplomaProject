@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController {
     private var selectedPostRow: IndexPath? = nil
 
     private lazy var sourceSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Для вас", "Новости"])
+        let segmentedControl = UISegmentedControl(items: ["Для вас".localized, "Новости".localized])
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -96,7 +96,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Setup view
 
     private func setupNavigation() {
-        navigationItem.title = "Участники"
+        navigationItem.title = "Участники".localized
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.titleView = sourceSegment
         sourceSegment.widthAnchor.constraint(equalToConstant: 240).isActive = true
@@ -192,7 +192,7 @@ final class HomeViewController: UIViewController {
             newsTableView.tableHeaderView  = tableHeaderView
             viewModel.updateState(viewInput: .runnersSegment)
             view.backgroundColor = Res.PRColors.prLight
-            navigationItem.title = "Участники"
+            navigationItem.title = "Участники".localized
             navigationController?.navigationBar.prefersLargeTitles = true
         case 1:
             newsTableView.reloadData()

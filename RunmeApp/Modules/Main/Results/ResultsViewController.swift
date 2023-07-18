@@ -23,7 +23,11 @@ final class ResultsViewController: UIViewController {
     }
 
     private lazy var distanceSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["5 км", "10 км", "21.1 км", "42.2 км"])
+        let segmentedControl = UISegmentedControl(items: [
+            "5 км".localized,
+            "10 км".localized,
+            "21.1 км".localized,
+            "42.2 км".localized])
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -86,7 +90,7 @@ final class ResultsViewController: UIViewController {
     // MARK: - Setup view
     
     private func setupNavigation() {
-        navigationItem.title = "Результаты"
+        navigationItem.title = "Результаты".localized
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.titleView = distanceSegment
         distanceSegment.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32).isActive = true

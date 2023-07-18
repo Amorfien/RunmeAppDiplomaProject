@@ -25,7 +25,7 @@ final class FavoriteCoordinator: Coordinatable {
     func start() {
         vm.coordinator = self
         let favoriteViewController = FavoriteViewController(viewModel: vm)
-        favoriteViewController.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(systemName: "star"), tag: 2)
+        favoriteViewController.tabBarItem = UITabBarItem(title: "Избранное".localized, image: UIImage(systemName: "star"), tag: 2)
         navigationController.setViewControllers([favoriteViewController], animated: true)
     }
 

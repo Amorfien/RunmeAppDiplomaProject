@@ -31,7 +31,7 @@ final class ProfileCoordinator: Coordinatable {
         let slideMenuViewController = SlideMenuViewController()
         slideMenuViewController.delegate = profileViewController
         let containerVC = ContainerViewController(profileVC: profileViewController, menuVC: slideMenuViewController)
-        containerVC.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.rectangle"), tag: 1)
+        containerVC.tabBarItem = UITabBarItem(title: "Профиль".localized, image: UIImage(systemName: "person.crop.rectangle"), tag: 1)
         navigationController.viewControllers = [containerVC]
     }
 

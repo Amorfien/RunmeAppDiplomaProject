@@ -74,7 +74,7 @@ extension SlideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectedBackgroundView = selectedView
         let item = SlideMenu.allCases[indexPath.row]
 
-        cell.textLabel?.text = SlideMenu.allCases[indexPath.row].rawValue
+        cell.textLabel?.text = SlideMenu.allCases[indexPath.row].rawValue.localized
         cell.textLabel?.font = .systemFont(ofSize: 16, weight: .regular)
         cell.textLabel?.textColor = UIColor(named: item.color)
 

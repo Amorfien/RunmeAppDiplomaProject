@@ -44,7 +44,7 @@ final class RegistrationView: UIView {
     let birthdayTextField = RegistrationTextField(type: .birthday)
 
     private lazy var sexSegment: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Муж", "Жен"])
+        let segmentedControl = UISegmentedControl(items: ["Муж".localized, "Жен".localized])
         segmentedControl.selectedSegmentTintColor = .tintColor
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         segmentedControl.selectedSegmentIndex = 0
@@ -66,7 +66,7 @@ final class RegistrationView: UIView {
 
     lazy var nextButton: LoginButton = {
         let button = LoginButton()
-        button.setTitle("Готово", for: .normal)
+        button.setTitle("Готово".localized, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button

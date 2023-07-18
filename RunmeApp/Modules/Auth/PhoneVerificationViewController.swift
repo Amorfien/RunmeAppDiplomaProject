@@ -52,7 +52,7 @@ class PhoneVerificationViewController: UIViewController {
 
     private lazy var nextButton: LoginButton = {
         let button = LoginButton()
-        button.setTitle("Далeе".uppercased(), for: .normal)
+        button.setTitle("Далeе".localized, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         return button
@@ -64,14 +64,14 @@ class PhoneVerificationViewController: UIViewController {
         label.font = .systemFont(ofSize: 12, weight: .semibold)
         label.textColor = .secondaryLabel
         label.textAlignment = .center
-        label.text = "Нажимая кнопку \"Далее\" Вы принимаете пользовательское Соглашение и политику конфиденциальности"
+        label.text = "NextWarning".localized
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var termsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("прочитать", for: .normal)
+        button.setTitle("прочитать".localized, for: .normal)
         button.setTitleColor(.tintColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
         button.addTarget(self, action: #selector(pushToTerms), for: .touchUpInside)

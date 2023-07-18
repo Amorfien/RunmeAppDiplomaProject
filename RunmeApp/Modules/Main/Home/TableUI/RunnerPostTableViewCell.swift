@@ -137,9 +137,9 @@ final class RunnerPostTableViewCell: UITableViewCell {
         nicknameLabel.text = post.userNickname
         let meters = post.distance / 1000
         let kmeters = round(meters * 100) / 100
-        distanceLabel.text = "\(kmeters) км"
+        distanceLabel.text = String(kmeters) + " км".localized
         timeLabel.text = timeFormat(sec: Int(post.time), seconds: false)
-        tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км"
+        tempLabel.text = tempFormat(sec: Int(post.temp)) + " мин/км".localized
         dateLabel.text = post.date
         descriptionText.text = post.text
         let buttonText = String(post.likes.count) + (iLikeIt ? " ♥️" : " 🩶")

@@ -34,9 +34,10 @@ final class FavoriteViewController: UIViewController {
         return tableView
     }()
 
-    private let infoLabel = UILabel(text: "Здесь будут храниться ваши избранные новости",
-                                    font: .systemFont(ofSize: 18, weight: .semibold),
-                                    textColor: .tintColor, lines: 2)
+    private let infoLabel = UILabel(
+        text: "Здесь будут храниться ваши избранные новости".localized,
+        font: .systemFont(ofSize: 18, weight: .semibold),
+        textColor: .tintColor, lines: 2)
 
     private let runnersImageView: UIImageView = {
         let image = UIImageView()
@@ -82,7 +83,7 @@ final class FavoriteViewController: UIViewController {
     // MARK: - Setup view
 
     private func setupNavigation() {
-        self.navigationItem.title = "Избранное"
+        self.navigationItem.title = "Избранное".localized
         navigationItem.rightBarButtonItems = [searchButton ,clearButton]
         searchButton.isEnabled = true
         clearButton.isEnabled = false
@@ -134,7 +135,7 @@ final class FavoriteViewController: UIViewController {
     //MARK: - Actions
 
     @objc private func searchButtonTap() {
-        let alertController = UIAlertController(title: "Поиск статьи", message: "Введите искомое слово из заголовка новости", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Поиск статьи".localized, message: "Введите искомое слово из заголовка новости".localized, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
             self?.searchButton.isEnabled = false
             self?.clearButton.isEnabled = true
@@ -191,7 +192,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(
             style: .destructive,
-            title: "Удалить"
+            title: "Удалить".localized
         ) { [weak self] _, _, _ in
             //delete from DB
             let article = self?.savedNews[indexPath.section]

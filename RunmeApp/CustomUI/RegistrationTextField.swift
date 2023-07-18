@@ -26,19 +26,19 @@ final class RegistrationTextField: TextFieldWithPadding {
         var placeholder: String {
             switch self {
             case .nickname:
-                return "Молния"
+                return "Молния".localized
             case .name:
-                return "Саша"
+                return "Саша".localized
             case .surname:
-                return "Сова"
+                return "Сова".localized
             case .birthday:
                 return "22.10.1998"
             case .telegram:
                 return "@telegram"
             case .email:
-                return "адрес@почта.бег"
+                return "адрес@почта.бег".localized
             case .status:
-                return "бегу..."
+                return "бегу...".localized
             default:
                 return ""
             }
@@ -108,7 +108,7 @@ final class RegistrationTextField: TextFieldWithPadding {
             font = .monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         }
 
-        let topLabel = UILabel(text: type.rawValue, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel, lines: 1)
+        let topLabel = UILabel(text: type.rawValue.localized, font: .systemFont(ofSize: 12, weight: .light), textColor: .secondaryLabel, lines: 1)
         topLabel.translatesAutoresizingMaskIntoConstraints = true
         topLabel.frame = CGRect(x: 10, y: -20, width: 150, height: 20)
 

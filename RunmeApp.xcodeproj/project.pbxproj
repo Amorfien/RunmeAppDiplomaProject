@@ -21,6 +21,8 @@
 		186AD0B42A485BA700001093 /* UIViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */; };
 		186AD0B62A48689F00001093 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B52A48689F00001093 /* FirebaseStorageService.swift */; };
 		186AD0B82A48AFEA00001093 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */; };
+		186CE46C2A67229800EC3EB1 /* String + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186CE46B2A67229800EC3EB1 /* String + Extensions.swift */; };
+		186CE46F2A67249C00EC3EB1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 186CE4712A67249C00EC3EB1 /* Localizable.strings */; };
 		187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */; };
 		187525D82A4C554700BBD8E1 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525D72A4C554700BBD8E1 /* TermsViewController.swift */; };
 		187525DB2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187525DA2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift */; };
@@ -84,6 +86,9 @@
 		186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extensions.swift"; sourceTree = "<group>"; };
 		186AD0B52A48689F00001093 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		186AD0B72A48AFEA00001093 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
+		186CE46B2A67229800EC3EB1 /* String + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extensions.swift"; sourceTree = "<group>"; };
+		186CE4702A67249C00EC3EB1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		186CE4722A6724A600EC3EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		187525D52A4C402A00BBD8E1 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		187525D72A4C554700BBD8E1 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		187525DA2A4C631C00BBD8E1 /* NewsPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPostTableViewCell.swift; sourceTree = "<group>"; };
@@ -270,6 +275,7 @@
 			children = (
 				1880D6912A449480008DBE6C /* Res.swift */,
 				1880D67F2A4490E5008DBE6C /* Assets.xcassets */,
+				186CE4712A67249C00EC3EB1 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -280,6 +286,7 @@
 				18DC3BF82A474C4500438728 /* UILabel + Extensions.swift */,
 				186AD0B32A485BA700001093 /* UIViewController + Extensions.swift */,
 				18FE16E72A53395800145305 /* UIView + Extensions.swift */,
+				186CE46B2A67229800EC3EB1 /* String + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -451,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1880D6832A4490E5008DBE6C /* LaunchScreen.storyboard in Resources */,
+				186CE46F2A67249C00EC3EB1 /* Localizable.strings in Resources */,
 				1880D6802A4490E5008DBE6C /* Assets.xcassets in Resources */,
 				18020EF72A461F1F00D615D7 /* GoogleService-Info.plist in Resources */,
 			);
@@ -519,6 +527,7 @@
 				1880D6B32A44F8DE008DBE6C /* FavoriteViewModel.swift in Sources */,
 				1880D6A52A449C70008DBE6C /* FavoriteCoordinator.swift in Sources */,
 				187525D62A4C402A00BBD8E1 /* PhoneVerificationViewController.swift in Sources */,
+				186CE46C2A67229800EC3EB1 /* String + Extensions.swift in Sources */,
 				18DC3BF72A474B7000438728 /* RegistrationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +535,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		186CE4712A67249C00EC3EB1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				186CE4702A67249C00EC3EB1 /* ru */,
+				186CE4722A6724A600EC3EB1 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		1880D6812A4490E5008DBE6C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
